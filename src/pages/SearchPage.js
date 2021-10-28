@@ -7,10 +7,7 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { useParams, useHistory, useLocation, Link } from "react-router-dom";
-import { useQuery, useLazyQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import firebase from "firebase/app";
+import { useParams, useHistory, Link } from "react-router-dom";
 import Layout from "../layouts/DefaultLayout";
 import Button from "../components/elements/Button";
 import CustomHelmet from "../components/elements/CustomHelmet";

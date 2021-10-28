@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import jwt from "jsonwebtoken";
-import firebase from "firebase/app";
 import Button from "../elements/Button";
 import CustomInput from "../elements/CustomInput";
 import FeedBack from "../elements/FeedBack";

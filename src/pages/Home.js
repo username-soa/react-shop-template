@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import {
-  getProducts,
-  getCollections,
-  getCoolectionByHandler,
-} from "../utils/GraphQLQueries";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import HomeMainCart from "../components/CartComponents/HomeMainCart";
