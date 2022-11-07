@@ -1,13 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import styled from "styled-components";
 import Img from "../../assets/testimg.png";
 import Button from "../elements/Button";
 
-const HomeMainCart = ({ collection }) => {
+const HomeMainCart = ({ collection, data }) => {
   const history = useHistory();
-  let cid = 1;
+  let cid = "winter-21";
   const ComponentVariants = {
     hidden: { y: "100vh" },
     visible: {
@@ -18,42 +18,45 @@ const HomeMainCart = ({ collection }) => {
 
   return (
     <Container variants={ComponentVariants} initial="hidden" animate="visible">
-      <div className="div-content-wrp">
-        <div className="categorie-desc-container">
-          <h2>Winter 21’</h2>
-          <p>
-            Winter layer season is here. Check out our trendy new winter
-            collection to stay warm in style.
-          </p>
-          {!collection && (
-            <>
-              <div className="price-container">
-                <h5>Price:</h5>
-                <h4>
-                  {new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "MAD",
-                  }).format(114)}
-                </h4>
-              </div>
-              <Button
-                handleClick={() => {
-                  history.push(`/collection/${cid}`);
-                }}
-                bg="#fff"
-                color="#393d46"
-                title="Voir plus"
-                border="#393d46"
-                hover="#393d46"
-                margin="0"
-                radius="0"
-              />
-            </>
-          )}
-        </div>
-        <div className="image-container">
-          <img src={Img} />
-        </div>
+      <div className="category-desc-container">
+        <h2>{data ? data.name : "Winter 21’"}</h2>
+        <p>
+          {data
+            ? data.description
+            : "Winter layer season is here. Check out our trendy new winter collection to stay warm in style."}
+        </p>
+        {!collection && (
+          <>
+            <div className="price-container">
+              <h5>Price: </h5>
+              <h4>
+                {" "}
+                {new Intl.NumberFormat("fr-FR", {
+                  style: "currency",
+                  currency: "MAD",
+                }).format(114)}
+              </h4>
+            </div>
+            <Button
+              handleClick={() => {
+                history.push(`/collections/${data ? data.slug : cid}`);
+              }}
+              bg="#fff"
+              color="#393d46"
+              title="Voir plus"
+              border="#393d46"
+              hover="#393d46"
+              margin="0"
+              radius="12px"
+            />
+          </>
+        )}
+      </div>
+      <div className="image-container">
+        <img
+          src={data ? data.img : Img}
+          alt={data ? `${data.description}-image` : "collection-image"}
+        />
       </div>
     </Container>
   );
@@ -62,19 +65,19 @@ const HomeMainCart = ({ collection }) => {
 export default HomeMainCart;
 
 const Container = styled(motion.div)`
-  padding: 0 150px;
-  .div-content-wrp {
-    max-height: 750px;
-    background: #fff;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    overflow: hidden;
-  }
-  .categorie-desc-container {
+  margin: 0 150px 1em 150px;
+  min-height: calc(100vh - 170px);
+  background: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* gap: 1em; */
+  overflow: hidden;
+  .category-desc-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 4em 2em;
+    padding: 4em 2em;
+    gap: 1em;
     .price-container {
       display: flex;
       align-items: center;
@@ -114,15 +117,19 @@ const Container = styled(motion.div)`
     }
   }
   .image-container {
-    width: 100%;
-    margin-top: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
     img {
-      width: 90%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
   @media only screen and (max-width: 1200px) {
-    padding: 1em;
-    .categorie-desc-container {
+    margin: 1em;
+    .category-desc-container {
       h2 {
         font-size: 3rem;
       }
@@ -137,23 +144,23 @@ const Container = styled(motion.div)`
     }
   }
   @media only screen and (max-width: 768px) {
-    .div-content-wrp {
-      grid-template-columns: 100% !important;
-    }
-    .categorie-desc-container {
+    grid-template-columns: 100% !important;
+    grid-template-rows: auto auto;
+    min-height: unset;
+    gap: 0;
+    .category-desc-container {
+      padding: 2em;
       p,
       h5,
       h4 {
         margin: 1em 0;
       }
-    }
-    .image-container {
-      margin-top: 1em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img {
-        width: 70%;
+      h5 {
+        margin-right: 1em;
+      }
+
+      h2 {
+        font-size: 40px;
       }
     }
   }

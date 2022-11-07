@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useField } from "formik";
+import { motion } from "framer-motion/dist/framer-motion";
 
 const CustomInput = ({
   margin,
@@ -10,7 +11,6 @@ const CustomInput = ({
   id,
   bg,
   border,
-  zindex,
   width,
   radius,
   ...props
@@ -32,10 +32,10 @@ const CustomInput = ({
     <Container
       margin={margin}
       bg={bg}
-      zindex={zindex}
       border={border}
       width={width}
       radius={radius}
+      variants={props.animations}
     >
       {label ? (
         <label htmlFor={props.id || props.name}>
@@ -95,12 +95,11 @@ const CustomInput = ({
 
 export default CustomInput;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   display: flex;
   flex-direction: column;
   width: ${(props) => (props.width ? props.width : "inherit")};
   margin: ${(props) => (props.margin ? props.margin : "0")};
-  z-index: ${(props) => (props.zindex ? props.zindex : "0")};
   label {
     font-size: 15px;
     font-weight: 600;

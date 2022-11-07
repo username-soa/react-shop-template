@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import CartSideMenuBottom from "../CartComponents/CartSideMenuBottom";
 import CartSideMenuItem from "../CartComponents/CartSideMenuItem";

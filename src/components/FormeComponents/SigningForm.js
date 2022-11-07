@@ -1,22 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
-import logo from "../../assets/thelogo.jpg";
-import { ReactComponent as LogoIcone } from "../../assets/logo.svg";
 import CustomInput from "../elements/CustomInput";
 import Button from "../elements/Button";
-import { SigninVariants } from "../../utils/Variables";
 
-const SigninForm = ({ setState, state, handleSignup, errors }) => {
+const SigningForm = ({ handleSignup, errors }) => {
   const handlePhone = (f) => {
-    var newstring = f.substring(1);
-    return "+212" + newstring;
+    var newString = f.substring(1);
+    return "+212" + newString;
   };
+  const parentAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.3 },
+    },
+  };
+  const childAnimations = {
+    hidden: { opacity: 0, y: "50px" },
+    show: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
-    <Container animate="visible" initial="hidden" variants={SigninVariants}>
+    <Container animate="show" initial="hidden" variants={parentAnimations}>
       <Formik
         enableReinitialize={true}
         initialValues={{
@@ -27,15 +38,11 @@ const SigninForm = ({ setState, state, handleSignup, errors }) => {
           pwd: "",
         }}
         validationSchema={Yup.object({
-          fname: Yup.string().required("Champ obligatoire"),
-          lname: Yup.string().required("Champ obligatoire"),
-          phone: Yup.string()
-            .min(10, "minimum 10")
-            .required("Champ obligatoire"),
-          email: Yup.string()
-            .email("doit être une adresse e-mail")
-            .required("Champ obligatoire"),
-          pwd: Yup.string().required("Champ obligatoire"),
+          fname: Yup.string().required("required"),
+          lname: Yup.string().required("required"),
+          phone: Yup.string().min(10, "minimum 10").required("required"),
+          email: Yup.string().email("must be an e-mail").required("required"),
+          pwd: Yup.string().required("required"),
         })}
         onSubmit={async (data, { setSubmitting }) => {
           const newPhone = handlePhone(data.phone);
@@ -46,31 +53,32 @@ const SigninForm = ({ setState, state, handleSignup, errors }) => {
       >
         {({ handleSubmit, isSubmitting, values }) => (
           <Form className="form first-form">
-            <div className="svg-wrp">
-              <Link to="/">
-                <LogoIcone />
-              </Link>
-            </div>
+            <motion.h2 className="form-h2" variants={childAnimations}>
+              Create an Account
+            </motion.h2>
             <div className="new-form-row">
               <CustomInput
-                placeholder="Prénom"
+                placeholder="First Name"
                 name="fname"
                 id="fname"
                 bg="transparent"
+                animations={childAnimations}
               />
               <CustomInput
-                placeholder="Nom"
+                placeholder="Last Name"
                 name="lname"
                 id="lname"
                 bg="transparent"
+                animations={childAnimations}
               />
             </div>
             <CustomInput
-              placeholder="Téléphone"
+              placeholder="Phone"
               name="phone"
               id="phone"
               bg="transparent"
               margin="0.5em"
+              animations={childAnimations}
             />
             <CustomInput
               placeholder="Email"
@@ -78,14 +86,16 @@ const SigninForm = ({ setState, state, handleSignup, errors }) => {
               id="email"
               bg="transparent"
               margin="0.5em"
+              animations={childAnimations}
             />
             <CustomInput
-              placeholder="Mot de passe"
+              placeholder="Password"
               name="pwd"
               id="pwd"
               bg="transparent"
               type="password"
               margin="0.5em"
+              animations={childAnimations}
             />
             <AnimatePresence>
               {errors?.status ? (
@@ -93,41 +103,25 @@ const SigninForm = ({ setState, state, handleSignup, errors }) => {
                   exit="exit"
                   animate="visible"
                   initial="hidden"
-                  variants={SigninVariants}
+                  variants={childAnimations}
                   className="errors-red"
                 >
                   {errors?.message}
                 </motion.p>
               ) : null}
             </AnimatePresence>
-            <div className="btn-wrp-login">
+            <motion.div className="btn-wrp-login" variants={childAnimations}>
               <Button
-                radius="0"
+                radius="12px"
                 type="submit"
                 color="#fff"
                 bg="#393d46"
                 border="#393d46"
                 hover="#f8f8f8"
                 handleClick={handleSubmit}
-                title={isSubmitting ? "S'enregistrer..." : "S'enregistrer"}
-                type="submit"
+                title={isSubmitting ? "Creating..." : "Create"}
               />
-              <Button
-                radius="0"
-                type="submit"
-                title="Se connecter"
-                color="#393d46"
-                border="#393d46"
-                hover="#393d46"
-                bg="#fff"
-                margin="0.5em"
-                padding="10px 30px"
-                handleClick={(event) => {
-                  event.preventDefault();
-                  setState(!state);
-                }}
-              />
-            </div>
+            </motion.div>
           </Form>
         )}
       </Formik>
@@ -135,22 +129,19 @@ const SigninForm = ({ setState, state, handleSignup, errors }) => {
   );
 };
 
-export default SigninForm;
+export default SigningForm;
 
 const Container = styled(motion.div)`
   width: 600px;
   min-width: 300px;
   border-radius: 10px;
   padding: 2em 1em;
-  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
-    rgb(237 239 247 / 47%) 0px 6px 6px;
   .errors-red {
     color: red;
     font-size: 0.9rem;
     margin: 0.5em 0 0 0;
   }
   .new-form-row {
-    /* margin-top: 1em; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1em;
@@ -168,32 +159,13 @@ const Container = styled(motion.div)`
     width: 100% !important;
     margin: 0.5em 0;
   }
-  .svg-wrp {
-    display: flex;
-    cursor: pointer;
-    svg {
-      width: 150px;
-      height: 50px;
-      margin: 1em auto 2em auto;
-      path {
-        fill: #222 !important;
-      }
-    }
+  .form-h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #393d46;
+    margin-bottom: 2em;
   }
-  .the-logo {
-    width: 100px;
-    margin: 2em 0;
-  }
-  .btn-next-step {
-    padding: 1em;
-    background: transparent;
-  }
-  .roteted-svg {
-    width: 10px;
-    height: 10px;
-    margin: 0 0.5em;
-    transform: rotate(90deg);
-  }
+
   @media only screen and (max-width: 768px) {
     .new-form-row {
       grid-template-columns: 100% !important;

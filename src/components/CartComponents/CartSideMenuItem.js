@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 
 const CartSideMenuItem = ({
   img,

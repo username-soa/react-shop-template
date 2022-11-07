@@ -22,7 +22,7 @@ const CartSideMenuBottom = ({ price, seeCatalogue, checkoutEC }) => {
           title="CHECKOUT"
           bg="#393d46"
           color="#fff"
-          radius="0"
+          radius="12px"
           margin="1em"
           handleClick={() => window.open(checkoutEC?.webUrl)}
         />
@@ -32,7 +32,7 @@ const CartSideMenuBottom = ({ price, seeCatalogue, checkoutEC }) => {
           color="#393d46"
           border="#393d46"
           hover="#393d46"
-          radius="0"
+          radius="12px"
           margin="0.5em"
           handleClick={seeCatalogue}
         />

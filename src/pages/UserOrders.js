@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import UserProfileNavigator from "../components/elements/UserProfileNavigator";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import useHasBeenViewed from "../../hooks/useHasBeenViewed";
 import Button from "../elements/Button";
 const CartTotale = ({ price, checkoutEC }) => {
@@ -50,7 +50,7 @@ const CartTotale = ({ price, checkoutEC }) => {
         color="#393d46"
         border="#393d46"
         hover="#393d46"
-        radius="0"
+        radius="12px"
       />
       <p>Estimated shipping 1-7 days</p>
     </Container>

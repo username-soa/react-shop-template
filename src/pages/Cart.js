@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import useHasBeenViewed from "../hooks/useHasBeenViewed";
 import { Link, useLocation } from "react-router-dom";
 import Layout from "../layouts/DefaultLayout";
@@ -45,17 +45,16 @@ const CartPage = () => {
             variants={H1Variants}
             className="empty-cart-wrp"
           >
-            <h1>Votre panier est actuellement vide.</h1>
+            <h1>Your cart is empty.</h1>
 
             <Link to="/">
               <Button
-                title="Retour à la boutique"
-                color="#fff"
+                title="Return to Shop"
                 border="#393d46"
                 hover="#393d46"
                 bg="#fff"
                 color="#393d46"
-                radius="0"
+                radius="12px"
                 margin="3em"
               />
             </Link>
@@ -65,7 +64,7 @@ const CartPage = () => {
         {!empty && (
           <>
             <motion.h2 animate="visible" initial="hidden" variants={H1Variants}>
-              Votre Panier
+              Your cart
             </motion.h2>
             <div className="cart-content-wrp">
               <div className="cart-product-list">

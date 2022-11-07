@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import { useHistory } from "react-router-dom";
 import { ReactComponent as SearchIcone } from "../../assets/close.svg";
 

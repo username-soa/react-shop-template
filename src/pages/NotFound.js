@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import { Link } from "react-router-dom";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import Button from "../components/elements/Button";
@@ -61,7 +61,7 @@ const NotFound = () => {
       </motion.div>
       <motion.div animate="visible" initial="hidden" variants={BtnVariants}>
         <Link to="/">
-          <Button bg="#fff" color="#000" title="Home" />
+          <Button bg="#fff" color="#000" title="Home" radius="12px" />
         </Link>
       </motion.div>
     </Container>

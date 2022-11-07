@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion/dist/framer-motion";
 import HeaderSearchBar from "./HeaderSearchBar";
 import { ReactComponent as LogoIcone } from "../../assets/logo.svg";
 import { ReactComponent as MenuIcone } from "../../assets/menu.svg";
@@ -63,7 +63,7 @@ const Header = ({ sideMenu, setSideMenu }) => {
               color="#fff"
               title="Login"
               margin="0"
-              radius="0"
+              radius="12px"
             />
           </Link>
         </div>

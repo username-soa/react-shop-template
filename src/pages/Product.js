@@ -1,40 +1,55 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion/dist/framer-motion";
 import styled from "styled-components";
-import useHasBeenViewed from "../hooks/useHasBeenViewed";
 import Layout from "../layouts/DefaultLayout";
-import ProductImages from "../components/CartComponents/ProductImages";
-import ProductInfo from "../components/CartComponents/ProductInfo";
 import CustomHelmet from "../components/elements/CustomHelmet";
-import ProductCart from "../components/CartComponents/ProductCard";
 import ProductInfoSkeleton from "../components/skeletons/ProductInfoSkeleton";
 import ProductCartSkeleton from "../components/skeletons/ProductCartSkeleton";
 import ProductImagesSkeleton from "../components/skeletons/ProductImagesSkeleton";
 import HeaderSkeleton from "../components/skeletons/HeaderSkeleton";
 import { productList } from "../utils/Products";
+import SimilarProductsList from "../components/CartComponents/SimilarProductList";
+import ProductInfoV2 from "../components/CartComponents/ProductInfoV2";
+import GalleryModal from "../components/FixedElements/GalleryModal";
+import product1 from "../assets/product-test.PNG";
+import product2 from "../assets/product-test1.PNG";
+import product3 from "../assets/product-test2.PNG";
+import product4 from "../assets/product-test3.PNG";
 
 const Product = () => {
-  const H2Variants = {
-    hidden: { opacity: 0, y: "100px" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, delay: 1, type: "Inertia" },
+  const imageList = [
+    {
+      id: 1,
+      img: product1,
     },
-  };
-  const ProductsVariants = {
-    hidden: { opacity: 0, y: "100px" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, delay: 0.5, type: "Inertia" },
+    {
+      id: 2,
+      img: product2,
     },
+    {
+      id: 3,
+      img: product3,
+    },
+    {
+      id: 4,
+      img: product4,
+    },
+    {
+      id: 5,
+      img: product3,
+    },
+    {
+      id: 6,
+      img: product4,
+    },
+  ];
+  const getNextImage = (id) => {
+    const tempImg = imageList.find((element) => element.id === id);
+    setTempImage({ id: id, url: tempImg.img });
   };
-  const { uid, cid } = useParams();
-  const location = useLocation();
   const [loading, setLoading] = useState(true);
-  const [hasBeenViewed, ref] = useHasBeenViewed();
+  const [popup, setPopUp] = useState(false);
+  const [tempImage, setTempImage] = useState({ id: null, url: null });
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -48,7 +63,7 @@ const Product = () => {
     return (
       <Layout>
         <SkContainer>
-          <div className="page-row row-3">
+          <div className="page-row row-3 full-height">
             <ProductImagesSkeleton />
             <ProductInfoSkeleton />
           </div>
@@ -56,18 +71,11 @@ const Product = () => {
             <HeaderSkeleton />
           </div>
           <div className="page-row row-2">
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
-            <ProductCartSkeleton />
+            {Array.from(Array(12).keys()).map((index) => {
+              return (
+                <ProductCartSkeleton key={`ProductCartSkeleton-${index}`} />
+              );
+            })}
           </div>
         </SkContainer>
       </Layout>
@@ -82,37 +90,24 @@ const Product = () => {
           transition: { ease: "easeInOut" },
         }}
       >
-        <CustomHelmet title="Produit détails" />
-        <div className="product-info-top">
-          <ProductImages />
-          <ProductInfo />
-        </div>
-        <motion.h2
-          className="similar-products-h2"
-          ref={ref}
-          animate={hasBeenViewed ? "visible" : "hidden"}
-          initial="hidden"
-          variants={H2Variants}
-        >
-          Produits similaires
-        </motion.h2>
-        <motion.div
-          className="similar-products-container page-row"
-          ref={ref}
-          animate={hasBeenViewed ? "visible" : "hidden"}
-          initial="hidden"
-          variants={ProductsVariants}
-        >
-          {productList.map((i, index) => {
-            return (
-              <ProductCart
-                key={`similar-p-${index}`}
-                title={i.name}
-                price={i.price}
-              />
-            );
-          })}
-        </motion.div>
+        <CustomHelmet title="Product details" />
+        <ProductInfoV2
+          images={imageList}
+          clickImage={(id, url) => {
+            setPopUp(true);
+            setTempImage({ id: id, url: url });
+          }}
+        />
+        <SimilarProductsList name="Similar Product" products={productList} />
+        {popup && (
+          <GalleryModal
+            handleClose={setPopUp}
+            handleNext={getNextImage}
+            img={tempImage?.url}
+            imgId={tempImage.id}
+            imagesLength={imageList?.length}
+          />
+        )}
       </Container>
     </Layout>
   );
@@ -125,6 +120,7 @@ const Container = styled(motion.div)`
   .product-info-top {
     display: grid;
     grid-template-columns: 50% 50%;
+    min-height: calc(100vh - 200px);
   }
   .similar-products-h2 {
     color: #393d46;
@@ -135,7 +131,7 @@ const Container = styled(motion.div)`
   }
   .similar-products-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     padding: 0 150px;
   }
   @media only screen and (max-width: 1400px) {
@@ -156,6 +152,10 @@ const Container = styled(motion.div)`
     .similar-products-h2 {
       font-size: 24px;
     }
+  }
+
+  @media only screen and (max-width: 500px) {
+    padding: 2em 1em;
   }
 `;
 

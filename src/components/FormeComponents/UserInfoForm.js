@@ -59,8 +59,8 @@ const UserInfoForm = ({ updateInfo, user }) => {
                 color="#393d46"
                 border="#393d46"
                 hover="#393d46"
-                radius="0"
-                title={isSubmitting ? "Enregistrer..." : "Enregistrer"}
+                radius="12px"
+                title={isSubmitting ? "Saving..." : "Save"}
                 handleClick={handleSubmit}
               />
             </div>

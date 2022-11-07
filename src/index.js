@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./styles/main.scss";
+import "swiper/swiper-bundle.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 

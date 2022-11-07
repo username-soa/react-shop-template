@@ -1,20 +1,36 @@
 import React from "react";
+import * as Yup from "yup";
+import { Formik, Form } from "formik";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
+import { motion } from "framer-motion/dist/framer-motion";
 import CustomInput from "../elements/CustomInput";
 import Button from "../elements/Button";
-import { ReactComponent as PlusIcone } from "../../assets/down-arrow.svg";
-import { ReactComponent as CloseIcone } from "../../assets/cancel.svg";
 
-const ContactForm = ({ login, feedback, handleClick }) => {
+const ContactForm = ({ feedback, handleClick }) => {
   const history = useHistory();
 
+  const parentAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { delayChildren: 0.5, staggerChildren: 0.3 },
+    },
+  };
+  const childAnimations = {
+    hidden: { opacity: 0, y: "50px" },
+    show: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
-    <Container>
+    <Container animate="show" initial="hidden" variants={parentAnimations}>
       <div className="popup-top">
-        <h2 className="contact-form-h2">Contact Form</h2>
+        <motion.h2 variants={childAnimations} className="contact-form-h2">
+          Contact Form
+        </motion.h2>
       </div>
       <Formik
         enableReinitialize={true}
@@ -26,19 +42,16 @@ const ContactForm = ({ login, feedback, handleClick }) => {
           message: "",
         }}
         validationSchema={Yup.object({
-          fname: Yup.string().required("Champ obligatoire"),
-          lname: Yup.string().required("Champ obligatoire"),
-          email: Yup.string()
-            .email("doit être une adresse e-mail")
-            .required("Champ obligatoire"),
-          phone: Yup.string().required("Champ obligatoire"),
-          message: Yup.string().required("Champ obligatoire"),
+          fname: Yup.string().required("required"),
+          lname: Yup.string().required("required"),
+          email: Yup.string().email("must be an e-mail").required("required"),
+          phone: Yup.string().required("required"),
+          message: Yup.string().required("required"),
         })}
         onSubmit={async (data, { setSubmitting, resetForm }) => {
           setSubmitting(true);
           await handleClick(data);
           if (feedback?.status === 1 || feedback?.status === null) {
-            console.log("inside resete");
             resetForm();
           }
           setSubmitting(false);
@@ -46,25 +59,34 @@ const ContactForm = ({ login, feedback, handleClick }) => {
       >
         {({ handleSubmit, isSubmitting, values }) => (
           <Form className="form first-form">
-            <div className="input-row-contact">
+            <motion.div
+              variants={childAnimations}
+              className="input-row-contact"
+            >
               <CustomInput
-                label="Prénom"
+                label="First Name"
                 name="fname"
-                placeholder="Prénom"
+                placeholder="First Name"
                 id="fname"
                 type="text"
               />
-            </div>
-            <div className="input-row-contact">
+            </motion.div>
+            <motion.div
+              variants={childAnimations}
+              className="input-row-contact"
+            >
               <CustomInput
-                label="Nom"
+                label="Last Name"
                 name="lname"
-                placeholder="Nom"
+                placeholder="Last Name"
                 id="lname"
                 type="text"
               />
-            </div>
-            <div className="input-row-contact">
+            </motion.div>
+            <motion.div
+              variants={childAnimations}
+              className="input-row-contact"
+            >
               <CustomInput
                 label="Email"
                 name="email"
@@ -72,36 +94,45 @@ const ContactForm = ({ login, feedback, handleClick }) => {
                 id="email"
                 type="text"
               />
-            </div>
-            <div className="input-row-contact">
+            </motion.div>
+            <motion.div
+              variants={childAnimations}
+              className="input-row-contact"
+            >
               <CustomInput
-                label="Téléphone"
+                label="Phone"
                 name="phone"
                 placeholder="Phone"
                 id="phone"
                 type="text"
               />
-            </div>
-            <div className="form-contact-middle"></div>
-            <div className="input-row-contact extra-margin">
+            </motion.div>
+            <motion.div
+              variants={childAnimations}
+              className="input-row-contact extra-margin"
+            >
               <CustomInput
-                label="Votre message"
+                label="Your message"
                 name="message"
                 placeholder="Your message"
                 id="message"
                 type="text"
                 textarea
               />
-            </div>
+            </motion.div>
 
-            <div className="form-contact-bottom">
+            <motion.div
+              variants={childAnimations}
+              className="form-contact-bottom"
+            >
               <Button
                 handleClick={handleSubmit}
-                title={isSubmitting ? "Envoyer..." : "Envoyer"}
+                title={isSubmitting ? "Sending..." : "Send"}
                 type="button"
                 bg="#1e212d"
                 color="#fff"
                 margin="0.5em"
+                radius="12px"
               />
               <Button
                 handleClick={(e) => {
@@ -115,18 +146,9 @@ const ContactForm = ({ login, feedback, handleClick }) => {
                 border="#1e212d"
                 hover="#1e212d"
                 margin="0.5em"
+                radius="12px"
               />
-              {/* <div className="back-btn">
-                <PlusIcone />
-                <button
-                  onClick={() => {
-                    history.push("/");
-                  }}
-                >
-                  Go Home
-                </button>
-              </div> */}
-            </div>
+            </motion.div>
           </Form>
         )}
       </Formik>
@@ -136,20 +158,17 @@ const ContactForm = ({ login, feedback, handleClick }) => {
 
 export default ContactForm;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   padding: 1em;
   background: #fff;
   border-radius: 10px;
-  width: calc(100vw - 400px - 3em);
-  height: 100%;
-  margin: 0 0 0 1em;
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;
   .contact-form-h2 {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: 500 !important;
     letter-spacing: 7px;
-    margin: 1em 0 0 0;
+    margin-top: 0.5em;
     color: #222;
   }
   form {
@@ -157,7 +176,7 @@ const Container = styled.div`
     grid-template-columns: 50% 50%;
     grid-template-rows: auto;
     height: fit-content;
-    margin: 6em 0;
+    margin: 2em 0;
   }
   input,
   textarea {
@@ -167,9 +186,7 @@ const Container = styled.div`
     margin: 0 0.5em;
     grid-column: 1/3;
   }
-  /* .form-contact-middle {
-    grid-column: 1/3;
-  } */
+
   .input-row-contact {
     margin: 0.5em 0;
   }
@@ -209,7 +226,6 @@ const Container = styled.div`
     }
   }
   @media only screen and (max-width: 1000px) {
-    width: calc(100vw - 3em);
     margin: 0;
     box-shadow: none;
     .input-row-contact,
@@ -221,6 +237,10 @@ const Container = styled.div`
     form {
       grid-template-columns: 100% !important;
       grid-template-rows: auto;
+    }
+    .contact-form-h2 {
+      font-size: 2rem;
+      margin: 0.5em 0;
     }
     .form-contact-bottom,
     .extra-margin {

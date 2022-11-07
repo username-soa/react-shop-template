@@ -25,10 +25,11 @@ const ProductCartSkeleton = ({ margin }) => {
 export default ProductCartSkeleton;
 
 const Container = styled.div`
-  min-height: 300px;
   display: grid;
-  grid-template-rows: 1fr 0.5fr;
-  max-height: 750px !important ;
+  grid-template-rows: 1fr auto;
+  aspect-ratio: 1/1.6;
+  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
+    rgb(237 239 247 / 47%) 0px 6px 6px;
   &.extra-m {
     margin: 1em 150px !important;
   }
@@ -39,9 +40,5 @@ const Container = styled.div`
     &.extra-m {
       margin: 1em !important;
     }
-  }
-  @media only screen and (max-width: 768px) {
-    grid-template-columns: 100% !important;
-    grid-template-rows: 1fr 1fr;
   }
 `;

@@ -43,6 +43,8 @@ const UserOrdersSkeleton = ({ margin }) => {
 export default UserOrdersSkeleton;
 
 const Container = styled.div`
+  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
+    rgb(237 239 247 / 47%) 0px 6px 6px;
   .grid-skeleton {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;

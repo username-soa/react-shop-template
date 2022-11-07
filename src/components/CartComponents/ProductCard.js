@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion/dist/framer-motion";
 import { useHistory, Link } from "react-router-dom";
 import testimg from "../../assets/testimg.png";
 import Button from "../elements/Button";
 
-const ProductCart = ({ img, title, price, type, uid, cid }) => {
+const ProductCart = ({ img, title, price, type, uid, cid, animations }) => {
   const history = useHistory();
   return (
-    <Container>
+    <Container variants={animations}>
       <img
         src={testimg}
         alt="product-image"
@@ -29,7 +30,7 @@ const ProductCart = ({ img, title, price, type, uid, cid }) => {
           color="#393d46"
           border="#393d46"
           hover="#393d46"
-          radius="0"
+          radius="12px"
           margin="1em"
           handleClick={() => {
             console.log("product clicked");
@@ -43,10 +44,10 @@ const ProductCart = ({ img, title, price, type, uid, cid }) => {
 
 export default ProductCart;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   background: #fff;
   padding: 2em 1em;
-  margin: 1em 0.5em;
+  /* margin: 1em 0.5em; */
   min-width: 260px;
   display: flex;
   flex-direction: column;

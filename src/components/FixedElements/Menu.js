@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import MenuLink from "./MenuLink";
 import MenuLinkParent from "./MenuLinkParent";
 import { ReactComponent as AccessoriesIcone } from "../../assets/headset.svg";
@@ -144,7 +144,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
             {collectionList?.map((c, index) => {
               return (
                 <MenuLink
-                  to={`/collection/${c?.id}`}
+                  to={`/collections/${c?.id}`}
                   title={handleTitle(c?.title)}
                   SvgIcone={Category}
                   state={sideMenu}

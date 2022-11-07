@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import Button from "./Button";
 
 const HomeCollectionCart = ({
@@ -36,15 +36,15 @@ const HomeCollectionCart = ({
         <p>{text}</p>
         <Button
           handleClick={() => {
-            history.push(`/collection/${cid}`);
+            history.push(`/collections/${cid}`);
           }}
           bg="#fff"
           color="#393d46"
-          title="Voir plus"
+          title="See More"
           border="#393d46"
           hover="#393d46"
           margin="0"
-          radius="0"
+          radius="12px"
         />
       </div>
       <div className="HomeCollectionCart-img">

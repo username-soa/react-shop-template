@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import ImageZoom from "../elements/ImageZoom";
 import img from "../../assets/product1.jpg";
 import product1 from "../../assets/collection2.png";
@@ -97,7 +97,7 @@ const ProductImages = () => {
           alt="product-image"
           width="100%"
           height="100%"
-          maxHeight="280px"
+          maxHeight="500px"
           objectFit="fill"
           handleClick={() => console.log("image clicked")}
         />

@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import { useParams, useHistory, Link } from "react-router-dom";
 import Layout from "../layouts/DefaultLayout";
 import Button from "../components/elements/Button";
@@ -113,6 +113,7 @@ const SearchPage = () => {
                 bg="#000"
                 color="#fff"
                 margin="0"
+                radius="12px"
               />
             </motion.div>
           </div>
@@ -140,7 +141,7 @@ const SearchPage = () => {
                 animate={true ? "visible" : "hidden"}
                 variants={H2CartVariants}
               >
-                Yacado Pêche Recherche.
+                Digital Era Recherche.
               </motion.h2>
             </Link>
             <motion.h3
@@ -185,6 +186,7 @@ const SearchPage = () => {
                 bg="#000"
                 color="#fff"
                 margin="0"
+                radius="12px"
               />
             </motion.div>
           </div>
@@ -228,6 +230,7 @@ const SearchPage = () => {
                 bg="#000"
                 color="#fff"
                 margin="0"
+                radius="12px"
               />
             </motion.div>
             <div className="found-products">

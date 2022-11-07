@@ -75,13 +75,12 @@ h1 {
 .page-row {
   margin: 1em 150px !important;
 }
-
+.full-height {
+  height: calc(100vh - 180px);
+}
 @media only screen and (max-width: 1200px) {
   .page-row {
     margin: 1em !important;
-  }
-  .row-3 {
-    grid-template-columns: 100% !important;
   }
 }
 
@@ -93,6 +92,9 @@ h1 {
 
 @media only screen and (max-width: 768px) {
   .row-1 {
+    grid-template-columns: 100% !important;
+  }
+  .row-3 {
     grid-template-columns: 100% !important;
   }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import Layout from "../layouts/DefaultLayout";
 import { ReactComponent as ShippingIcone } from "../assets/shipping.svg";
@@ -34,7 +34,7 @@ const ShippingInfo = () => {
         <motion.h2 initial="hidden" animate="visible" variants={HeaderVariants}>
           Politique d'expédition
         </motion.h2>
-        <div className="privacy-policy-container">
+        <div className="shipping-info-container">
           <motion.div
             className="page-div-content"
             initial="hidden"
@@ -483,7 +483,7 @@ export default ShippingInfo;
 
 const Container = styled(motion.div)`
   padding: 2em 150px;
-  .privacy-policy-container {
+  .shipping-info-container {
     display: grid;
     grid-template-columns: 60% 40%;
     .page-div-content {
@@ -534,7 +534,7 @@ const Container = styled(motion.div)`
     }
   }
   @media only screen and (max-width: 1000px) {
-    .privacy-policy-container {
+    .shipping-info-container {
       grid-template-columns: 100% !important;
       .page-div-content {
         height: calc(100vh - 250px);

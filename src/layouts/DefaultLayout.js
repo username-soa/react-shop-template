@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion/dist/framer-motion";
 import Header from "../components/FixedElements/Header";
 import Menu from "../components/FixedElements/Menu";
 import Footer from "../components/FixedElements/Footer";
@@ -71,7 +71,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background: #f6f7fb;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   .menu {
     transition: all 0.3s;
     position: fixed;

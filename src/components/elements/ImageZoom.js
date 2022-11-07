@@ -89,6 +89,8 @@ export default ImageZoom;
 
 const Container = styled.div`
   position: relative;
+  height: ${(props) => props.height};
+  width: ${(props) => props.width};
   .zoomed-image {
     height: ${(props) => props.height};
     width: ${(props) => props.width};

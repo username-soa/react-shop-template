@@ -1,8 +1,7 @@
 import { Switch, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion/dist/framer-motion";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import ContactPage from "./pages/Contact";
 import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
 import Product from "./pages/Product";
@@ -14,9 +13,11 @@ import UserOrders from "./pages/UserOrders";
 import UserAdresse from "./pages/UserAdresse";
 import FAQs from "./pages/FAQs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermesConditions from "./pages/TermesConditions";
+import TermsConditions from "./pages/TermsConditions";
 import ShippingInfo from "./pages/ShippingInfo";
 import Collection from "./pages/Collection";
+import Collections from "./pages/Collections";
+import ContactPage from "./pages/ContactV2";
 
 function App() {
   const location = useLocation();
@@ -26,7 +27,7 @@ function App() {
       <AnimatePresence exitBeforeEnter>
         <Switch location={location} key={location.key}>
           <Route exact path="/" component={Home} />
-          <Route exact path="/product-details/:uid/:cid" component={Product} />
+          <Route exact path="/product-details/:slug" component={Product} />
           <Route exact path="/contact" component={ContactPage} />
           <Route exact path="/search/:p" component={SearchPage} />
           <Route exact path="/account/login" component={LoginPage} />
@@ -38,8 +39,9 @@ function App() {
           <Route exact path="/faqs" component={FAQs} />
           <Route exact path="/privacy-policy" component={PrivacyPolicy} />
           <Route exact path="/livraison" component={ShippingInfo} />
-          <Route exact path="/termes-conditions" component={TermesConditions} />
-          <Route exact path="/collection/:cid" component={Collection} />
+          <Route exact path="/terms-conditions" component={TermsConditions} />
+          <Route exact path="/collections/all" component={Collections} />
+          <Route exact path="/collections/:slug" component={Collection} />
           <Route path="*" component={NotFound} />
         </Switch>
       </AnimatePresence>

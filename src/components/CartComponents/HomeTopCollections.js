@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import useHasBeenViewed from "../../hooks/useHasBeenViewed";
 import HomeCollectionCart from "../elements/HomeCollectionCart";
 import collection1 from "../../assets/collection1.png";
 import collection2 from "../../assets/collection2.png";
 
 const HomeTopCollections = () => {
-  let isMounted = true;
   const [hasBeenViewed, ref] = useHasBeenViewed();
 
   return (
     <Container ref={ref}>
       <HomeCollectionCart
-        origin="-100vw"
+        origin="-100px"
         hasBeenViewed={hasBeenViewed}
         img={collection1}
         title="THE BLACK BEAUTY"
@@ -22,7 +19,7 @@ const HomeTopCollections = () => {
         type="NOUVELLES ARRIVÉES"
       />
       <HomeCollectionCart
-        origin="100vw"
+        origin="100px"
         hasBeenViewed={hasBeenViewed}
         img={collection2}
         title="WINTER’S BEST"

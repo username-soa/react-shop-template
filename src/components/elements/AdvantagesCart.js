@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion/dist/framer-motion";
 
-const AdvantagesCart = ({ Icon, title, text, bg }) => {
+const AdvantagesCart = ({ Icon, title, text, bg, animations }) => {
   return (
-    <Container bg={bg}>
+    <Container bg={bg} variants={animations}>
       {Icon ? <Icon /> : null}
       <h3>{title}</h3>
       <p>{text}</p>
@@ -13,20 +14,16 @@ const AdvantagesCart = ({ Icon, title, text, bg }) => {
 
 export default AdvantagesCart;
 
-const Container = styled.div`
-  background: #fff;
-  margin: 1em;
+const Container = styled(motion.div)`
   padding: 2em;
   box-shadow: 0px 50px 130px 0px rgb(57 61 70 / 15%);
-  background: ${(props) => (props.bg ? props.bg : null)};
+  background: ${(props) => (props.bg ? props.bg : "#fff")};
   svg {
     width: 50px;
     height: 50px;
   }
-  h3,
-  p {
+  h3 {
     margin: 1em 0;
-    text-align: justify;
   }
   h3 {
     color: #393d46;
@@ -39,19 +36,23 @@ const Container = styled.div`
     font-size: 15px;
     font-weight: 400;
     line-height: 1.8em;
+    margin-top: 1em;
   }
   @media only screen and (max-width: 1200px) {
+    padding: 1.5em;
     svg {
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
     }
     h3 {
       font-size: 18px;
+      margin: 0.5em 0;
     }
     p {
       font-size: 14px;
     }
   }
   @media only screen and (max-width: 768px) {
+    padding: 1em;
   }
 `;

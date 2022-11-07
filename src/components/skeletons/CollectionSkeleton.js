@@ -3,9 +3,10 @@ import styled from "styled-components";
 import SkeletonElement from "./SkeletonElement";
 import Shimmer from "./Shimmer";
 
-const CollectionSkeleton = ({ margin }) => {
+const CollectionSkeleton = ({ margin, maxHeight }) => {
   return (
     <Container
+      maxHeight={maxHeight}
       className={
         margin ? `skeleton-wrapper light extra-m` : `skeleton-wrapper light`
       }
@@ -30,10 +31,12 @@ export default CollectionSkeleton;
 const Container = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
-  max-height: 750px !important ;
-  height: 400px;
+  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
+    rgb(237 239 247 / 47%) 0px 6px 6px;
+  min-height: ${({ maxHeight }) =>
+    maxHeight ? "calc(100vh - 170px)" : "500px"};
   &.extra-m {
-    margin: 1em 150px !important;
+    margin: 0em 150px !important;
   }
   .skeleton-cell {
     display: flex;
@@ -49,5 +52,6 @@ const Container = styled.div`
   @media only screen and (max-width: 768px) {
     grid-template-columns: 100% !important;
     grid-template-rows: 1fr 1fr;
+    min-height: unset;
   }
 `;

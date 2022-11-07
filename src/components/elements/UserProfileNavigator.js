@@ -129,7 +129,7 @@ const UserProfileNavigator = () => {
 
         <div className="navigator-link">
           <LogoutIcone />
-          <button onClick={disconnect}>Déconnexion</button>
+          <button onClick={disconnect}>Disconnect</button>
         </div>
       </div>
     </Container>

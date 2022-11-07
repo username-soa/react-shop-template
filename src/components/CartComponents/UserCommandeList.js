@@ -32,7 +32,7 @@ const UserCommandeList = () => {
                   border="#393d46"
                   hover="#393d46"
                   margin="0"
-                  radius="0"
+                  radius="12px"
                   padding="7px 10px"
                 />
               </h5>

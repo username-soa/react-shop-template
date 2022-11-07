@@ -1,61 +1,69 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import useHasBeenViewed from "../../hooks/useHasBeenViewed";
+import { motion, useInView } from "framer-motion/dist/framer-motion";
 import AdvantagesCart from "../elements/AdvantagesCart";
-import { ReactComponent as packageIcone } from "../../assets/package.svg";
-import { ReactComponent as package2Icone } from "../../assets/package2.svg";
-import { ReactComponent as deliveryIcone } from "../../assets/delivery.svg";
 
 const ExtraAdvantagesCart = () => {
-  const [hasBeenViewed, ref] = useHasBeenViewed();
-  const H2Variants = {
+  const H2Animations = {
     hidden: { opacity: 0, y: "100px" },
-    visible: {
+    show: {
       opacity: 1,
       y: 0,
       transition: { type: "Inertia" },
     },
   };
-  const CartsVariants = {
+  const parentAnimations = {
     hidden: { opacity: 0 },
-    visible: {
+    show: {
       opacity: 1,
-      transition: { delay: 0.5, type: "Inertia" },
+      transition: { staggerChildren: 0.4 },
     },
   };
+  const childAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    },
+  };
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
   return (
-    <Container>
+    <Container ref={ref}>
       <motion.h2
-        ref={ref}
-        animate={hasBeenViewed ? "visible" : "hidden"}
+        animate={isInView ? "show" : "hidden"}
         initial="hidden"
-        variants={H2Variants}
+        variants={H2Animations}
       >
         Why Choose Us?
       </motion.h2>
       <motion.div
-        ref={ref}
-        animate={hasBeenViewed ? "visible" : "hidden"}
+        className="test-new-div"
+        animate={isInView ? "show" : "hidden"}
         initial="hidden"
-        variants={H2Variants}
-        className="carts-items-container"
+        variants={parentAnimations}
       >
-        <AdvantagesCart
-          bg="#f6f7fb"
-          title="100% Guarantee"
-          text="Not happy with your purchase? Get 100% money back by returning within 7 days of purchase"
-        />
-        <AdvantagesCart
-          bg="#f6f7fb"
-          title="Free Shipping"
-          text="We don’t charge extra to get your products delivered to your doorstep. Order from anywhere in morocco."
-        />
-        <AdvantagesCart
-          bg="#f6f7fb"
-          title="24/7 Support"
-          text="We have the friendliest and most dedicated customer support who stay online 24/7 to help you with your needs."
-        />
+        <motion.div className="test-new-div-item" variants={childAnimations}>
+          <h5>100% Guarantee</h5>
+          <p>
+            Not happy with your purchase? Get 100% money back by returning
+            within 7 days of purchase
+          </p>
+        </motion.div>
+        <motion.div className="test-new-div-item" variants={childAnimations}>
+          <h5>Express delivery</h5>
+          <p>
+            Don't feel like waiting? Our express delivery service ensures you
+            receive your new items within 5 business days.
+          </p>
+        </motion.div>
+        <motion.div className="test-new-div-item" variants={childAnimations}>
+          <h5>24/7 Support</h5>
+          <p>
+            We have the friendliest and most dedicated customer support who stay
+            online 24/7 to help you with your needs.
+          </p>
+        </motion.div>
       </motion.div>
     </Container>
   );
@@ -64,9 +72,32 @@ const ExtraAdvantagesCart = () => {
 export default ExtraAdvantagesCart;
 
 const Container = styled.div`
-  /* background: #fff; */
-  margin: 2em 150px 4em 150px;
-  padding: 2em;
+  margin: 4em 150px;
+  .test-new-div {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: 1fr;
+    .test-new-div-item {
+      padding: 5em 0;
+      display: grid;
+      grid-gap: 1em;
+      align-items: center;
+      grid-template-columns: 1fr 2fr;
+      border-bottom: 2px solid #eee;
+      h5 {
+        font-size: 2rem;
+        color: #393d46;
+        font-weight: 700;
+        line-height: 1.5em;
+      }
+      p {
+        color: #68768e;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.8em;
+      }
+    }
+  }
   h2 {
     color: #393d46;
     font-size: 60px;
@@ -76,13 +107,24 @@ const Container = styled.div`
   .carts-items-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+    margin: 2em 0;
   }
   @media only screen and (max-width: 1200px) {
     padding: 1em;
     margin: 2em 1em 4em 1em;
     h2 {
-      margin: 1em;
+      margin: 1em 0;
       font-size: 40px;
+    }
+  }
+  @media only screen and (max-width: 1000px) {
+    .test-new-div {
+      .test-new-div-item {
+        padding: 3em 0;
+        grid-gap: 2em;
+        grid-template-columns: 100%;
+      }
     }
   }
   @media only screen and (max-width: 768px) {
@@ -91,6 +133,17 @@ const Container = styled.div`
     }
     .carts-items-container {
       grid-template-columns: 100% !important;
+    }
+    .test-new-div {
+      .test-new-div-item {
+        grid-gap: 1em;
+        h5 {
+          font-size: 1.25rem;
+        }
+        p {
+          font-size: 13px;
+        }
+      }
     }
   }
 `;
