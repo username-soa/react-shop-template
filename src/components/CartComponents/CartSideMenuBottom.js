@@ -6,7 +6,7 @@ const CartSideMenuBottom = ({ price, seeCatalogue, checkoutEC }) => {
   return (
     <Container>
       <div className="cart-totale-row">
-        <h5 className="cart-total-h5">Sous-total</h5>
+        <h5 className="cart-total-h5">Sub-total</h5>
         <h5>
           {new Intl.NumberFormat("fr-FR", {
             style: "currency",
@@ -15,7 +15,7 @@ const CartSideMenuBottom = ({ price, seeCatalogue, checkoutEC }) => {
         </h5>
       </div>
       <div>
-        <span>Frais de livraison et taxes calculés au checkout.</span>
+        <span>Tax included. Shipping calculated at checkout.</span>
       </div>
       <div className="cart-totale-btn-wrp">
         <Button
@@ -38,7 +38,7 @@ const CartSideMenuBottom = ({ price, seeCatalogue, checkoutEC }) => {
         />
       </div>
       <div className="shipping-info">
-        <span className="gray-span">Expédition estimée: 1-7 jours</span>
+        <span className="gray-span">Estimated shipping: 1-7 days</span>
       </div>
     </Container>
   );

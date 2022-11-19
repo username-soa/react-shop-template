@@ -1,14 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import styled from "styled-components";
-import { motion, useInView } from "framer-motion/dist/framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import CustomCheckbox from "../elements/CustomCheckbox";
+import ClientContext from "../../contexts/ClientContext";
 
-const ProductInfo = () => {
+const ProductInfo = ({ data, addToCart }) => {
   const parentAnimations = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { delayChildren: 0.1, staggerChildren: 0.3 },
+      transition: { delayChildren: 0.3, staggerChildren: 0.3 },
     },
   };
   const childAnimations = {
@@ -18,10 +19,14 @@ const ProductInfo = () => {
     },
   };
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [Qte, setQte] = useState(1);
-  const [productColor, setProductColor] = useState(1);
-  const [productSize, setProductSize] = useState();
+  const [productSize, setProductSize] = useState(data?.size[0]);
+  const [productColor, setProductColor] = useState(data?.colors[0]);
+  const { checkoutEC, isOpen, setIsOpen } = useContext(ClientContext);
+
+  const handleSelect = (value) => {
+    setProductColor(value);
+  };
 
   return (
     <Container
@@ -30,24 +35,46 @@ const ProductInfo = () => {
       animate="show"
       variants={parentAnimations}
     >
-      <motion.h2 variants={childAnimations}>Produit ...</motion.h2>
+      <motion.h2 variants={childAnimations}>{data?.name}</motion.h2>
       <motion.div className="price-div" variants={childAnimations}>
         <h3>
           {new Intl.NumberFormat("fr-FR", {
             style: "currency",
             currency: "MAD",
-          }).format(114)}
+          }).format(data?.price)}
         </h3>
         <p className="p-extra-info">
           Tax included. Shipping calculated at checkout.
         </p>
+        <motion.div className="stock-container" variants={childAnimations}>
+          {data?.availability ? (
+            <>
+              <div className="stock-dot green-bg" />
+              <p className="stock-p stock-green">In stock</p>
+            </>
+          ) : (
+            <>
+              <div className="stock-dot red-bg" />
+              <p className="stock-p stock-red">Out of stock</p>
+            </>
+          )}
+        </motion.div>
       </motion.div>
       <motion.div className="product-variants-div" variants={childAnimations}>
         <p className="product-variants-p">Color</p>
         <div className="radio-btn-wrp">
-          <CustomCheckbox color="#ddd" title="green" value="#ddd" />
-          <CustomCheckbox color="#222" value="#222" />
-          <CustomCheckbox color="green" value="green" />
+          {data?.colors.map((item, index) => {
+            return (
+              <CustomCheckbox
+                color={item}
+                title="green"
+                value={item}
+                checked={productColor}
+                key={`custom-checkbox-${index}`}
+                handleSelectChange={handleSelect}
+              />
+            );
+          })}
         </div>
       </motion.div>
       <motion.div className="product-variants-div" variants={childAnimations}>
@@ -57,10 +84,13 @@ const ProductInfo = () => {
           id="sizes"
           onChange={(e) => setProductSize(e.target.value)}
         >
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
+          {data?.size.map((item, index) => {
+            return (
+              <option value={item} key={`select-option-${index}`}>
+                {item}
+              </option>
+            );
+          })}
         </select>
       </motion.div>
       <motion.div
@@ -96,8 +126,11 @@ const ProductInfo = () => {
         <button
           className="add-cart-btn"
           onClick={() => {
+            setIsOpen(!isOpen);
+            // addToCart
             return null;
           }}
+          disabled={data?.availability === false}
         >
           ADD TO CART
         </button>
@@ -116,6 +149,35 @@ const Container = styled(motion.div)`
   gap: 1em;
   height: 100%;
   border-radius: 0 15px 15px 0;
+  .stock-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-top: 0.5em;
+    .stock-dot {
+      width: 10px;
+      height: 10px;
+      background: red;
+      border-radius: 50%;
+    }
+    .stock-p {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .green-bg {
+      background: #ace1af;
+    }
+    .stock-green {
+      color: #ace1af;
+    }
+    .red-bg {
+      background: #fd5c63;
+    }
+
+    .stock-red {
+      color: #fd5c63;
+    }
+  }
 
   .product-variants-div {
     border-bottom: 1px solid #eee;
@@ -194,6 +256,10 @@ const Container = styled(motion.div)`
       padding: 1em;
       font-size: 14px;
       border-radius: 7px;
+      &:disabled {
+        background: #dddddd;
+        cursor: not-allowed;
+      }
     }
   }
 

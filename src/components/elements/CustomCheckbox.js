@@ -14,10 +14,8 @@ const CustomCheckbox = ({
         type="radio"
         name="radio"
         value={value}
-        onChange={
-          (event) => console.log(event.target.value)
-          // handleSelectChange(event.target.value)
-        }
+        checked={value === checked}
+        onChange={(event) => handleSelectChange(event.target.value)}
       />
       <RadioButtonLabel color={color} />
     </Container>

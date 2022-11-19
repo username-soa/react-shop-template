@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion, useInView } from "framer-motion/dist/framer-motion";
 import ProductCartV2 from "./ProductCartV2";
 
-const SimilarProductsList = ({ name, products }) => {
+const SimilarProductsList = ({ name, products, showResults = false }) => {
   const parentAnimations = {
     hidden: { opacity: 0 },
     show: {
@@ -37,6 +37,16 @@ const SimilarProductsList = ({ name, products }) => {
       >
         {name}
       </motion.h2>
+      {showResults && (
+        <motion.h5
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={H2CartVariants}
+        >
+          Showing <span>{products?.length}</span> results
+        </motion.h5>
+      )}
+
       <motion.div
         className="products-list-container"
         ref={ref}
@@ -47,13 +57,14 @@ const SimilarProductsList = ({ name, products }) => {
         {products.map((i, index) => {
           return (
             <ProductCartV2
-              key={`p-${index}`}
               name={i.name}
+              slug={i.slug}
               price={i.price}
               image={i.image}
-              slug={i.slug}
+              key={`p-${index}`}
               hoverImage={i.hoverImage}
               animations={childAnimations}
+              availability={i?.availability}
             />
           );
         })}
@@ -74,6 +85,15 @@ const Container = styled.div`
     font-size: 4rem;
     font-weight: 400;
     line-height: 2em;
+  }
+  h5 {
+    color: #393d46;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 2em;
+    span {
+      font-weight: 600;
+    }
   }
   .products-list-container {
     display: grid;

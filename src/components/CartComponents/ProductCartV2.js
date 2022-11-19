@@ -6,15 +6,16 @@ import CustomImage from "../elements/CustomImage";
 import { ReactComponent as ChoppingCart } from "../../assets/shopping-cart.svg";
 
 const ProductCartV2 = ({
-  image,
-  hoverImage,
-  name,
-  price,
   uid,
   cid,
-  animations,
   slug,
+  name,
+  price,
+  image,
   addToCart,
+  animations,
+  hoverImage,
+  availability,
 }) => {
   const history = useHistory();
   const [isHovering, setIsHovered] = useState(false);
@@ -56,7 +57,7 @@ const ProductCartV2 = ({
         />
       )}
       <div className="product-card-description">
-        <Link to={`/product-details/${uid}/${cid}`}>
+        <Link to={`/product-details/${slug}`}>
           <h3 className="product-cart-h2">{name}</h3>
         </Link>
         <p>
@@ -68,22 +69,25 @@ const ProductCartV2 = ({
         </p>
         <AnimatePresence exitBeforeEnter>
           {isHovering && (
-            <motion.div
+            <motion.button
               className="testing-div"
               initial="hidden"
               exit="exit"
               animate="visible"
               variants={animationVariants}
+              onClick={() => {
+                return null;
+              }}
+              disabled={availability === false}
             >
-              <ChoppingCart
-                onClick={() => {
-                  return null;
-                }}
-              />
-            </motion.div>
+              <ChoppingCart />
+            </motion.button>
           )}
         </AnimatePresence>
       </div>
+      {availability === false && (
+        <div className="out-of-stock">Out of stock</div>
+      )}
     </Container>
   );
 };
@@ -92,6 +96,20 @@ export default ProductCartV2;
 
 const Container = styled(motion.div)`
   position: relative;
+  .out-of-stock {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: #fff;
+    color: #666666;
+  }
   .testing-div {
     padding: 0.75em;
     background: #000;
@@ -105,6 +123,11 @@ const Container = styled(motion.div)`
     transition: all 0.3s ease-in;
     &:hover {
       transform: scale(1.1);
+    }
+    &:disabled {
+      background-color: #b5b5b5;
+      cursor: not-allowed;
+      border: none;
     }
     svg {
       width: 15px;

@@ -1,52 +1,41 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion/dist/framer-motion";
 
 const CartSideMenuItem = ({
-  img,
-  name,
-  brand,
-  price,
   qte,
   uid,
   cid,
-  gotoProduct,
+  img,
+  name,
+  slug,
+  price,
   updateQte,
+  animations,
+  description,
+  gotoProduct,
 }) => {
   const history = useHistory();
 
-  const SidecartItemsVariants = {
-    hidden: { x: "350px", y: "-100px" },
-    visible: {
-      x: 0,
-      y: 0,
-      transition: { delay: 0.2, type: "Inertia" },
-    },
-  };
-
   return (
-    <Container
-    // variants={SidecartItemsVariants}
-    // initial="hidden"
-    // animate="visible"
-    >
+    <Container variants={animations}>
       <div className="cart-items-img">
         <img
           loading="lazy"
           src={img}
           alt="cart-item-image"
           onClick={() => {
-            gotoProduct();
-            history.push(`/product-detail/${uid}/${cid}`);
+            // gotoProduct();
+            history.push(`/product-detail/${slug}`);
           }}
         />
       </div>
       <div className="cart-items-info">
         <h4>{name}</h4>
-        <h5>{brand}</h5>
+        <p className="text-p">{description}</p>
       </div>
-      <div className="cart-items-qte-controll">
+      <div className="cart-items-qte-control">
         <div className="counting">
           <button
             onClick={() => {
@@ -70,7 +59,7 @@ const CartSideMenuItem = ({
             +
           </button>
         </div>
-        <h4>
+        <h4 className="h4-price">
           {new Intl.NumberFormat("fr-FR", {
             style: "currency",
             currency: "MAD",
@@ -83,44 +72,43 @@ const CartSideMenuItem = ({
 
 export default CartSideMenuItem;
 
-const Container = styled.div`
-  padding: 0.5em 1em;
+const Container = styled(motion.div)`
+  padding: 0.75em 1em;
   display: grid;
+  gap: 10px;
   grid-template-columns: 100px auto;
   .cart-items-img {
-    width: 70px;
-    height: 70px;
-    border: 1px solid #878787;
+    border: 1px solid #eee;
     border-radius: 7px;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     img {
-      width: 80%;
-      height: 80%;
-      object-fit: scale-down;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       cursor: pointer;
     }
   }
   .cart-items-info {
     h4 {
       font-size: 14px;
-      line-height: 1.7rem;
+      line-height: 150%;
       font-weight: 500;
+      margin: 0.75em 0;
     }
-    h5 {
-      font-weight: 500;
-      font-size: 12px;
-      color: #878787;
-      line-height: 1.5rem;
+    .text-p {
+      font-size: 13px;
     }
   }
-  .cart-items-qte-controll {
+  .cart-items-qte-control {
     grid-column: 1/3;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
   }
+
   .counting {
     display: flex;
     button {
@@ -140,6 +128,24 @@ const Container = styled.div`
       margin: auto 0;
     }
   }
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: 80px auto;
+    .cart-items-info {
+      h4 {
+        margin: 0.5em 0;
+      }
+      .text-p {
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+    }
+    .h4-price {
+      font-size: 14px;
+    }
   }
 `;

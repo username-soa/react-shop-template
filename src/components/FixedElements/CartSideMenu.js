@@ -7,128 +7,68 @@ import CartSideMenuItem from "../CartComponents/CartSideMenuItem";
 import { productList } from "../../utils/Products";
 
 const CartSideMenu = ({ menuStatus, closeSideMenu, checkoutEC }) => {
-  let isMounted = true;
-  const Containervariants = {
-    hidden: { x: "100vw" },
-    visible: {
-      x: 0,
-      transition: {
-        type: "Inertia",
-        delay: 0.3,
-      },
-    },
-  };
-  const exitVariants = {
-    opacity: 0,
-    transition: { type: "Inertia" },
-  };
-  const variants = {
+  const parentAnimations = {
     hidden: { opacity: 0 },
-    visible: {
+    show: {
       opacity: 1,
-      transition: {
-        type: "Inertia",
-      },
+      transition: { delayChildren: 0.1, staggerChildren: 0.3 },
+    },
+    exit: {
+      opacity: 0,
     },
   };
-  const Contentvariants = {
-    hidden: { opacity: 0, y: "100vh" },
-    visible: {
+  const childAnimations = {
+    hidden: { opacity: 0 },
+    show: {
       opacity: 1,
-      y: 0,
-      transition: {
-        type: "Inertia",
-        delay: 0.7,
-        duration: 0.6,
-      },
+    },
+    exit: {
+      opacity: 0,
     },
   };
-  const ContentTopvariants = {
-    hidden: { opacity: 0, y: "100vh" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "Inertia",
-        delay: 0.3,
-        duration: 0.6,
-      },
-    },
-  };
-  const ContentBottomvariants = {
-    hidden: { opacity: 0, y: "100vh" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "Inertia",
-        delay: 1,
-        duration: 0.6,
-      },
-    },
-  };
+
   const getTotal = () => {
     let total = null;
-
     return total;
   };
 
   return (
     <Container
-      active={menuStatus}
-      exit={exitVariants}
-      variants={variants}
+      exit="exit"
       initial="hidden"
-      animate="visible"
+      animate="show"
+      active={menuStatus}
+      variants={parentAnimations}
     >
-      <div
-        className="cart-items-wrp"
-        variants={Containervariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div
-          variants={ContentTopvariants}
-          initial="hidden"
-          animate="visible"
-          className="cart-items-wrp-top"
-        >
-          <h3>panier</h3>
+      <div className="cart-items-wrp">
+        <motion.div variants={childAnimations} className="cart-items-wrp-top">
+          <h3>Your cart</h3>
           <Close onClick={closeSideMenu} />
         </motion.div>
-        <motion.div
-          variants={Contentvariants}
-          initial="hidden"
-          animate="visible"
-          className="cart-items-wrp-middle"
-        >
-          {productList?.map((item, index) => {
+        <div className="cart-items-wrp-middle">
+          {[...productList.slice(1, 4)]?.map((item, index) => {
             return (
               <CartSideMenuItem
-                price={parseFloat(item?.product?.variants[0]?.price, 10)}
-                // name={item?.product?.title}
-                name={item?.name}
-                brand={item?.product?.vendor}
-                img={item?.img}
-                // img={item?.product?.images[0]?.src}
-                key={`sidecart-item-${index}`}
                 qte={item?.qte}
-                gotoProduct={closeSideMenu}
                 cid={item?.cid}
                 uid={item?.uid}
                 updateQte={() => {
                   return null;
                 }}
+                slug={item.slug}
+                name={item?.name}
+                img={item?.image}
+                description={item.desc}
+                gotoProduct={closeSideMenu}
+                animations={childAnimations}
+                brand={item?.product?.vendor}
+                key={`side-cart-item-${index}`}
+                price={parseFloat(item?.price, 10)}
               />
             );
           })}
-        </motion.div>
-        <motion.div
-          variants={ContentBottomvariants}
-          initial="hidden"
-          animate="visible"
-          className="cart-items-wrp-bottom"
-        >
+        </div>
+        <motion.div variants={childAnimations}>
           <CartSideMenuBottom
             price={getTotal()}
             seeCatalogue={closeSideMenu}
@@ -156,7 +96,7 @@ const Container = styled(motion.div)`
   -webkit-backdrop-filter: blur(3px);
   transition: all 0.9s ease-in-out;
   .cart-items-wrp {
-    width: 340px;
+    width: 500px;
     height: 100vh;
     background: #fff;
     position: absolute;
@@ -187,7 +127,7 @@ const Container = styled(motion.div)`
     height: calc(100vh - 80px - 244px);
     overflow-y: scroll;
   }
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 768px) {
     .cart-items-wrp {
       width: 100%;
     }

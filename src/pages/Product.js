@@ -1,63 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion/dist/framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion/dist/framer-motion";
+import { useParams } from "react-router-dom";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
+import HeaderSkeleton from "../components/skeletons/HeaderSkeleton";
+import GalleryModal from "../components/FixedElements/GalleryModal";
+import ProductInfoV2 from "../components/CartComponents/ProductInfoV2";
 import ProductInfoSkeleton from "../components/skeletons/ProductInfoSkeleton";
 import ProductCartSkeleton from "../components/skeletons/ProductCartSkeleton";
 import ProductImagesSkeleton from "../components/skeletons/ProductImagesSkeleton";
-import HeaderSkeleton from "../components/skeletons/HeaderSkeleton";
-import { productList } from "../utils/Products";
 import SimilarProductsList from "../components/CartComponents/SimilarProductList";
-import ProductInfoV2 from "../components/CartComponents/ProductInfoV2";
-import GalleryModal from "../components/FixedElements/GalleryModal";
-import product1 from "../assets/product-test.PNG";
-import product2 from "../assets/product-test1.PNG";
-import product3 from "../assets/product-test2.PNG";
-import product4 from "../assets/product-test3.PNG";
+import { productList, imageList } from "../utils/Products";
 
 const Product = () => {
-  const imageList = [
-    {
-      id: 1,
-      img: product1,
-    },
-    {
-      id: 2,
-      img: product2,
-    },
-    {
-      id: 3,
-      img: product3,
-    },
-    {
-      id: 4,
-      img: product4,
-    },
-    {
-      id: 5,
-      img: product3,
-    },
-    {
-      id: 6,
-      img: product4,
-    },
-  ];
   const getNextImage = (id) => {
     const tempImg = imageList.find((element) => element.id === id);
     setTempImage({ id: id, url: tempImg.img });
   };
-  const [loading, setLoading] = useState(true);
+  let { slug } = useParams();
   const [popup, setPopUp] = useState(false);
+  const [product, setProduct] = useState({});
+  const [loading, setLoading] = useState(true);
   const [tempImage, setTempImage] = useState({ id: null, url: null });
   useEffect(() => {
+    const selectedProduct = productList.find(
+      (element) => element.slug === slug
+    );
+    setProduct(selectedProduct);
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [slug]);
 
   if (loading) {
     return (
@@ -93,6 +70,7 @@ const Product = () => {
         <CustomHelmet title="Product details" />
         <ProductInfoV2
           images={imageList}
+          data={product}
           clickImage={(id, url) => {
             setPopUp(true);
             setTempImage({ id: id, url: url });

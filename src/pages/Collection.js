@@ -10,6 +10,7 @@ import ProductCartSkeleton from "../components/skeletons/ProductCartSkeleton";
 import HeaderSkeleton from "../components/skeletons/HeaderSkeleton";
 import { productList, collectionList } from "../utils/Products";
 import SimilarProductsList from "../components/CartComponents/SimilarProductList";
+import ProductsFilters from "../components/FormeComponents/ProductsFilters";
 
 const Collection = () => {
   const { slug } = useParams();
@@ -70,7 +71,12 @@ const Collection = () => {
       >
         <CustomHelmet title="Collection details" />
         <HomeMainCart collection data={collection} />
-        <SimilarProductsList name="Product List" products={productList} />
+        <ProductsFilters />
+        <SimilarProductsList
+          name="Product List"
+          products={productList}
+          showResults
+        />
       </Container>
     </Layout>
   );
@@ -78,4 +84,7 @@ const Collection = () => {
 
 export default Collection;
 
-const Container = styled(motion.div)``;
+const Container = styled(motion.div)`
+  .collection-filters-container {
+  }
+`;

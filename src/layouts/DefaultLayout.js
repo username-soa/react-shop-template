@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion/dist/framer-motion";
@@ -6,18 +6,22 @@ import Header from "../components/FixedElements/Header";
 import Menu from "../components/FixedElements/Menu";
 import Footer from "../components/FixedElements/Footer";
 import CartSideMenu from "../components/FixedElements/CartSideMenu";
+import ClientContext from "../contexts/ClientContext";
 
 const Layout = ({ children }) => {
+  const { checkoutEC, isOpen, setIsOpen } = useContext(ClientContext);
   const location = useLocation();
   const scrollRef = useRef(null);
   const [sideMenu, setSideMenu] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [scrollDir, setScrollDir] = useState(null);
   const [feedback, setFeeadback] = useState({ status: null, message: null });
 
   const sendEmail = async (data) => {
     return data;
   };
+  useEffect(() => {
+    console.log(isOpen);
+  }, []);
 
   return (
     <Container sideMenu={sideMenu} status={scrollDir}>
@@ -50,13 +54,13 @@ const Layout = ({ children }) => {
           <Footer />
         </div>
       </div>
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         {isOpen && (
           <CartSideMenu
             // checkoutEC={checkoutEC}
             menuStatus={isOpen}
             closeSideMenu={() => {
-              // setIsOpen(false);
+              setIsOpen(false);
             }}
           />
         )}

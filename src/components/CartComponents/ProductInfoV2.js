@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion/dist/framer-motion";
 import styled from "styled-components";
 import ProductInfo from "./ProductInfo";
-import ImageZoom from "../elements/ImageZoom";
 import "swiper/swiper.scss";
 import "swiper/swiper.min.css";
 import "swiper/modules/pagination/pagination.min.css";
@@ -10,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import CustomImage from "../elements/CustomImage";
 
-const ProductInfoV2 = ({ clickImage, images }) => {
+const ProductInfoV2 = ({ clickImage, images, data }) => {
   return (
     <Container>
       <div className="product-info-images">
@@ -53,7 +52,7 @@ const ProductInfoV2 = ({ clickImage, images }) => {
         </Swiper>
       </div>
       <div className="product-info-details">
-        <ProductInfo />
+        <ProductInfo data={data} />
       </div>
     </Container>
   );
@@ -103,6 +102,7 @@ const Container = styled(motion.div)`
   }
   .product-info-images-carousel {
     display: none;
+    background: #fff;
   }
   .div-image-mock {
     background-color: red;

@@ -18,11 +18,12 @@ import ShippingInfo from "./pages/ShippingInfo";
 import Collection from "./pages/Collection";
 import Collections from "./pages/Collections";
 import ContactPage from "./pages/ContactV2";
+import { ClientProvider } from "./contexts/ClientContext";
 
 function App() {
   const location = useLocation();
   return (
-    <>
+    <ClientProvider>
       <ScrollToTop />
       <AnimatePresence exitBeforeEnter>
         <Switch location={location} key={location.key}>
@@ -45,7 +46,7 @@ function App() {
           <Route path="*" component={NotFound} />
         </Switch>
       </AnimatePresence>
-    </>
+    </ClientProvider>
   );
 }
 

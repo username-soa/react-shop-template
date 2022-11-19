@@ -8,34 +8,44 @@ import Button from "../elements/Button";
 const HomeMainCart = ({ collection, data }) => {
   const history = useHistory();
   let cid = "winter-21";
-  const ComponentVariants = {
-    hidden: { y: "100vh" },
-    visible: {
+
+  const parentAnimations = {
+    hidden: { opacity: 0, y: "100vh" },
+    show: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 1, type: "Inertia" },
+      transition: { duration: 1, delayChildren: 0.3, staggerChildren: 0.3 },
+    },
+  };
+  const childAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
     },
   };
 
   return (
-    <Container variants={ComponentVariants} initial="hidden" animate="visible">
+    <Container variants={parentAnimations} initial="hidden" animate="show">
       <div className="category-desc-container">
-        <h2>{data ? data.name : "Winter 21’"}</h2>
-        <p>
+        <motion.h2 variants={childAnimations}>
+          {data ? data.name : "Winter 21’"}
+        </motion.h2>
+        <motion.p variants={childAnimations}>
           {data
             ? data.description
             : "Winter layer season is here. Check out our trendy new winter collection to stay warm in style."}
-        </p>
+        </motion.p>
         {!collection && (
           <>
             <div className="price-container">
-              <h5>Price: </h5>
-              <h4>
+              <motion.h5 variants={childAnimations}>Price: </motion.h5>
+              <motion.h4 variants={childAnimations}>
                 {" "}
                 {new Intl.NumberFormat("fr-FR", {
                   style: "currency",
                   currency: "MAD",
                 }).format(114)}
-              </h4>
+              </motion.h4>
             </div>
             <Button
               handleClick={() => {
@@ -52,12 +62,12 @@ const HomeMainCart = ({ collection, data }) => {
           </>
         )}
       </div>
-      <div className="image-container">
+      <motion.div variants={childAnimations} className="image-container">
         <img
           src={data ? data.img : Img}
           alt={data ? `${data.description}-image` : "collection-image"}
         />
-      </div>
+      </motion.div>
     </Container>
   );
 };
