@@ -50,7 +50,6 @@ const Layout = ({ children }) => {
       <AnimatePresence exitBeforeEnter>
         {isOpen && (
           <CartSideMenu
-            // checkoutEC={checkoutEC}
             menuStatus={isOpen}
             closeSideMenu={() => {
               setIsOpen(false);

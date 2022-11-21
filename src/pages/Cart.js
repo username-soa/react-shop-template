@@ -61,16 +61,16 @@ const CartPage = () => {
     return total;
   };
 
-  return (
-    <Layout>
-      <Container
-        exit={{
-          opacity: 0,
-          transition: { ease: "easeInOut" },
-        }}
-      >
-        <CustomHelmet title="Panier" />
-        {cartItems.length === 0 && (
+  if (cartItems.length === 0) {
+    return (
+      <Layout>
+        <Container
+          exit={{
+            opacity: 0,
+            transition: { ease: "easeInOut" },
+          }}
+        >
+          <CustomHelmet title="Panier" />
           <motion.div
             ref={ref}
             animate={hasBeenViewed ? "visible" : "hidden"}
@@ -92,45 +92,54 @@ const CartPage = () => {
               />
             </Link>
           </motion.div>
-        )}
+        </Container>
+      </Layout>
+    );
+  }
 
-        {cartItems.length > 0 && (
-          <div className="cart-container">
-            <motion.h2 animate="visible" initial="hidden" variants={H1Variants}>
-              Your cart
-            </motion.h2>
-            <div className="cart-content-wrp">
-              <motion.div
-                className="cart-product-list"
-                exit="exit"
-                initial="hidden"
-                animate="show"
-                variants={parentAnimations}
-              >
-                {cartItems.map((i, index) => {
-                  return (
-                    <CartItem
-                      qte={i.qte}
-                      name={i.name}
-                      slug={i?.slug}
-                      img={i.image}
-                      price={i.price}
-                      description={i.desc}
-                      updateQte={updateProductQte}
-                      animations={childAnimations}
-                      deleteProduct={deleteProduct}
-                      selectedSize={i?.selectedSize}
-                      selectedColor={i?.selectedColor}
-                      key={`cart-product-list-${index}`}
-                    />
-                  );
-                })}
-              </motion.div>
-              <CartTotal price={getTotal()} />
-            </div>
+  return (
+    <Layout>
+      <Container
+        exit={{
+          opacity: 0,
+          transition: { ease: "easeInOut" },
+        }}
+      >
+        <CustomHelmet title="Panier" />
+        <div className="cart-container">
+          <motion.h2 animate="visible" initial="hidden" variants={H1Variants}>
+            Your cart
+          </motion.h2>
+          <div className="cart-content-wrp">
+            <motion.div
+              className="cart-product-list"
+              exit="exit"
+              initial="hidden"
+              animate="show"
+              variants={parentAnimations}
+            >
+              {cartItems.map((i, index) => {
+                return (
+                  <CartItem
+                    qte={i.qte}
+                    name={i.name}
+                    slug={i?.slug}
+                    img={i.image}
+                    price={i.price}
+                    description={i.desc}
+                    updateQte={updateProductQte}
+                    animations={childAnimations}
+                    deleteProduct={deleteProduct}
+                    selectedSize={i?.selectedSize}
+                    selectedColor={i?.selectedColor}
+                    key={`cart-product-list-${index}`}
+                  />
+                );
+              })}
+            </motion.div>
+            <CartTotal price={getTotal()} />
           </div>
-        )}
-
+        </div>
         <SimilarProductsList
           name="You May Also Like"
           products={similarProducts}

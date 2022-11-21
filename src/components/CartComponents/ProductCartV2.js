@@ -6,8 +6,6 @@ import CustomImage from "../elements/CustomImage";
 import { ReactComponent as ChoppingCart } from "../../assets/shopping-cart.svg";
 
 const ProductCartV2 = ({
-  uid,
-  cid,
   slug,
   name,
   price,
@@ -35,7 +33,6 @@ const ProductCartV2 = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       variants={animations}
-      //
     >
       <div onClick={() => history.push(`/product-details/${slug}`)}>
         {isHovering ? (
@@ -60,9 +57,7 @@ const ProductCartV2 = ({
       </div>
       <div className="product-card-description">
         <Link to={`/product-details/${slug}`}>
-          <h3 className="product-cart-h2" onClick={() => {}}>
-            {name}
-          </h3>
+          <h3 className="product-cart-h2">{name}</h3>
         </Link>
         <p>
           {new Intl.NumberFormat("en-US", {

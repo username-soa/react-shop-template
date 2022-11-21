@@ -10,64 +10,6 @@ export const ClientProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   let mounted = true;
 
-  const createCheckout = async () => {
-    //   client?.checkout?.create().then((c) => {
-    //     localStorage.setItem("ec-shopify-checkout-id", c.id);
-    //     setCheckout(c);
-    //   });
-  };
-
-  const fetchCheckout = () => {
-    //   const id = localStorage.getItem("ec-shopify-checkout-id");
-    //   client?.checkout
-    //     ?.fetch(id)
-    //     .then((c) => {
-    //       setCheckout(c);
-    //     })
-    //     .catch((err) => console.log(err));
-  };
-
-  const updateCheckout = async (variantId, quantity) => {
-    //   console.log("updating checkout : ", variantId);
-    //   const lineItemsToAdd = [
-    //     {
-    //       variantId,
-    //       quantity,
-    //     },
-    //   ];
-    //   const cout = await client.checkout.addLineItems(
-    //     checkoutEC?.id,
-    //     lineItemsToAdd
-    //   );
-    //   setCheckout(cout);
-    //   const t = [...cout.lineItems];
-    //   console.log(t);
-    //   return t;
-  };
-
-  const updateCheckoutQte = async (id, quantity) => {
-    //   console.log("updating checkout itmes qte: ", id);
-    //   const i = null;
-    //   const lineItemsToUpdate = [
-    //     {
-    //       id,
-    //       quantity,
-    //     },
-    //   ];
-    //   client?.checkout
-    //     ?.updateLineItems(checkoutEC?.id, lineItemsToUpdate)
-    //     .then((checkout) => {
-    //       console.log(checkout.lineItems);
-    //     });
-  };
-
-  const deletProductFromCheckout = async (id) => {
-    //   client?.checkout?.removeLineItems(checkoutEC?.id, id).then((checkout) => {
-    // Do something with the updated checkout
-    // console.log(checkout.lineItems); // Checkout with line item 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc4NTc5ODkzODQ=' removed
-    //   });
-  };
-
   const addToCart = (item, qte, size, color) => {
     const newItem = item;
     newItem.selectedSize = size;
@@ -106,11 +48,11 @@ export const ClientProvider = ({ children }) => {
   const clientContext = {
     client,
     isOpen,
-    setIsOpen,
+    cartItems,
     isLoading,
+    setIsOpen,
     addToCart,
     setClient,
-    cartItems,
     checkoutEC,
     deleteProduct,
     updateProductQte,

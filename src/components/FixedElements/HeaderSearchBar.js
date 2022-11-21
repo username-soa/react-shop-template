@@ -51,7 +51,9 @@ const Container = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #393d46;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -62,7 +64,7 @@ const Container = styled(motion.div)`
   .search-input {
     padding: 10px 6px;
     background: transparent;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.9);
     width: 70%;
     border-bottom: 2px solid #fff;
   }

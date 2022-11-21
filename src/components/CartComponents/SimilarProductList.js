@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { motion, useInView } from "framer-motion/dist/framer-motion";
 import ProductCartV2 from "./ProductCartV2";
-import Popup from "../FixedElements/Popup";
+import AddToCartPopup from "../FixedElements/AddToCartPopup";
 
 const SimilarProductsList = ({ name, products, showResults = false }) => {
   const parentAnimations = {
@@ -28,6 +28,7 @@ const SimilarProductsList = ({ name, products, showResults = false }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [show, setShow] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   return (
     <Container>
@@ -66,6 +67,7 @@ const SimilarProductsList = ({ name, products, showResults = false }) => {
               key={`p-${index}`}
               addToCart={() => {
                 setShow(!show);
+                setSelectedProduct(i);
               }}
               hoverImage={i.hoverImage}
               animations={childAnimations}
@@ -74,7 +76,8 @@ const SimilarProductsList = ({ name, products, showResults = false }) => {
           );
         })}
         {show && (
-          <Popup
+          <AddToCartPopup
+            product={selectedProduct}
             handleClose={() => {
               setShow(!show);
             }}

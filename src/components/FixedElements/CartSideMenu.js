@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import { ReactComponent as Close } from "../../assets/close.svg";
@@ -26,6 +26,7 @@ const CartSideMenu = ({ menuStatus, closeSideMenu, checkoutEC }) => {
       opacity: 0,
     },
   };
+  const divRef = useRef();
   const { cartItems, updateProductQte } = useContext(ClientContext);
 
   const getTotal = () => {
@@ -36,6 +37,18 @@ const CartSideMenu = ({ menuStatus, closeSideMenu, checkoutEC }) => {
     return total;
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (divRef.current && !divRef.current.contains(event.target)) {
+        closeSideMenu();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [divRef]);
+
   return (
     <Container
       exit="exit"
@@ -44,7 +57,7 @@ const CartSideMenu = ({ menuStatus, closeSideMenu, checkoutEC }) => {
       active={menuStatus}
       variants={parentAnimations}
     >
-      <div className="cart-items-wrp">
+      <div className="cart-items-wrp" ref={divRef}>
         <motion.div variants={childAnimations} className="cart-items-wrp-top">
           <h3>Your cart</h3>
           <Close onClick={closeSideMenu} />
