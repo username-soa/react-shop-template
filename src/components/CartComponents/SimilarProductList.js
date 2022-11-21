@@ -1,7 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { motion, useInView } from "framer-motion/dist/framer-motion";
 import ProductCartV2 from "./ProductCartV2";
+import Popup from "../FixedElements/Popup";
 
 const SimilarProductsList = ({ name, products, showResults = false }) => {
   const parentAnimations = {
@@ -26,6 +27,7 @@ const SimilarProductsList = ({ name, products, showResults = false }) => {
   };
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [show, setShow] = useState(false);
 
   return (
     <Container>
@@ -62,12 +64,22 @@ const SimilarProductsList = ({ name, products, showResults = false }) => {
               price={i.price}
               image={i.image}
               key={`p-${index}`}
+              addToCart={() => {
+                setShow(!show);
+              }}
               hoverImage={i.hoverImage}
               animations={childAnimations}
               availability={i?.availability}
             />
           );
         })}
+        {show && (
+          <Popup
+            handleClose={() => {
+              setShow(!show);
+            }}
+          />
+        )}
       </motion.div>
     </Container>
   );

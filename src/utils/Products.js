@@ -57,7 +57,11 @@ const productList = [
     name: "Product example 1",
     slug: "product-example-1",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ddd", "#ace1af", "#fd5c63"],
+    colors: [
+      { name: "light grey", hex: "#ddd" },
+      { name: "green", hex: "#ace1af" },
+      { name: "red", hex: "#fd5c63" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
   {
@@ -67,7 +71,11 @@ const productList = [
     hoverImage: product2hover,
     name: "Product example 2",
     slug: "product-example-2",
-    colors: ["#ddd", "#222", "#333"],
+    colors: [
+      { name: "light grey", hex: "#ddd" },
+      { name: "dark brown", hex: "#222" },
+      { name: "brown", hex: "#333" },
+    ],
     size: ["XL", "XS", "L", "M", "S"],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
@@ -80,7 +88,11 @@ const productList = [
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
     availability: true,
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ddd", "#ace1af", "#333"],
+    colors: [
+      { name: "light grey", hex: "#ddd" },
+      { name: "green", hex: "#ace1af" },
+      { name: "brown", hex: "#333" },
+    ],
   },
   {
     price: 200,
@@ -90,7 +102,11 @@ const productList = [
     name: "Product example 4",
     slug: "product-example-4",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ace1af", "#fd5c63", "#222"],
+    colors: [
+      { name: "red", hex: "#fd5c63" },
+      { name: "green", hex: "#ace1af" },
+      { name: "dark brown", hex: "#222" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
   {
@@ -101,7 +117,11 @@ const productList = [
     name: "Product example 5",
     slug: "product-example-5",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ddd", "#fd5c63", "#222"],
+    colors: [
+      { name: "red", hex: "#fd5c63" },
+      { name: "light grey", hex: "#ddd" },
+      { name: "dark brown", hex: "#222" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
   {
@@ -112,7 +132,11 @@ const productList = [
     name: "Product example 6",
     slug: "product-example-6",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ace1af", "#fd5c63", "#222"],
+    colors: [
+      { name: "red", hex: "#fd5c63" },
+      { name: "green", hex: "#ace1af" },
+      { name: "dark brown", hex: "#222" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
   {
@@ -123,7 +147,11 @@ const productList = [
     name: "Product example 7",
     slug: "product-example-7",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ddd", "#fd5c63", "#222"],
+    colors: [
+      { name: "red", hex: "#fd5c63" },
+      { name: "light grey", hex: "#ddd" },
+      { name: "dark brown", hex: "#222" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
   {
@@ -134,7 +162,11 @@ const productList = [
     name: "Product example 8",
     slug: "product-example-8",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ace1af", "#fd5c63", "#222"],
+    colors: [
+      { name: "red", hex: "#fd5c63" },
+      { name: "green", hex: "#ace1af" },
+      { name: "dark brown", hex: "#222" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
   {
@@ -145,7 +177,11 @@ const productList = [
     name: "Product example 9",
     slug: "product-example-9",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ddd", "#ace1af", "#333"],
+    colors: [
+      { name: "light grey", hex: "#ddd" },
+      { name: "green", hex: "#ace1af" },
+      { name: "brown", hex: "#333" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
   {
@@ -156,7 +192,11 @@ const productList = [
     name: "Product example 10",
     slug: "product-example-10",
     size: ["XL", "XS", "L", "M", "S"],
-    colors: ["#ddd", "#fd5c63", "#222"],
+    colors: [
+      { name: "light grey", hex: "#ddd" },
+      { name: "red", hex: "#fd5c63" },
+      { name: "dark brown", hex: "#222" },
+    ],
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
   },
 ];

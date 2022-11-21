@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion/dist/framer-motion";
 import useHasBeenViewed from "../../hooks/useHasBeenViewed";
 import Button from "../elements/Button";
-const CartTotale = ({ price, checkoutEC }) => {
+
+const CartTotal = ({ price, checkoutEC }) => {
   const AdvantageCartVariants = {
     hidden: { opacity: 0, y: "100px" },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 1, delay: 0.5, type: "Inertia" },
+      transition: { duration: 0.5, type: "Inertia" },
     },
   };
 
@@ -24,7 +25,7 @@ const CartTotale = ({ price, checkoutEC }) => {
       variants={AdvantageCartVariants}
     >
       <h4 className="cart-total-h4">Total panier</h4>
-      <div className="cart-totale-row">
+      <div className="cart-total-row">
         <h5 className="cart-total-h5">Sous-total</h5>
         <h5>
           {new Intl.NumberFormat("fr-FR", {
@@ -33,11 +34,11 @@ const CartTotale = ({ price, checkoutEC }) => {
           }).format(price)}
         </h5>
       </div>
-      <div className="cart-totale-row">
+      <div className="cart-total-row">
         <h5 className="cart-total-h5">Taxes</h5>
         <h5 className="cart-total-h5 right">Calculated at checkout</h5>
       </div>
-      <div className="cart-totale-row">
+      <div className="cart-total-row">
         <h5 className="cart-total-h5">Shipping</h5>
         <h5 className="cart-total-h5 right">Calculated at checkout</h5>
       </div>
@@ -56,11 +57,10 @@ const CartTotale = ({ price, checkoutEC }) => {
     </Container>
   );
 };
-export default CartTotale;
+export default CartTotal;
 
 const Container = styled(motion.div)`
   background: #fff;
-  margin: 0.5em;
   padding: 2em 1em;
   height: fit-content;
   display: flex;
@@ -69,7 +69,9 @@ const Container = styled(motion.div)`
   justify-content: center;
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;
-  .cart-totale-row {
+
+  border-radius: 12px;
+  .cart-total-row {
     width: 100%;
     display: flex;
     margin: 1em 0;
@@ -93,5 +95,9 @@ const Container = styled(motion.div)`
     margin-top: 1em;
     font-size: 0.8rem;
     color: #222;
+  }
+  @media only screen and (min-width: 1200px) {
+    position: sticky;
+    top: 2vh;
   }
 `;

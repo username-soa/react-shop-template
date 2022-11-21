@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import CartSideMenuBottom from "../CartComponents/CartSideMenuBottom";
 import CartSideMenuItem from "../CartComponents/CartSideMenuItem";
-import { productList } from "../../utils/Products";
+import ClientContext from "../../contexts/ClientContext";
 
 const CartSideMenu = ({ menuStatus, closeSideMenu, checkoutEC }) => {
   const parentAnimations = {
@@ -26,9 +26,13 @@ const CartSideMenu = ({ menuStatus, closeSideMenu, checkoutEC }) => {
       opacity: 0,
     },
   };
+  const { cartItems, updateProductQte } = useContext(ClientContext);
 
   const getTotal = () => {
-    let total = null;
+    let total = 0;
+    cartItems.map((item) => {
+      total = total + item.price * item.qte;
+    });
     return total;
   };
 
@@ -46,23 +50,20 @@ const CartSideMenu = ({ menuStatus, closeSideMenu, checkoutEC }) => {
           <Close onClick={closeSideMenu} />
         </motion.div>
         <div className="cart-items-wrp-middle">
-          {[...productList.slice(1, 4)]?.map((item, index) => {
+          {cartItems?.map((item, index) => {
             return (
               <CartSideMenuItem
                 qte={item?.qte}
-                cid={item?.cid}
-                uid={item?.uid}
-                updateQte={() => {
-                  return null;
-                }}
                 slug={item.slug}
                 name={item?.name}
                 img={item?.image}
                 description={item.desc}
-                gotoProduct={closeSideMenu}
+                closeMenu={closeSideMenu}
+                updateQte={updateProductQte}
                 animations={childAnimations}
-                brand={item?.product?.vendor}
                 key={`side-cart-item-${index}`}
+                selectedSize={item?.selectedSize}
+                selectedColor={item?.selectedColor}
                 price={parseFloat(item?.price, 10)}
               />
             );

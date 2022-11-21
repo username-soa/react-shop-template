@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import useHasBeenViewed from "../hooks/useHasBeenViewed";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import Button from "../components/elements/Button";
-import CartTotale from "../components/CartComponents/CartTotale";
+import CartTotal from "../components/CartComponents/CartTotal";
 import CartItem from "../components/CartComponents/CartItem";
 import { productList } from "../utils/Products";
+import ClientContext from "../contexts/ClientContext";
+import SimilarProductsList from "../components/CartComponents/SimilarProductList";
 
 const CartPage = () => {
   const H1Variants = {
@@ -19,14 +21,45 @@ const CartPage = () => {
       transition: { duration: 1, type: "Inertia" },
     },
   };
+  const parentAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { delayChildren: 0.3, staggerChildren: 0.5, duration: 0.5 },
+    },
+    exit: {
+      opacity: 0,
+    },
+  };
+  const childAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    },
+    exit: {
+      opacity: 0,
+    },
+  };
 
-  const [empty, setEmpty] = useState(false);
-  const [initaldata, setInitialdata] = useState(productList);
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [hasBeenViewed, ref] = useHasBeenViewed();
+  const { cartItems, updateProductQte, deleteProduct } =
+    useContext(ClientContext);
 
-  const productCost = (i) => {};
+  useEffect(() => {
+    const tempArr = productList.filter(
+      (i) => !cartItems.find((f) => f.slug === i.slug)
+    );
+    setSimilarProducts(tempArr);
+  }, [cartItems]);
 
-  const cartTotalCost = () => {};
+  const getTotal = () => {
+    let total = 0;
+    cartItems.map((item) => {
+      total = total + item.price * item.qte;
+    });
+    return total;
+  };
 
   return (
     <Layout>
@@ -37,7 +70,7 @@ const CartPage = () => {
         }}
       >
         <CustomHelmet title="Panier" />
-        {empty && (
+        {cartItems.length === 0 && (
           <motion.div
             ref={ref}
             animate={hasBeenViewed ? "visible" : "hidden"}
@@ -61,34 +94,47 @@ const CartPage = () => {
           </motion.div>
         )}
 
-        {!empty && (
-          <>
+        {cartItems.length > 0 && (
+          <div className="cart-container">
             <motion.h2 animate="visible" initial="hidden" variants={H1Variants}>
               Your cart
             </motion.h2>
             <div className="cart-content-wrp">
-              <div className="cart-product-list">
-                {productList.map((i, index) => {
+              <motion.div
+                className="cart-product-list"
+                exit="exit"
+                initial="hidden"
+                animate="show"
+                variants={parentAnimations}
+              >
+                {cartItems.map((i, index) => {
                   return (
                     <CartItem
-                      key={`similar-p-${index}`}
+                      qte={i.qte}
                       name={i.name}
+                      slug={i?.slug}
+                      img={i.image}
                       price={i.price}
-                      img={i.img}
-                      removeProduct={() => {
-                        return null;
-                      }}
-                      updateQte={() => {
-                        return null;
-                      }}
+                      description={i.desc}
+                      updateQte={updateProductQte}
+                      animations={childAnimations}
+                      deleteProduct={deleteProduct}
+                      selectedSize={i?.selectedSize}
+                      selectedColor={i?.selectedColor}
+                      key={`cart-product-list-${index}`}
                     />
                   );
                 })}
-              </div>
-              <CartTotale price={cartTotalCost()} /*checkoutEC={checkoutEC}*/ />
+              </motion.div>
+              <CartTotal price={getTotal()} />
             </div>
-          </>
+          </div>
         )}
+
+        <SimilarProductsList
+          name="You May Also Like"
+          products={similarProducts}
+        />
       </Container>
     </Layout>
   );
@@ -97,7 +143,9 @@ const CartPage = () => {
 export default CartPage;
 
 const Container = styled(motion.div)`
-  padding: 2em 150px;
+  .cart-container {
+    padding: 2em 150px;
+  }
   h2 {
     color: #393d46;
     font-size: 2.5rem;
@@ -148,34 +196,18 @@ const Container = styled(motion.div)`
   .cart-content-wrp {
     display: grid;
     grid-template-columns: 60% 40%;
+    gap: 1em;
   }
-  .cart-similar-products {
+  .cart-product-list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2em 0;
-    width: 80%;
-    margin: 0em auto;
-    .h2-product {
-      margin: 0.5em 0;
-      font-weight: 600;
-      font-size: 2rem;
-      color: #aaa;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .product-list {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      grid-template-rows: auto;
-      height: fit-content;
-    }
+    gap: 1em;
   }
+
   @media only screen and (max-width: 1200px) {
-    padding: 2em;
+    .cart-container {
+      padding: 2em 1em;
+    }
     h2 {
       font-size: 2rem;
     }
@@ -185,13 +217,11 @@ const Container = styled(motion.div)`
     }
   }
   @media only screen and (max-width: 768px) {
-    padding: 1em;
+    .cart-container {
+      padding: 1em;
+    }
     h2 {
       font-size: 1.5rem;
-    }
-    .cart-similar-products {
-      margin: 0;
-      width: 100%;
     }
   }
   @media only screen and (max-width: 600px) {

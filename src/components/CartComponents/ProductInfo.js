@@ -4,7 +4,7 @@ import { motion } from "framer-motion/dist/framer-motion";
 import CustomCheckbox from "../elements/CustomCheckbox";
 import ClientContext from "../../contexts/ClientContext";
 
-const ProductInfo = ({ data, addToCart }) => {
+const ProductInfo = ({ data }) => {
   const parentAnimations = {
     hidden: { opacity: 0 },
     show: {
@@ -21,8 +21,8 @@ const ProductInfo = ({ data, addToCart }) => {
   const ref = useRef(null);
   const [Qte, setQte] = useState(1);
   const [productSize, setProductSize] = useState(data?.size[0]);
-  const [productColor, setProductColor] = useState(data?.colors[0]);
-  const { checkoutEC, isOpen, setIsOpen } = useContext(ClientContext);
+  const [productColor, setProductColor] = useState(data?.colors[0]?.name);
+  const { addToCart, isOpen, setIsOpen } = useContext(ClientContext);
 
   const handleSelect = (value) => {
     setProductColor(value);
@@ -66,9 +66,9 @@ const ProductInfo = ({ data, addToCart }) => {
           {data?.colors.map((item, index) => {
             return (
               <CustomCheckbox
-                color={item}
+                color={item.hex}
                 title="green"
-                value={item}
+                value={item.name}
                 checked={productColor}
                 key={`custom-checkbox-${index}`}
                 handleSelectChange={handleSelect}
@@ -121,14 +121,13 @@ const ProductInfo = ({ data, addToCart }) => {
           step="1"
           min="1"
           value={Qte}
-          onChange={(e) => setQte(e.target.value)}
+          onChange={(e) => setQte(parseInt(e.target.value))}
         />
         <button
           className="add-cart-btn"
           onClick={() => {
+            addToCart(data, Qte, productSize, productColor);
             setIsOpen(!isOpen);
-            // addToCart
-            return null;
           }}
           disabled={data?.availability === false}
         >

@@ -35,30 +35,34 @@ const ProductCartV2 = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       variants={animations}
-      onClick={() => history.push(`/product-details/${slug}`)}
+      //
     >
-      {isHovering ? (
-        <CustomImage
-          className="collection-card-image"
-          src={image}
-          alt={`${name}-image`}
-          objectFit="cover"
-          width="100%"
-          height="100%"
-        />
-      ) : (
-        <CustomImage
-          className="collection-card-image"
-          src={hoverImage}
-          alt={`${name}-image`}
-          objectFit="cover"
-          width="100%"
-          height="100%"
-        />
-      )}
+      <div onClick={() => history.push(`/product-details/${slug}`)}>
+        {isHovering ? (
+          <CustomImage
+            className="collection-card-image"
+            src={image}
+            alt={`${name}-image`}
+            objectFit="cover"
+            width="100%"
+            height="100%"
+          />
+        ) : (
+          <CustomImage
+            className="collection-card-image"
+            src={hoverImage}
+            alt={`${name}-image`}
+            objectFit="cover"
+            width="100%"
+            height="100%"
+          />
+        )}
+      </div>
       <div className="product-card-description">
         <Link to={`/product-details/${slug}`}>
-          <h3 className="product-cart-h2">{name}</h3>
+          <h3 className="product-cart-h2" onClick={() => {}}>
+            {name}
+          </h3>
         </Link>
         <p>
           {new Intl.NumberFormat("en-US", {
@@ -70,14 +74,12 @@ const ProductCartV2 = ({
         <AnimatePresence exitBeforeEnter>
           {isHovering && (
             <motion.button
-              className="testing-div"
-              initial="hidden"
               exit="exit"
+              initial="hidden"
               animate="visible"
+              onClick={addToCart}
+              className="testing-div"
               variants={animationVariants}
-              onClick={() => {
-                return null;
-              }}
               disabled={availability === false}
             >
               <ChoppingCart />
@@ -96,6 +98,15 @@ export default ProductCartV2;
 
 const Container = styled(motion.div)`
   position: relative;
+  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
+    rgb(237 239 247 / 47%) 0px 6px 6px;
+  aspect-ratio: 1/1.6;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
   .out-of-stock {
     position: absolute;
     top: 10px;
@@ -140,15 +151,6 @@ const Container = styled(motion.div)`
     }
   }
 
-  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
-    rgb(237 239 247 / 47%) 0px 6px 6px;
-  aspect-ratio: 1/1.6;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  background: #fff;
-  cursor: pointer;
-  border-radius: 10px;
-  overflow: hidden;
   .product-card-images {
   }
   .product-card-description {
@@ -160,6 +162,9 @@ const Container = styled(motion.div)`
       font-weight: 500;
       line-height: 150%;
       text-transform: capitalize;
+    }
+    a {
+      width: fit-content;
     }
     p {
       font-size: 12px;

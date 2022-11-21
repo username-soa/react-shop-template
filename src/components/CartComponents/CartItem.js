@@ -1,69 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as DeleteIcone } from "../../assets/trash.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
 
 const CartItem = ({
   img,
-  name,
-  brand,
-  price,
-  uid,
-  cid,
   qte,
+  name,
+  slug,
+  price,
   updateQte,
-  removeProduct,
+  animations,
+  description,
+  selectedSize,
+  selectedColor,
+  deleteProduct,
 }) => {
   const history = useHistory();
-  const CartItemVariants = {
-    hidden: { opacity: 0, y: "100px" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 1, delay: 0.5, type: "Inertia" },
-    },
-  };
+  const [productQte, setProductQte] = useState(qte);
+  useEffect(() => {
+    const val = isNaN(parseInt(productQte)) ? 1 : parseInt(productQte);
+    updateQte(slug, val);
+  }, [productQte]);
 
   return (
-    <Container animate="visible" initial="hidden" variants={CartItemVariants}>
-      <div className="product-row-wrp">
-        <div className="left">
-          <div className="product-img">
-            <img
-              loading="lazy"
-              src={img}
-              alt={name}
-              onClick={() => {
-                history.push(`/product-detail/${uid}/${cid}`);
-              }}
-            />
-          </div>
-          <div className="product-info">
-            <h4>{name}</h4>
-            <p>{brand}</p>
-          </div>
+    <Container variants={animations}>
+      <div className="cart-item-image">
+        <img
+          loading="lazy"
+          src={img}
+          alt={name}
+          onClick={() => {
+            history.push(`/product-details/${slug}`);
+          }}
+        />
+      </div>
+      <div className="cart-item-info">
+        <h4>{name}</h4>
+        <p className="text-p">{description}</p>
+        <div className="div-flex">
+          <span className="text-span">Size : {selectedSize}</span>
+          <span className="text-span">Color : {selectedColor}</span>
         </div>
-        <div className="product-count">
-          <div className="counting">
-            <button onClick={() => updateQte(-1, uid)}>-</button>
-            <input
-              type="text"
-              value={qte}
-              onChange={() => {
-                return null;
-              }}
-            />
-            <button onClick={() => updateQte(1, uid)}>+</button>
-          </div>
-          <h4 className="product-price">
-            {new Intl.NumberFormat("fr-FR", {
-              style: "currency",
-              currency: "MAD",
-            }).format(price)}
-          </h4>
-          <DeleteIcone onClick={() => removeProduct(uid)} />
-        </div>
+      </div>
+      <div className="cart-item-controls">
+        <h4 className="product-price">
+          {new Intl.NumberFormat("fr-FR", {
+            style: "currency",
+            currency: "MAD",
+          }).format(price)}
+        </h4>
+        <input
+          min="1"
+          type="number"
+          value={productQte}
+          onChange={(e) => {
+            setProductQte(e.target.value);
+          }}
+        />
+        <DeleteIcon onClick={() => deleteProduct(slug)} />
       </div>
     </Container>
   );
@@ -72,106 +68,109 @@ export default CartItem;
 
 const Container = styled(motion.div)`
   background: #fff;
-  margin: 0.5em 0.5em;
   padding: 0.5em;
-  display: flex;
-  flex-direction: column;
-  .product-row-wrp {
-    width: 100%;
-    background: #fff;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: 60% 40%;
-    .left {
-      display: flex;
-    }
-    .product-img {
-      width: 120px;
-      height: 100px;
+  display: grid;
+  gap: 0.75em;
+  grid-template-columns: 100px 2fr 1fr;
+  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
+    rgb(237 239 247 / 47%) 0px 6px 6px;
+  border-radius: 12px;
+  .cart-item-image {
+    border: 1px solid #eee;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img {
-        width: 80%;
-        height: 80%;
-        object-fit: scale-down;
-      }
     }
-    .product-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      p {
-        margin-top: 0.5em;
-        font-size: 0.8rem;
-      }
-      h4 {
-        font-weight: 500;
-      }
+  }
+  .cart-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    h4 {
+      font-weight: 500;
+      line-height: 150%;
+      font-weight: 500;
+      margin-bottom: 0.25em;
     }
-    .product-count {
-      display: grid;
-      grid-template-columns: 1fr 1fr 20px;
-      .counting {
-        display: flex;
-        button {
-          font-size: 1.7rem;
-          padding: 0.25em;
-          height: fit-content;
-          margin: auto 0;
-          cursor: pointer;
-          background: transparent;
-        }
-        input {
-          width: 50px;
-          padding: 0.5em;
-          border-radius: 7px;
-          background: #f2f4f8;
-          height: fit-content;
-          margin: auto 0;
-        }
-      }
-      .product-price {
-        width: fit-content;
-        height: fit-content;
-        margin: auto;
-        font-size: 0.8rem;
-      }
-      svg {
-        margin: auto;
-        cursor: pointer;
-        transition: all 0.3s;
-        path {
-          fill: #393d46;
-        }
-        &:hover {
-          path {
-            fill: red;
-          }
-        }
+    .text-p {
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+  .div-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em;
+    padding-top: 0.35em;
+    .text-span {
+      font-size: 12px;
+      padding: 5px 10px;
+      background: #ccc;
+      border-radius: 12px;
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+  .cart-item-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.75em 0;
+    input {
+      width: 50px;
+      padding: 0.5em;
+      border-radius: 7px;
+      background: #f2f4f8;
+      height: fit-content;
+      margin: auto 0;
+    }
+    svg {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      &:hover {
+        fill: red;
       }
     }
   }
   @media only screen and (max-width: 768px) {
-    .product-row-wrp {
-      grid-template-columns: 100% !important;
-      grid-template-rows: auto;
+    grid-template-columns: 100px 1fr;
+    .cart-item-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      h4 {
+        font-size: 13px;
+      }
+      .text-p {
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+      }
     }
-    .product-count {
-      width: fit-content;
-      margin: 0 auto;
+    .div-flex {
+      padding-top: 0.25em;
+      .text-span {
+        font-size: 10px;
+        padding: 4px 6px;
+      }
     }
-    .left {
-      display: grid;
-      grid-template-columns: 120px auto;
+    .product-price {
+      font-size: 14px;
     }
-  }
-
-  @media only screen and (max-width: 400px) {
-    h4 {
-      font-size: 0.9rem;
+    .cart-item-controls {
+      grid-column: 1/3;
+      flex-direction: row;
     }
   }
 `;

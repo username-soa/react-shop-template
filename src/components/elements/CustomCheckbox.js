@@ -50,8 +50,9 @@ const RadioButton = styled.input`
   cursor: pointer;
   width: 25px;
   height: 25px;
+  transition: all 0.3s ease;
   &:hover ~ ${RadioButtonLabel} {
-    background: #ccc;
+    opacity: 0.8;
   }
   &:checked ~ ${RadioButtonLabel} {
     border: 1px solid #222;

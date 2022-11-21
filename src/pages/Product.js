@@ -22,11 +22,15 @@ const Product = () => {
   const [popup, setPopUp] = useState(false);
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [tempImage, setTempImage] = useState({ id: null, url: null });
+
   useEffect(() => {
     const selectedProduct = productList.find(
       (element) => element.slug === slug
     );
+    const tempArr = productList.filter((element) => element.slug !== slug);
+    setSimilarProducts(tempArr);
     setProduct(selectedProduct);
     const timer = setTimeout(() => {
       setLoading(false);
@@ -76,7 +80,10 @@ const Product = () => {
             setTempImage({ id: id, url: url });
           }}
         />
-        <SimilarProductsList name="Similar Product" products={productList} />
+        <SimilarProductsList
+          name="Similar Product"
+          products={similarProducts}
+        />
         {popup && (
           <GalleryModal
             handleClose={setPopUp}

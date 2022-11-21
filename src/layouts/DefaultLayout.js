@@ -9,19 +9,12 @@ import CartSideMenu from "../components/FixedElements/CartSideMenu";
 import ClientContext from "../contexts/ClientContext";
 
 const Layout = ({ children }) => {
-  const { checkoutEC, isOpen, setIsOpen } = useContext(ClientContext);
+  const { isOpen, setIsOpen } = useContext(ClientContext);
   const location = useLocation();
   const scrollRef = useRef(null);
   const [sideMenu, setSideMenu] = useState(false);
   const [scrollDir, setScrollDir] = useState(null);
   const [feedback, setFeeadback] = useState({ status: null, message: null });
-
-  const sendEmail = async (data) => {
-    return data;
-  };
-  useEffect(() => {
-    console.log(isOpen);
-  }, []);
 
   return (
     <Container sideMenu={sideMenu} status={scrollDir}>
