@@ -73,7 +73,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
               to="https://www.facebook.com"
               title="Facebook"
               external
-              SvgIcone={FacebookIcone}
+              SvgIcon={FacebookIcone}
               state={sideMenu}
               setState={setSideMenu}
             />
@@ -81,7 +81,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
               to="https://www.instagram.com"
               title="Instagram"
               external
-              SvgIcone={InstagramIcone}
+              SvgIcon={InstagramIcone}
               state={sideMenu}
               setState={setSideMenu}
             />
@@ -89,7 +89,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
               to="https://www.twitter.com"
               title="Twitter"
               external
-              SvgIcone={TwitterIcone}
+              SvgIcon={TwitterIcone}
               state={sideMenu}
               setState={setSideMenu}
             />
@@ -98,14 +98,14 @@ const Menu = ({ sideMenu, setSideMenu }) => {
             <MenuLink
               to="/about"
               title="À Propos"
-              SvgIcone={AboutUs}
+              SvgIcon={AboutUs}
               state={sideMenu}
               setState={setSideMenu}
             />
             <MenuLink
               to="/contact"
               title="Contact"
-              SvgIcone={ContactUs}
+              SvgIcon={ContactUs}
               state={sideMenu}
               setState={setSideMenu}
             />
@@ -114,28 +114,28 @@ const Menu = ({ sideMenu, setSideMenu }) => {
             <MenuLink
               to="/privacy-policy"
               title="Politique de confidentialité"
-              SvgIcone={TrustIcone}
+              SvgIcon={TrustIcone}
               state={sideMenu}
               setState={setSideMenu}
             />
             <MenuLink
               to="/livraison"
               title="Politique d'expédition"
-              SvgIcone={ShippingIcone}
+              SvgIcon={ShippingIcone}
               state={sideMenu}
               setState={setSideMenu}
             />
             <MenuLink
               to="/termes-conditions"
               title="Termes et conditions"
-              SvgIcone={ContractIcone}
+              SvgIcon={ContractIcone}
               state={sideMenu}
               setState={setSideMenu}
             />
             <MenuLink
               to="/faqs"
               title="FAQs"
-              SvgIcone={FaqsIcone}
+              SvgIcon={FaqsIcone}
               state={sideMenu}
               setState={setSideMenu}
             />
@@ -146,7 +146,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
                 <MenuLink
                   to={`/collections/${c?.id}`}
                   title={handleTitle(c?.title)}
-                  SvgIcone={Category}
+                  SvgIcon={Category}
                   state={sideMenu}
                   setState={setSideMenu}
                   key={`menu-link1_${index}`}

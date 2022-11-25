@@ -46,28 +46,29 @@ const FAQsContact = () => {
 export default FAQsContact;
 
 const Container = styled(motion.div)`
-  padding: 4em 2em;
+  padding: 3em 2em;
   background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 2em;
+  border-radius: 12px;
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;
   .faq-contact-h3 {
     text-align: center;
     color: #393d46;
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 1px;
     line-height: 150%;
   }
   .faq-contact-p {
     color: #68768e;
     text-align: center;
-    font-size: 18px;
-    line-height: 150%;
+    font-size: 16px;
+    line-height: 1.8em;
     width: 80%;
   }
   .faq-contact-a {
@@ -75,6 +76,7 @@ const Container = styled(motion.div)`
     color: #fff;
     background-color: #393d46;
     font-size: 16px;
+    border-radius: 12px;
   }
   @media only screen and (max-width: 1200px) {
     .faq-contact-h3 {

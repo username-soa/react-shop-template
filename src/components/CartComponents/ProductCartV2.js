@@ -34,7 +34,10 @@ const ProductCartV2 = ({
       onMouseLeave={onMouseLeave}
       variants={animations}
     >
-      <div onClick={() => history.push(`/product-details/${slug}`)}>
+      <div
+        className="product-card-images"
+        onClick={() => history.push(`/product-details/${slug}`)}
+      >
         {isHovering ? (
           <CustomImage
             className="collection-card-image"
@@ -73,7 +76,7 @@ const ProductCartV2 = ({
               initial="hidden"
               animate="visible"
               onClick={addToCart}
-              className="testing-div"
+              className="hover-btn"
               variants={animationVariants}
               disabled={availability === false}
             >
@@ -97,7 +100,7 @@ const Container = styled(motion.div)`
     rgb(237 239 247 / 47%) 0px 6px 6px;
   aspect-ratio: 1/1.6;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 80px;
   background: #fff;
   cursor: pointer;
   border-radius: 10px;
@@ -116,7 +119,7 @@ const Container = styled(motion.div)`
     background: #fff;
     color: #666666;
   }
-  .testing-div {
+  .hover-btn {
     padding: 0.75em;
     background: #000;
     border-radius: 50%;
@@ -145,8 +148,8 @@ const Container = styled(motion.div)`
       }
     }
   }
-
   .product-card-images {
+    overflow: hidden;
   }
   .product-card-description {
     padding: 1em 0.75em;

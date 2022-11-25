@@ -85,5 +85,6 @@ const Container = styled(motion.details)`
     overflow-y: auto;
     padding: 1em;
     min-width: 350px;
+    z-index: 99;
   }
 `;

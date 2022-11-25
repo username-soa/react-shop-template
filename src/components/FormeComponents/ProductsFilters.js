@@ -289,33 +289,38 @@ const ProductsFilters = () => {
                 </CustomDataList>
               </motion.div>
             </Form>
-            <div className="filter-values">
-              {[
-                ...values.style,
-                ...values.availability,
-                ...values.type,
-                ...values.size,
-              ].map((item, index) => {
-                return (
-                  <span
-                    className="filter-values-item"
-                    key={`filter-values-item-${index}`}
-                  >
-                    {item}
-                  </span>
-                );
-              })}
-              {[
-                ...values.style,
-                ...values.availability,
-                ...values.type,
-                ...values.size,
-              ].length > 0 && (
-                <button className="clear-all-btn" onClick={resetForm}>
-                  Clear All
-                </button>
+            {values.style.length > 0 &&
+              values.availability.length &&
+              values.type.length &&
+              values.size.length && (
+                <div className="filter-values">
+                  {[
+                    ...values.style,
+                    ...values.availability,
+                    ...values.type,
+                    ...values.size,
+                  ].map((item, index) => {
+                    return (
+                      <span
+                        className="filter-values-item"
+                        key={`filter-values-item-${index}`}
+                      >
+                        {item}
+                      </span>
+                    );
+                  })}
+                  {[
+                    ...values.style,
+                    ...values.availability,
+                    ...values.type,
+                    ...values.size,
+                  ].length > 0 && (
+                    <button className="clear-all-btn" onClick={resetForm}>
+                      Clear All
+                    </button>
+                  )}
+                </div>
               )}
-            </div>
           </>
         )}
       </Formik>
@@ -608,33 +613,38 @@ const ProductsFilters = () => {
                   </motion.div>
                 </motion.div>
               </Form>
-              <div className="filter-values">
-                {[
-                  ...values.style,
-                  ...values.availability,
-                  ...values.type,
-                  ...values.size,
-                ].map((item, index) => {
-                  return (
-                    <span
-                      className="filter-values-item"
-                      key={`filter-values-item-${index}`}
-                    >
-                      {item}
-                    </span>
-                  );
-                })}
-                {[
-                  ...values.style,
-                  ...values.availability,
-                  ...values.type,
-                  ...values.size,
-                ].length > 0 && (
-                  <button className="clear-all-btn" onClick={resetForm}>
-                    Clear All
-                  </button>
+              {values.style.length > 0 &&
+                values.availability.length &&
+                values.typ.lengthe &&
+                values.size.length && (
+                  <div className="filter-values">
+                    {[
+                      ...values.style,
+                      ...values.availability,
+                      ...values.type,
+                      ...values.size,
+                    ].map((item, index) => {
+                      return (
+                        <span
+                          className="filter-values-item"
+                          key={`filter-values-item-${index}`}
+                        >
+                          {item}
+                        </span>
+                      );
+                    })}
+                    {[
+                      ...values.style,
+                      ...values.availability,
+                      ...values.type,
+                      ...values.size,
+                    ].length > 0 && (
+                      <button className="clear-all-btn" onClick={resetForm}>
+                        Clear All
+                      </button>
+                    )}
+                  </div>
                 )}
-              </div>
             </>
           )}
         </Formik>

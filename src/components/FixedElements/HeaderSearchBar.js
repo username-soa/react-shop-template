@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion/dist/framer-motion";
+import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as SearchIcone } from "../../assets/close.svg";
+import { ReactComponent as SearchIcon } from "../../assets/close.svg";
+import { ReactComponent as CloseIcon } from "../../assets/close.svg";
+import SearchHistoryContext from "../../contexts/SearchHistoryContext";
 
 const Menu = ({ state, setState }) => {
   let isMounted = true;
@@ -13,15 +15,64 @@ const Menu = ({ state, setState }) => {
       transition: { duration: 1, type: "Inertia" },
     },
   };
-  const [search, serSearch] = useState("");
+  const parentAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.3 },
+    },
+  };
+  const childAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    },
+  };
   const history = useHistory();
+  const [search, serSearch] = useState("");
+  const [searchArr, setSearchArr] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const { saveSearchTermsToBrowser, searchTerms, removeSearchTerm } =
+    useContext(SearchHistoryContext);
 
   const handleSearch = (e) => {
-    if (e.key === "Enter" && e.target.value.length !== 0) {
+    const t = e.target.value.trim();
+    if (e.key === "Enter" && t.length !== 0) {
+      saveSearchTermsToBrowser(t);
+      setShowHistory(false);
       setState(false);
-      history.push(`/search/${e.target.value}`);
+      history.push(`/search/${t}`);
     }
   };
+  const handleSearchV2 = (term) => {
+    const t = term.trim();
+    if (t.trim().length !== 0) {
+      saveSearchTermsToBrowser(t);
+      setShowHistory(false);
+      setState(false);
+      history.push(`/search/${t}`);
+    }
+  };
+
+  const filterSearchHistory = (term) => {
+    if (term.length === 0) {
+      setSearchArr(searchTerms);
+      return -1;
+    }
+    const arr = searchTerms?.filter((item) => {
+      return item?.toLocaleLowerCase().includes(term?.toLocaleLowerCase());
+    });
+    setSearchArr(arr);
+  };
+
+  useEffect(() => {
+    if (isMounted && searchTerms) {
+      setSearchArr(searchTerms);
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [searchTerms]);
 
   return (
     <Container
@@ -30,18 +81,59 @@ const Menu = ({ state, setState }) => {
       variants={HeaderSearchBarVariants}
       exit={{ opacity: 0, transition: { duration: 0.5, type: "Inertia" } }}
     >
-      <input
-        type="text"
-        onChange={(e) => serSearch(e.target.value)}
-        placeholder="Search..."
-        className="search-input"
-        onKeyDown={handleSearch}
-      />
-      <SearchIcone
-        onClick={() => {
-          setState(false);
-        }}
-      />
+      <div className="search-dropdown-elements">
+        <input
+          type="text"
+          onChange={(e) => {
+            serSearch(e.target.value);
+            filterSearchHistory(e.target.value);
+          }}
+          placeholder="Search..."
+          className="search-input"
+          onKeyDown={handleSearch}
+          onFocus={() => setShowHistory(true)}
+        />
+        <SearchIcon
+          onClick={() => {
+            setState(false);
+          }}
+        />
+      </div>
+      <AnimatePresence exitBeforeEnter>
+        {showHistory && searchArr?.length !== 0 && (
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={parentAnimations}
+            className="saved-search-terms"
+          >
+            <ul>
+              {searchArr?.map((i, index) => {
+                return (
+                  <motion.li
+                    variants={childAnimations}
+                    className="saved-term hover-grid"
+                    key={`saved-term-${index}`}
+                  >
+                    <span
+                      className="saved-term-span"
+                      onClick={() => handleSearchV2(i)}
+                    >
+                      {i}
+                    </span>
+
+                    <CloseIcon
+                      onClick={() => {
+                        removeSearchTerm(i);
+                      }}
+                    />
+                  </motion.li>
+                );
+              })}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Container>
   );
 };
@@ -49,6 +141,7 @@ export default Menu;
 
 const Container = styled(motion.div)`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.4);
@@ -61,11 +154,15 @@ const Container = styled(motion.div)`
   left: 0;
   opacity: 0.9;
   z-index: 999;
+  .search-dropdown-elements {
+    display: grid;
+    grid-template-columns: auto 40px;
+    width: 70%;
+  }
   .search-input {
     padding: 10px 6px;
     background: transparent;
     color: rgba(0, 0, 0, 0.9);
-    width: 70%;
     border-bottom: 2px solid #fff;
   }
   .search-input::placeholder {
@@ -85,7 +182,7 @@ const Container = styled(motion.div)`
   }
   svg {
     cursor: pointer;
-    margin: 0 1em;
+    margin: auto;
     width: 18px;
     height: 18px;
     fill: #fff !important;
@@ -94,6 +191,61 @@ const Container = styled(motion.div)`
       g {
         fill: #fff !important;
       }
+    }
+  }
+
+  .saved-search-terms {
+    margin: 1em auto;
+    background: #fff;
+    border-radius: 10px;
+    width: 70%;
+    ul,
+    li {
+      list-style: none;
+    }
+    .saved-term-span {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 0.75em;
+    }
+    li {
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: auto 30px;
+      min-width: 250px;
+      width: 100%;
+      overflow: hidden;
+      svg {
+        width: 10px;
+        height: 10px;
+        fill: rgba(0, 0, 0, 0.7) !important;
+        margin: auto;
+        path {
+          fill: rgba(0, 0, 0, 0.7) !important;
+          g {
+            fill: rgba(0, 0, 0, 0.7) !important;
+          }
+        }
+      }
+    }
+  }
+  .hover-grid {
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      > li {
+        color: #000 !important;
+      }
+      background: RGBA(159, 162, 180, 0.125);
+      border-radius: 10px;
+      font-weight: 600;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .search-dropdown-elements,
+    .saved-search-terms {
+      width: 90%;
     }
   }
 `;

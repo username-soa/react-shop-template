@@ -1,23 +1,22 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { AnimatePresence } from "framer-motion/dist/framer-motion";
 import HeaderSearchBar from "./HeaderSearchBar";
-import { ReactComponent as LogoIcone } from "../../assets/logo.svg";
-import { ReactComponent as MenuIcone } from "../../assets/menu.svg";
-import { ReactComponent as UserIcone } from "../../assets/user.svg";
+import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
 import { ReactComponent as Search } from "../../assets/loupe.svg";
-import { ReactComponent as Close } from "../../assets/cancel2.svg";
-import { ReactComponent as FavoritIcone } from "../../assets/heart.svg";
 import { ReactComponent as ChoppingCart } from "../../assets/shopping-cart.svg";
+import ClientContext from "../../contexts/ClientContext";
 import Button from "../elements/Button";
 
 const Header = ({ sideMenu, setSideMenu }) => {
   let isMounted = true;
-  const cartItems = [];
-  const [showSearch, setShowSearch] = useState(false);
-  const [totalqte, setTotalqte] = useState(null);
+  // const cartItems = [];
   const history = useHistory();
+  const location = useLocation();
+  const { cartItems } = useContext(ClientContext);
+  const [totalQte, setTotalQte] = useState(null);
+  const [showSearch, setShowSearch] = useState(false);
 
   const getTotalQte = () => {
     let total = null;
@@ -31,9 +30,9 @@ const Header = ({ sideMenu, setSideMenu }) => {
     if (isMounted) {
       const t = getTotalQte();
       if (t > 0) {
-        setTotalqte(t);
+        setTotalQte(t);
       } else if (t <= 0) {
-        setTotalqte(null);
+        setTotalQte(null);
       }
     }
     return () => {
@@ -42,9 +41,9 @@ const Header = ({ sideMenu, setSideMenu }) => {
   }, [cartItems]);
 
   return (
-    <Container totalqte={totalqte}>
+    <Container totalqte={totalQte}>
       <div className="menu-icon">
-        <MenuIcone
+        <MenuIcon
           onClick={() => {
             setSideMenu(true);
           }}
@@ -55,8 +54,15 @@ const Header = ({ sideMenu, setSideMenu }) => {
           <h2 className="header-right-h2">Digital Era.</h2>
         </Link>
         <div className="svgs-wrp">
-          <Search onClick={() => setShowSearch(true)} />
-          <ChoppingCart onClick={() => history.push("/shopping-cart")} />
+          {!location.pathname.includes("/search/") && (
+            <Search onClick={() => setShowSearch(true)} />
+          )}
+          <div className="cart-svg-wrp">
+            <ChoppingCart onClick={() => history.push("/shopping-cart")} />
+            <span>{totalQte ? totalQte : 0}</span>
+          </div>
+
+          {/* <ChoppingCart onClick={() => history.push("/shopping-cart")} /> */}
           <Link to="/account/login">
             <Button
               bg="#393d46"
@@ -92,6 +98,28 @@ const Container = styled.div`
       height: 30px;
     }
   }
+  .cart-svg-wrp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0 0.5em;
+    span {
+      color: #fff;
+      background: #000;
+      position: absolute;
+      text-align: center;
+      white-space: normal;
+      height: 20px;
+      min-width: 20px;
+      font-size: 10px;
+      line-height: 22px;
+      right: 7px;
+      top: -12px;
+      border-radius: 50%;
+    }
+  }
+
   .header-right {
     display: flex;
     justify-content: space-between;

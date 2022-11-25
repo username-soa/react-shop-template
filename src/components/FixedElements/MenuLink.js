@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-const MenuLink = ({ to, title, SvgIcone, external, state, setState }) => {
+const MenuLink = ({ to, title, SvgIcon, external, state, setState }) => {
   return (
     <Container>
       <button onClick={() => setState(false)}>
@@ -18,7 +18,7 @@ const MenuLink = ({ to, title, SvgIcone, external, state, setState }) => {
           }
           target={external ? "_blank" : null}
         >
-          <SvgIcone />
+          <SvgIcon />
           <span>{title}</span>
         </NavLink>
       </button>

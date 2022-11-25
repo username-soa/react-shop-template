@@ -27,10 +27,12 @@ export const ClientProvider = ({ children }) => {
   };
 
   const deleteProduct = async (id) => {
+    console.log(id);
     const tempArr = [...cartItems];
     const newArr = tempArr.filter((i) => {
       return i.slug !== id;
     });
+    console.log(newArr);
     setCartItems(newArr);
   };
 
@@ -59,7 +61,7 @@ export const ClientProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (mounted && cartItems?.length > 0) {
+    if (mounted) {
       localStorage.setItem("ec_client_cart", JSON.stringify(cartItems));
     }
     return () => {
