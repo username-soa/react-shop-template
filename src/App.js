@@ -37,8 +37,8 @@ function App() {
             <Route exact path="/shopping-cart" component={CartPage} />
             <Route exact path="/about" component={AboutPage} />
             <Route exact path="/account" component={UserProfilePage} />
-            <Route exact path="/account/commandes" component={UserOrders} />
-            <Route exact path="/account/adresse" component={UserAdresse} />
+            <Route exact path="/account/orders" component={UserOrders} />
+            <Route exact path="/account/address" component={UserAdresse} />
             <Route exact path="/faqs" component={FAQs} />
             <Route exact path="/privacy-policy" component={PrivacyPolicy} />
             <Route exact path="/livraison" component={ShippingInfo} />

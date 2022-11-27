@@ -78,6 +78,7 @@ const Container = styled.div`
   background: #fff;
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;
+  border-radius: 12px;
   form {
     display: grid;
     grid-template-columns: 50% 50%;

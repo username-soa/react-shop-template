@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import Button from "../elements/Button";
 import CustomInput from "../elements/CustomInput";
 
-const UserAdresseForm = ({ updateAdresse, user }) => {
+const UserAddressForm = ({ updateAddress, user }) => {
   return (
     <Container>
       <Formik
@@ -29,7 +29,7 @@ const UserAdresseForm = ({ updateAdresse, user }) => {
           zip: Yup.string().required("Champ obligatoire"),
         })}
         onSubmit={async (data) => {
-          await updateAdresse(data);
+          await updateAddress(data);
         }}
       >
         {({ handleSubmit, isSubmitting, values }) => (
@@ -90,10 +90,11 @@ const UserAdresseForm = ({ updateAdresse, user }) => {
   );
 };
 
-export default UserAdresseForm;
+export default UserAddressForm;
 
 const Container = styled.div`
   padding: 2em;
+  border-radius: 12px;
   background: #fff;
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;

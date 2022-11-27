@@ -1,17 +1,17 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from "styled-components";
 import Button from "../elements/Button";
 import { ordersList } from "../../utils/orders";
 
-const UserCommandeList = () => {
+const UserOrdersList = () => {
   return (
     <Container>
       <div className="table">
         <div className="grid">
-          <h6>Name </h6>
-          <h6>Email</h6>
-          <h6>Username</h6>
-          <h6>Role</h6>
+          <h6>#ID</h6>
+          <h6>Date</h6>
+          <h6>Status</h6>
+          <h6>Price</h6>
           <h6 className="empty-h6" />
         </div>
         {ordersList.map((i, index) => {
@@ -44,9 +44,10 @@ const UserCommandeList = () => {
   );
 };
 
-export default UserCommandeList;
+export default UserOrdersList;
 const Container = styled.div`
   padding: 1em;
+  border-radius: 12px;
   background: #fff;
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;

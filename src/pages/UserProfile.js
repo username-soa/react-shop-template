@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { useLocation } from "react-router-dom";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
-import UserProfileNavigator from "../components/elements/UserProfileNavigator";
 import UserProfileContainer from "../layouts/UserAccountContainer";
 import UserInfoForm from "../components/FormeComponents/UserInfoForm";
 
@@ -15,15 +13,9 @@ const UserProfilePage = () => {
 
   return (
     <Layout>
-      <Container
-        exit={{
-          opacity: 0,
-          transition: { ease: "easeInOut" },
-        }}
-      >
-        <CustomHelmet title="Page Profile" />
-        <UserProfileContainer>
-          <UserProfileNavigator />
+      <Container>
+        <CustomHelmet title="User Profile" />
+        <UserProfileContainer title="My Account">
           <UserInfoForm updateInfo={updateUserInfo} />
         </UserProfileContainer>
       </Container>

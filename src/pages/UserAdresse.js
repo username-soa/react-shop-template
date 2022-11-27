@@ -3,27 +3,20 @@ import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
-import UserProfileNavigator from "../components/elements/UserProfileNavigator";
 import UserProfileContainer from "../layouts/UserAccountContainer";
-import UserAdresseForm from "../components/FormeComponents/UserAdresseForm";
+import UserAddressForm from "../components/FormeComponents/UserAddressForm";
 
 const UserAdresse = () => {
-  const updateAdresse = async (data) => {
+  const updateAddress = async (data) => {
     return data;
   };
 
   return (
     <Layout>
-      <Container
-        exit={{
-          opacity: 0,
-          transition: { ease: "easeInOut" },
-        }}
-      >
-        <CustomHelmet title="Page Adresse" />
-        <UserProfileContainer>
-          <UserProfileNavigator />
-          <UserAdresseForm updateAdresse={updateAdresse} />
+      <Container>
+        <CustomHelmet title="User Address" />
+        <UserProfileContainer title="My Address">
+          <UserAddressForm updateAddress={updateAddress} />
         </UserProfileContainer>
       </Container>
     </Layout>

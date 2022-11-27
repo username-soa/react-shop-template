@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
-import UserProfileNavigator from "../components/elements/UserProfileNavigator";
 import UserProfileContainer from "../layouts/UserAccountContainer";
-import UserCommandeList from "../components/CartComponents/UserCommandeList";
+import UserOrdersList from "../components/CartComponents/UserOrdersList";
 import Pagination from "../components/elements/Pagination";
 import UserOrdersSkeleton from "../components/skeletons/UserOrdersSkeleton";
 
@@ -25,9 +24,8 @@ const UserOrders = () => {
     return (
       <Layout>
         <Container>
-          <CustomHelmet title="Page Commandes" />
-          <UserProfileContainer>
-            <UserProfileNavigator />
+          <CustomHelmet title="User Orders" />
+          <UserProfileContainer title="User Orders">
             <UserOrdersSkeleton />
           </UserProfileContainer>
         </Container>
@@ -37,17 +35,11 @@ const UserOrders = () => {
 
   return (
     <Layout>
-      <Container
-        exit={{
-          opacity: 0,
-          transition: { ease: "easeInOut" },
-        }}
-      >
-        <CustomHelmet title="Page Commandes" />
-        <UserProfileContainer>
-          <UserProfileNavigator />
+      <Container>
+        <CustomHelmet title="User Orders" />
+        <UserProfileContainer title="User Orders">
           <div>
-            <UserCommandeList />
+            <UserOrdersList />
             <Pagination
               postsPerPage={10}
               paginate={() => {

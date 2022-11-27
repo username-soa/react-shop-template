@@ -1,12 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useLocation, useHistory } from "react-router-dom";
-import { ReactComponent as PlusIcone } from "../../assets/down-arrow.svg";
-import { ReactComponent as InfoIcone } from "../../assets/user2.svg";
-import { ReactComponent as AdresseIcone } from "../../assets/adress-book.svg";
-import { ReactComponent as OrderIcone } from "../../assets/sent.svg";
-import { ReactComponent as LogoutIcone } from "../../assets/logout.svg";
-import jwt from "jsonwebtoken";
+import { ReactComponent as PlusIcon } from "../../assets/down-arrow.svg";
+import { ReactComponent as InfoIcon } from "../../assets/user2.svg";
+import { ReactComponent as AddressIcon } from "../../assets/adress-book.svg";
+import { ReactComponent as OrderIcon } from "../../assets/sent.svg";
+import { ReactComponent as LogoutIcon } from "../../assets/logout.svg";
 
 const UserProfileNavigator = () => {
   const [expand, setExpand] = useState(0);
@@ -18,11 +17,13 @@ const UserProfileNavigator = () => {
     switch (location.pathname) {
       case "/account":
         return 1;
-      case "/account/adresse":
+      case "/account/":
+        return 1;
+      case "/account/address":
         return 2;
-      case "/account/commandes":
+      case "/account/orders":
         return 3;
-      case "/account/archifier":
+      case "/account/archive":
         return 4;
       default:
         break;
@@ -31,12 +32,12 @@ const UserProfileNavigator = () => {
   const getName = () => {
     switch (location.pathname) {
       case "/account":
-        return "Vous Informations";
-      case "/account/adresse":
-        return "Votre adresse";
-      case "/account/commandes":
-        return "Vos commandes";
-      case "/account/archifier":
+        return "Your account information";
+      case "/account/address":
+        return "Your address information";
+      case "/account/orders":
+        return "Your orders list";
+      case "/account/archive":
         return "Vos archive";
       default:
         break;
@@ -45,11 +46,11 @@ const UserProfileNavigator = () => {
   const getSvg = () => {
     switch (location.pathname) {
       case "/account":
-        return <InfoIcone />;
-      case "/account/adresse":
-        return <AdresseIcone />;
-      case "/account/commandes":
-        return <OrderIcone />;
+        return <InfoIcon />;
+      case "/account/address":
+        return <AddressIcon />;
+      case "/account/orders":
+        return <OrderIcon />;
 
       default:
         break;
@@ -57,16 +58,6 @@ const UserProfileNavigator = () => {
   };
 
   const disconnect = async () => {
-    if (localStorage.getItem("ec_user_token") !== null) {
-      const userToken = localStorage.getItem("ec_user_token");
-      jwt.verify(
-        userToken,
-        "d6d82b79-5226-454c-a36d-17bc13bcd6f2",
-        async (err, decoded) => {
-          // await saveUserEvent(decoded?.documentId, "logout");
-        }
-      );
-    }
     localStorage.removeItem("ec_shopify_token");
     localStorage.removeItem("ec_shopify_accessToken");
     history.push("/");
@@ -74,19 +65,22 @@ const UserProfileNavigator = () => {
 
   return (
     <Container show={highlight}>
-      <div className={highlight ? "navigation-top active" : "navigation-top"}>
+      <div
+        className={highlight ? "navigation-top active" : "navigation-top"}
+        onClick={() => setHighlight(!highlight)}
+      >
         <div className="navigation-top-left">
           {getSvg()}
           <span> {getName()}</span>
         </div>
-        <PlusIcone
+        <PlusIcon
           onClick={() => setHighlight(!highlight)}
           className={highlight ? "rotate" : null}
         />
       </div>
       <div
         className={
-          highlight ? "navidation-content active" : "navidation-content"
+          highlight ? "navigation-content active" : "navigation-content"
         }
       >
         <Link to="/account">
@@ -97,11 +91,11 @@ const UserProfileNavigator = () => {
                 : "navigator-link extra-padding navigator-border-bottom"
             }
           >
-            <InfoIcone />
-            Modifier vous informations
+            <InfoIcon />
+            Personal information
           </div>
         </Link>
-        <Link to="/account/adresse">
+        <Link to="/account/address">
           <div
             className={
               checkLocation() === 2
@@ -109,12 +103,11 @@ const UserProfileNavigator = () => {
                 : "navigator-link extra-padding navigator-border-bottom "
             }
           >
-            <AdresseIcone />
-            Votre Adresse
+            <AddressIcon />
+            Address
           </div>
         </Link>
-        <Link to="/account/commandes">
-          {" "}
+        <Link to="/account/orders">
           <div
             className={
               checkLocation() === 3
@@ -122,13 +115,12 @@ const UserProfileNavigator = () => {
                 : "navigator-link extra-padding navigator-border-bottom "
             }
           >
-            <OrderIcone />
-            Votre Liste des commandes
+            <OrderIcon />
+            Orders list
           </div>
         </Link>
-
-        <div className="navigator-link">
-          <LogoutIcone />
+        <div className="navigator-link extra-padding">
+          <LogoutIcon />
           <button onClick={disconnect}>Disconnect</button>
         </div>
       </div>
@@ -144,22 +136,27 @@ const Container = styled.div`
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;
   height: fit-content;
+  border-radius: 12px;
+  overflow: hidden;
+  position: sticky;
+  top: 5px;
+  z-index: 99;
   .navigator-link {
     color: #676767;
     width: 100%;
     cursor: pointer;
     font-weight: 500;
     font-size: 0.9rem;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 50px auto;
+    transition: all 0.3s ease-in-out;
     svg {
       opacity: 0.4;
-      margin: 0 1em;
+      margin: auto;
     }
     button {
       width: 100%;
       height: 100%;
-      padding: 1em 0;
       background: transparent;
       text-align: left;
       font-weight: 500;
@@ -169,11 +166,14 @@ const Container = styled.div`
     &.active-navigation {
       color: #222 !important;
       font-weight: 600;
-      border-right: 2px solid #000;
+      border-right: 3px solid #000;
       background: RGBA(159, 162, 180, 0.08);
       svg {
         opacity: 1;
       }
+    }
+    &:hover {
+      background: RGBA(159, 162, 180, 0.08);
     }
   }
   .extra-padding {
@@ -186,8 +186,7 @@ const Container = styled.div`
     height: 18px;
     margin-right: 0.5em;
   }
-  .navigator-border-bottom {
-  }
+
   @media only screen and (min-width: 1200px) {
     .navigation-top {
       display: none;
@@ -201,6 +200,7 @@ const Container = styled.div`
       justify-content: space-between;
       padding: 1em 0;
       margin: 0 1em;
+      cursor: pointer;
       svg {
         &.rotate {
           transform: rotate(180deg);
@@ -211,7 +211,7 @@ const Container = styled.div`
         align-items: center;
       }
     }
-    .navidation-content {
+    .navigation-content {
       height: 0;
       &:nth-child(n) {
         display: none;
@@ -222,6 +222,23 @@ const Container = styled.div`
           display: block;
         }
       }
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    .navigation-top {
+      margin-right: 0.5em;
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+      .navigation-top-left {
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+    .navigator-link {
+      font-size: 13px;
     }
   }
 `;
