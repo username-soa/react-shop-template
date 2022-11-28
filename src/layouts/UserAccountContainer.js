@@ -22,6 +22,7 @@ const Container = styled.div`
   .profile-layout-content {
     display: grid;
     grid-template-columns: 330px auto;
+    gap: 1em;
   }
   .profile-layout-h2 {
     color: #393d46;

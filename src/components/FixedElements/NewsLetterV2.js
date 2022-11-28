@@ -115,6 +115,7 @@ const Container = styled(motion.div)`
         border: 1px solid #fff;
         color: #fff;
         transition: all 0.3s ease;
+        border-radius: 12px;
         &:hover {
           border: 1px solid #eee;
           color: #393d46;

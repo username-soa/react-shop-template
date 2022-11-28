@@ -92,7 +92,7 @@ const UserProfileNavigator = () => {
             }
           >
             <InfoIcon />
-            Personal information
+            Edit Profile
           </div>
         </Link>
         <Link to="/account/address">
@@ -104,7 +104,7 @@ const UserProfileNavigator = () => {
             }
           >
             <AddressIcon />
-            Address
+            Address Book
           </div>
         </Link>
         <Link to="/account/orders">
@@ -116,12 +116,12 @@ const UserProfileNavigator = () => {
             }
           >
             <OrderIcon />
-            Orders list
+            Order History
           </div>
         </Link>
         <div className="navigator-link extra-padding">
           <LogoutIcon />
-          <button onClick={disconnect}>Disconnect</button>
+          <button onClick={disconnect}>Log Out</button>
         </div>
       </div>
     </Container>
@@ -131,7 +131,6 @@ const UserProfileNavigator = () => {
 export default UserProfileNavigator;
 
 const Container = styled.div`
-  margin-right: 1em;
   background: #fff;
   box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
     rgb(237 239 247 / 47%) 0px 6px 6px;
