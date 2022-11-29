@@ -105,9 +105,5 @@ const Container = styled(motion.div)`
     form {
       grid-template-columns: 100%;
     }
-    /* h2,
-    .btn-wrp-form {
-      grid-column: 1/2;
-    } */
   }
 `;

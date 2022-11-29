@@ -38,7 +38,7 @@ const UserAddress = () => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.3 },
+      transition: { delayChildren: 0.3, staggerChildren: 0.3 },
     },
   };
   const childAnimations = {

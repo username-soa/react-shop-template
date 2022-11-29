@@ -1,22 +1,40 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion/dist/framer-motion";
 import Button from "../elements/Button";
 import { ordersList } from "../../utils/orders";
 
 const UserOrdersList = () => {
+  const parentAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+  const childAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    },
+  };
   return (
-    <Container>
+    <Container animate="show" initial="hidden" variants={parentAnimations}>
       <div className="table">
-        <div className="grid">
+        <motion.div className="grid" variants={childAnimations}>
           <h6>#ID</h6>
           <h6>Date</h6>
           <h6>Status</h6>
           <h6>Price</h6>
           <h6 className="empty-h6" />
-        </div>
+        </motion.div>
         {ordersList.map((i, index) => {
           return (
-            <div className="grid hover-grid">
+            <motion.div
+              className="grid hover-grid"
+              variants={childAnimations}
+              key={`order-item-${index}`}
+            >
               <h5>{i.name}</h5>
               <h5>{i.date}</h5>
               <h5>{i.status}</h5>
@@ -36,7 +54,7 @@ const UserOrdersList = () => {
                   padding="7px 10px"
                 />
               </h5>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -45,12 +63,7 @@ const UserOrdersList = () => {
 };
 
 export default UserOrdersList;
-const Container = styled.div`
-  padding: 1em;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: rgb(237 239 247 / 47%) 0px 10px 20px,
-    rgb(237 239 247 / 47%) 0px 6px 6px;
+const Container = styled(motion.div)`
   h5 {
     font-size: 14px;
     font-weight: 400;
@@ -79,6 +92,7 @@ const Container = styled.div`
   }
   .empty-h6 {
     height: 47px;
+    min-width: 90px;
   }
   .table {
     overflow-x: auto;
@@ -89,8 +103,10 @@ const Container = styled.div`
     grid-template-rows: auto;
     align-items: center;
     padding: 0.5em 1em;
+    min-width: 600px;
   }
   .hover-grid {
+    border-radius: 12px;
     &:hover {
       > h5 {
         color: #000 !important;

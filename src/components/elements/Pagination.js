@@ -7,7 +7,7 @@ const Pagination = ({
   paginate,
   source,
   currentPage,
-  setCurrrentPage,
+  setCurrentPage,
 }) => {
   const [pageNumbers, setPageNumbers] = useState([]);
 
@@ -32,7 +32,7 @@ const Pagination = ({
         >
           <button
             onClick={() => {
-              setCurrrentPage(currentPage - 1);
+              setCurrentPage(currentPage - 1);
               if (source) {
                 paginate(currentPage - 1, source);
               } else {
@@ -57,7 +57,7 @@ const Pagination = ({
               >
                 <button
                   onClick={() => {
-                    setCurrrentPage(currentPage - 1);
+                    setCurrentPage(currentPage - 1);
                     if (source) {
                       paginate(currentPage - 1, source);
                     } else {
@@ -87,7 +87,7 @@ const Pagination = ({
             >
               <button
                 onClick={() => {
-                  setCurrrentPage(number);
+                  setCurrentPage(number);
                   if (source) {
                     paginate(number, source);
                   } else {
@@ -107,7 +107,7 @@ const Pagination = ({
               >
                 <button
                   onClick={() => {
-                    setCurrrentPage(currentPage - 1);
+                    setCurrentPage(currentPage - 1);
                     if (source) {
                       paginate(currentPage - 1, source);
                     } else {
@@ -132,7 +132,7 @@ const Pagination = ({
         >
           <button
             onClick={() => {
-              setCurrrentPage(currentPage + 1);
+              setCurrentPage(currentPage + 1);
               if (source) {
                 paginate(currentPage + 1, source);
               } else {

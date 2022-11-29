@@ -6,7 +6,7 @@ import Shimmer from "./Shimmer";
 const UserOrdersSkeleton = ({ margin }) => {
   const renderSkeletonElements = () => {
     const items = [];
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 15; index++) {
       items.push(
         <div className="grid-skeleton">
           <SkeletonElement type="text" />
