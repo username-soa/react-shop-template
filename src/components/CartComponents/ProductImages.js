@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import ImageZoom from "../elements/ImageZoom";
-import img from "../../assets/product1.jpg";
 import product1 from "../../assets/collection2.png";
 import product2 from "../../assets/collection1.png";
 import product3 from "../../assets/testimg.png";

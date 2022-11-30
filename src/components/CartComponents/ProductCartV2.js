@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import { useHistory, Link } from "react-router-dom";
 import CustomImage from "../elements/CustomImage";
-import { ReactComponent as ChoppingCart } from "../../assets/shopping-cart.svg";
+import { ReactComponent as ChoppingCart } from "../../assets/svgs/shopping-cart.svg";
 
 const ProductCartV2 = ({
   slug,

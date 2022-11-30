@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { AnimatePresence } from "framer-motion/dist/framer-motion";
-import HeaderSearchBar from "./HeaderSearchBar";
-import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
-import { ReactComponent as Search } from "../../assets/loupe.svg";
-import { ReactComponent as ChoppingCart } from "../../assets/shopping-cart.svg";
-import ClientContext from "../../contexts/ClientContext";
 import Button from "../elements/Button";
+import HeaderSearchBar from "./HeaderSearchBar";
+import ClientContext from "../../contexts/ClientContext";
+import { ReactComponent as Search } from "../../assets/svgs/loupe.svg";
+import { ReactComponent as MenuIcon } from "../../assets/svgs/menu.svg";
+import { ReactComponent as ChoppingCart } from "../../assets/svgs/shopping-cart.svg";
 
 const Header = ({ sideMenu, setSideMenu }) => {
   let isMounted = true;

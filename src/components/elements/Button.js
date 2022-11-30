@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Search } from "../../assets/loupe.svg";
+import { ReactComponent as Search } from "../../assets/svgs/loupe.svg";
 
 const Button = ({
   title,

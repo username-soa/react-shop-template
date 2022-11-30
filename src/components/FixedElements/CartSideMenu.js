@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { ReactComponent as Close } from "../../assets/close.svg";
+import { ReactComponent as Close } from "../../assets/svgs/close.svg";
 import CartSideMenuBottom from "../CartComponents/CartSideMenuBottom";
 import CartSideMenuItem from "../CartComponents/CartSideMenuItem";
 import ClientContext from "../../contexts/ClientContext";

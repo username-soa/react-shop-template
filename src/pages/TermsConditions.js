@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import Layout from "../layouts/DefaultLayout";
-import { ReactComponent as TermsIcone } from "../assets/terms.svg";
 
 const TermsConditions = () => {
   const HeaderVariants = {

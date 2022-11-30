@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import Layout from "../layouts/DefaultLayout";
-import { ReactComponent as ShippingIcone } from "../assets/shipping.svg";
+import { ReactComponent as ShippingIcon } from "../assets/svgs/shipping.svg";
 
 const ShippingInfo = () => {
   const HeaderVariants = {
@@ -471,7 +471,7 @@ const ShippingInfo = () => {
             animate="visible"
             variants={InfoVariants}
           >
-            <ShippingIcone />
+            <ShippingIcon />
           </motion.div>
         </div>
       </Container>

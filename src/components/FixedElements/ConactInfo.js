@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { ReactComponent as EmailIcon } from "../../assets/email.svg";
-import { ReactComponent as PhoneEmail } from "../../assets/phone-call.svg";
-import { ReactComponent as LocationIcon } from "../../assets/pin.svg";
-import { ReactComponent as FacebookIcon } from "../../assets/facebook.svg";
-import { ReactComponent as InstagramIcon } from "../../assets/instagram.svg";
-import { ReactComponent as TwitterIcon } from "../../assets/twitter.svg";
+import { ReactComponent as EmailIcon } from "../../assets/svgs/email.svg";
+import { ReactComponent as PhoneEmail } from "../../assets/svgs/phone-call.svg";
+import { ReactComponent as LocationIcon } from "../../assets/svgs/pin.svg";
+import { ReactComponent as FacebookIcon } from "../../assets/svgs/facebook.svg";
+import { ReactComponent as InstagramIcon } from "../../assets/svgs/instagram.svg";
+import { ReactComponent as TwitterIcon } from "../../assets/svgs/twitter.svg";
 
 const ContactInfo = () => {
   const parentAnimations = {

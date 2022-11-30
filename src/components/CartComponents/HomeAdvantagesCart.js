@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { motion, useInView } from "framer-motion/dist/framer-motion";
-import AdvantagesCart from "../elements/AdvantagesCart";
-import { ReactComponent as packageIcone } from "../../assets/package.svg";
-import { ReactComponent as package2Icone } from "../../assets/package2.svg";
-import { ReactComponent as deliveryIcone } from "../../assets/delivery.svg";
+import AdvantagesCart from "../../components/elements/AdvantagesCart";
+import { ReactComponent as packageIcon } from "../../assets/svgs/package.svg";
+import { ReactComponent as package2Icon } from "../../assets/svgs/package2.svg";
+import { ReactComponent as deliveryIcon } from "../../assets/svgs/delivery.svg";
 
 const HomeAdvantagesCart = () => {
   const H2Animations = {
@@ -49,19 +49,19 @@ const HomeAdvantagesCart = () => {
       <div className="carts-items-container">
         <AdvantagesCart
           title="Latest Styles"
-          Icon={packageIcone}
+          Icon={packageIcon}
           text="Our designs follow the latest fashion styles to help you stay updated with new trends."
           animations={childAnimations}
         />
         <AdvantagesCart
           title="Best Prices"
-          Icon={package2Icone}
+          Icon={package2Icon}
           text="Enjoy the best prices for high quality clothing and accessories."
           animations={childAnimations}
         />
         <AdvantagesCart
           title="Free Shipping"
-          Icon={deliveryIcone}
+          Icon={deliveryIcon}
           text="We provide free shipping worldwide. You can order from anywhere, anytime."
           animations={childAnimations}
         />

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as SearchIscone } from "../../assets/search.svg";
+import { ReactComponent as SearchIcon } from "../../assets/svgs/search.svg";
 
-const SearchBar = ({ handlSearchInput }) => {
+const SearchBar = ({ handleSearchInput }) => {
   return (
     <Container>
       <div className="search-wrp">
@@ -10,11 +10,11 @@ const SearchBar = ({ handlSearchInput }) => {
           type="text"
           id="sms"
           name="methode"
-          onChange={(e) => handlSearchInput(e)}
-          placeholder="Rechercher"
+          onChange={(e) => handleSearchInput(e)}
+          placeholder="Search"
           className="searchinput"
         />
-        <SearchIscone />
+        <SearchIcon />
       </div>
     </Container>
   );

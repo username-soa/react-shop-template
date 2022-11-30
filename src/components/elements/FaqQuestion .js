@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
-import { ReactComponent as CloseIcon } from "../../assets/close.svg";
+import { ReactComponent as CloseIcon } from "../../assets/svgs/close.svg";
 
 const FaqQuestion = ({ title, children, animations }) => {
   const ExtraInfoVariants = {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/svgs/trash.svg";
 
 const CartItem = ({
   img,

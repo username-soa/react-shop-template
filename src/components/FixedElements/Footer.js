@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ReactComponent as FacebookIcone } from "../../assets/facebook.svg";
-import { ReactComponent as InstagramIcone } from "../../assets/instagram.svg";
-import { ReactComponent as TwitterIcone } from "../../assets/twitter.svg";
-import crats from "../../assets/credit.png";
+import { ReactComponent as FacebookIcone } from "../../assets/svgs/facebook.svg";
+import { ReactComponent as InstagramIcone } from "../../assets/svgs/instagram.svg";
+import { ReactComponent as TwitterIcone } from "../../assets/svgs/twitter.svg";
+import crats from "../../assets/pngs/credit.png";
 
 const Footer = () => {
   return (

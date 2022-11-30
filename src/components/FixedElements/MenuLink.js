@@ -2,26 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-const MenuLink = ({ to, title, SvgIcon, external, state, setState }) => {
+const MenuLink = ({ to, title, external }) => {
   return (
     <Container>
-      <button onClick={() => setState(false)}>
-        <NavLink
-          exact
-          className="dash-link"
-          to={
-            external
-              ? {
-                  pathname: to,
-                }
-              : to
-          }
-          target={external ? "_blank" : null}
-        >
-          <SvgIcon />
-          <span>{title}</span>
-        </NavLink>
-      </button>
+      <NavLink
+        exact
+        className="dash-link"
+        to={
+          external
+            ? {
+                pathname: to,
+              }
+            : to
+        }
+        target={external ? "_blank" : null}
+      >
+        <span className="link-title">{title}</span>
+      </NavLink>
     </Container>
   );
 };
@@ -29,16 +26,14 @@ const MenuLink = ({ to, title, SvgIcon, external, state, setState }) => {
 export default MenuLink;
 
 const Container = styled.div`
-  button {
-    width: 100% !important;
-    background: transparent;
-    &:hover {
-      span {
-        background-color: #fff;
-        color: #000;
-        padding: 2px 10px !important;
-        text-transform: capitalize;
-      }
+  width: 100% !important;
+  background: transparent;
+  &:hover {
+    .link-title {
+      color: #000;
+      background-color: #fff;
+      text-transform: capitalize;
+      padding: 1px 10px !important;
     }
   }
   .dash-link {
@@ -56,18 +51,18 @@ const Container = styled.div`
         }
       }
     }
-    span {
-      font-size: 1.125rem;
-      font-family: neue-haas-unica, sans-serif;
-      font-weight: 800;
-      display: inline-block;
-      position: relative;
-      color: #fff;
-      padding: 2px 0;
-      line-height: 1.2;
-      text-transform: uppercase;
-      transition: all 0.4s;
-      white-space: nowrap;
-    }
+  }
+  .link-title {
+    color: #fff;
+    opacity: 0.9;
+    padding: 1px 0;
+    font-weight: 700;
+    line-height: 1.2;
+    font-size: 1.1rem;
+    position: relative;
+    white-space: nowrap;
+    transition: all 0.4s;
+    display: inline-block;
+    text-transform: uppercase;
   }
 `;

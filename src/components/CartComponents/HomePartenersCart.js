@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { motion, useInView } from "framer-motion/dist/framer-motion";
-import rebook from "../../assets/rebook.png";
-import adidas from "../../assets/adidas.png";
-import nike from "../../assets/nike.png";
-import puma from "../../assets/puma.png";
+import rebook from "../../assets/pngs/rebook.png";
+import adidas from "../../assets/pngs/adidas.png";
+import nike from "../../assets/pngs/nike.png";
+import puma from "../../assets/pngs/puma.png";
 
 const HomePartnersCart = () => {
   const parentAnimations = {

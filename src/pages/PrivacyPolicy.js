@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import Layout from "../layouts/DefaultLayout";
-import { ReactComponent as PrivacyIcone } from "../assets/privacypolicy.svg";
+import { ReactComponent as PrivacyIcon } from "../assets/svgs/privacy-policy.svg";
 
 const PrivacyPolicy = () => {
   const HeaderVariants = {

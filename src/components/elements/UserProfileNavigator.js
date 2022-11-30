@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useLocation, useHistory } from "react-router-dom";
-import { ReactComponent as PlusIcon } from "../../assets/down-arrow.svg";
-import { ReactComponent as InfoIcon } from "../../assets/user2.svg";
-import { ReactComponent as AddressIcon } from "../../assets/adress-book.svg";
-import { ReactComponent as OrderIcon } from "../../assets/sent.svg";
-import { ReactComponent as LogoutIcon } from "../../assets/logout.svg";
+import { ReactComponent as InfoIcon } from "../../assets/svgs/user2.svg";
+import { ReactComponent as OrderIcon } from "../../assets/svgs/sent.svg";
+import { ReactComponent as LogoutIcon } from "../../assets/svgs/logout.svg";
+import { ReactComponent as PlusIcon } from "../../assets/svgs/down-arrow.svg";
+import { ReactComponent as AddressIcon } from "../../assets/svgs/adress-book.svg";
 
 const UserProfileNavigator = () => {
   const [expand, setExpand] = useState(0);

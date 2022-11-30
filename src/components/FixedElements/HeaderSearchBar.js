@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as SearchIcon } from "../../assets/close.svg";
-import { ReactComponent as CloseIcon } from "../../assets/close.svg";
+import { ReactComponent as SearchIcon } from "../../assets/svgs/close.svg";
+import { ReactComponent as CloseIcon } from "../../assets/svgs/close.svg";
 import SearchHistoryContext from "../../contexts/SearchHistoryContext";
 
 const Menu = ({ state, setState }) => {

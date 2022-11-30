@@ -1,23 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion/dist/framer-motion";
 import MenuLink from "./MenuLink";
 import MenuLinkParent from "./MenuLinkParent";
-import { ReactComponent as AccessoriesIcone } from "../../assets/headset.svg";
-import { ReactComponent as AboutUs } from "../../assets/aboutus.svg";
-import { ReactComponent as Category } from "../../assets/category.svg";
-import { ReactComponent as ContactUs } from "../../assets/contactus.svg";
-import { ReactComponent as CloseIcone } from "../../assets/cancel.svg";
-import { ReactComponent as BrandIcone } from "../../assets/brand.svg";
-import { ReactComponent as LogoIcone } from "../../assets/logo.svg";
-import { ReactComponent as FacebookIcone } from "../../assets/facebook.svg";
-import { ReactComponent as InstagramIcone } from "../../assets/instagram.svg";
-import { ReactComponent as TwitterIcone } from "../../assets/twitter.svg";
-import { ReactComponent as FaqsIcone } from "../../assets/faq.svg";
-import { ReactComponent as TrustIcone } from "../../assets/trust.svg";
-import { ReactComponent as ContractIcone } from "../../assets/contract.svg";
-import { ReactComponent as ShippingIcone } from "../../assets/delivery.svg";
+import { ReactComponent as AboutIcon } from "../../assets/svgs/about.svg";
+import { ReactComponent as CloseIcon } from "../../assets/svgs/cancel.svg";
+import { ReactComponent as SocialsIcon } from "../../assets/svgs/socials.svg";
+import { ReactComponent as SupportIcon } from "../../assets/svgs/support.svg";
+import { ReactComponent as CollectionIcon } from "../../assets/svgs/collection.svg";
+
 import {
   menuNavigationCategories,
   menuContainerVariants,
@@ -25,13 +17,25 @@ import {
 import { collectionList } from "../../utils/Products";
 
 const Menu = ({ sideMenu, setSideMenu }) => {
-  let isMounted = true;
   const handleTitle = (name) => {
     if (name?.toLowerCase().includes("home-")) {
       return name.replace("home-", "");
     } else {
       return name;
     }
+  };
+  const parentAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { delayChildren: 0.1, staggerChildren: 0.3 },
+    },
+  };
+  const childAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    },
   };
 
   return (
@@ -42,16 +46,27 @@ const Menu = ({ sideMenu, setSideMenu }) => {
       exit="exit"
       variants={menuContainerVariants}
     >
-      <div className="links">
+      <motion.div
+        animate="show"
+        initial="hidden"
+        variants={parentAnimations}
+        className="links"
+      >
         <div className="links-top">
-          <div className="links-top-menu-icon">
-            <CloseIcone
+          <motion.div
+            variants={childAnimations}
+            className="links-top-menu-icon"
+          >
+            <CloseIcon
               onClick={() => {
                 setSideMenu(false);
               }}
             />
-          </div>
-          <div className="links-top-header-right">
+          </motion.div>
+          <motion.div
+            variants={childAnimations}
+            className="links-top-header-right"
+          >
             <button onClick={() => setSideMenu(false)}>
               <NavLink to="/" className="top-link">
                 <motion.h2
@@ -65,97 +80,58 @@ const Menu = ({ sideMenu, setSideMenu }) => {
                 </motion.h2>
               </NavLink>
             </button>
-          </div>
+          </motion.div>
         </div>
         <div className="links-content">
-          <MenuLinkParent SvgComp={AccessoriesIcone} title="Suivez-nous sur">
-            <MenuLink
-              to="https://www.facebook.com"
-              title="Facebook"
-              external
-              SvgIcon={FacebookIcone}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
+          <MenuLinkParent
+            SvgComp={SocialsIcon}
+            title="Socials"
+            animations={childAnimations}
+          >
+            <MenuLink to="https://www.facebook.com" title="Facebook" external />
             <MenuLink
               to="https://www.instagram.com"
               title="Instagram"
               external
-              SvgIcon={InstagramIcone}
-              state={sideMenu}
-              setState={setSideMenu}
             />
-            <MenuLink
-              to="https://www.twitter.com"
-              title="Twitter"
-              external
-              SvgIcon={TwitterIcone}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
+            <MenuLink to="https://www.twitter.com" title="Twitter" external />
           </MenuLinkParent>
-          <MenuLinkParent SvgComp={AccessoriesIcone} title="À Propos De Nous">
-            <MenuLink
-              to="/about"
-              title="À Propos"
-              SvgIcon={AboutUs}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
-            <MenuLink
-              to="/contact"
-              title="Contact"
-              SvgIcon={ContactUs}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
+          <MenuLinkParent
+            SvgComp={AboutIcon}
+            title="About"
+            animations={childAnimations}
+          >
+            <MenuLink to="/about" title="About" />
+            <MenuLink to="/contact" title="Contact" />
           </MenuLinkParent>
-          <MenuLinkParent SvgComp={AccessoriesIcone} title="Support">
-            <MenuLink
-              to="/privacy-policy"
-              title="Politique de confidentialité"
-              SvgIcon={TrustIcone}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
-            <MenuLink
-              to="/livraison"
-              title="Politique d'expédition"
-              SvgIcon={ShippingIcone}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
-            <MenuLink
-              to="/termes-conditions"
-              title="Termes et conditions"
-              SvgIcon={ContractIcone}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
-            <MenuLink
-              to="/faqs"
-              title="FAQs"
-              SvgIcon={FaqsIcone}
-              state={sideMenu}
-              setState={setSideMenu}
-            />
+          <MenuLinkParent
+            SvgComp={SupportIcon}
+            title="Support"
+            animations={childAnimations}
+          >
+            <MenuLink to="/faqs" title="FAQs" />
+            <MenuLink to="/privacy-policy" title="Privacy policy" />
+            <MenuLink to="/terms-conditions" title="Terms & Conditions" />
           </MenuLinkParent>
-          <MenuLinkParent SvgComp={AccessoriesIcone} title="Catégories">
-            {collectionList?.map((c, index) => {
-              return (
-                <MenuLink
-                  to={`/collections/${c?.id}`}
-                  title={handleTitle(c?.title)}
-                  SvgIcon={Category}
-                  state={sideMenu}
-                  setState={setSideMenu}
-                  key={`menu-link1_${index}`}
-                />
-              );
-            })}
+          <MenuLinkParent
+            SvgComp={CollectionIcon}
+            title="Collections"
+            animations={childAnimations}
+          >
+            {collectionList
+              .sort((a, b) => a.name.length - b.name.length)
+              .map((c, index) => {
+                return (
+                  <MenuLink
+                    key={`menu-link1-${index}`}
+                    title={handleTitle(c?.name)}
+                    to={`/collections/${c?.slug}`}
+                  />
+                );
+              })}
           </MenuLinkParent>
         </div>
-      </div>
+      </motion.div>
     </Container>
   );
 };
@@ -223,9 +199,10 @@ const Container = styled(motion.div)`
     }
   }
   .links-content {
-    padding: 0em 1em;
-    display: flex;
-    flex-wrap: wrap;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 700px;
   }
   @media only screen and (max-width: 1000px) {
     .links-top {
@@ -238,12 +215,16 @@ const Container = styled(motion.div)`
   @media only screen and (max-width: 768px) {
     .links-top {
       justify-content: space-between;
+      padding: 2em 0;
       .links-top-h2 {
         font-size: 1.25rem;
       }
     }
     .links-content {
-      padding: 0;
+      margin: 0;
+      padding: 0 1em;
+      grid-template-columns: 100%;
+      width: 100%;
     }
     .logo {
       svg {
