@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ReactComponent as FacebookIcone } from "../../assets/svgs/facebook.svg";
-import { ReactComponent as InstagramIcone } from "../../assets/svgs/instagram.svg";
-import { ReactComponent as TwitterIcone } from "../../assets/svgs/twitter.svg";
-import crats from "../../assets/pngs/credit.png";
+import shopInfo from "../../utils/general";
+import cards from "../../assets/pngs/credit.png";
+import { ReactComponent as TwitterIcon } from "../../assets/svgs/twitter.svg";
+import { ReactComponent as FacebookIcon } from "../../assets/svgs/facebook.svg";
+import { ReactComponent as InstagramIcon } from "../../assets/svgs/instagram.svg";
 
 const Footer = () => {
   return (
@@ -36,44 +37,44 @@ const Footer = () => {
         </div>
         <div className="contact">
           <h4 className="title-h4">Find us</h4>
-          <h4 className="data">+212 528230735</h4>
-          <h4 className="data">shop.contact@gmail.com</h4>
-          <h4 className="data">
-            N° 19 Rue Tambouktou Cité El Massira Agadir, Maroc
-          </h4>
+          <h4 className="data">{shopInfo.phone}</h4>
+          <h4 className="data">{shopInfo.email}</h4>
+          <h4 className="data">{shopInfo.address}</h4>
         </div>
       </div>
       <div className="bottom-footer">
         <div>
-          <span className="data">© {new Date().getFullYear()} Shop</span>
+          <span className="data">
+            © {new Date().getFullYear()} {shopInfo.name}.
+          </span>
         </div>
         <div>
-          <img src={crats} alt="credit-cards" />
+          <img src={cards} alt="credit-cards" />
         </div>
         <div className="socials">
           <a
             className="social-link"
-            href="https://www.facebook.com"
+            href={shopInfo.facebook}
             target="_blank"
             rel="noreferrer"
           >
-            <FacebookIcone />
+            <FacebookIcon />
           </a>
           <a
             className="social-link"
-            href="https://www.instagram.com"
+            href={shopInfo.instagram}
             target="_blank"
             rel="noreferrer"
           >
-            <InstagramIcone />
+            <InstagramIcon />
           </a>
           <a
             className="social-link"
-            href="https://www.twitter.com"
+            href={shopInfo.twitter}
             target="_blank"
             rel="noreferrer"
           >
-            <TwitterIcone />
+            <TwitterIcon />
           </a>
         </div>
       </div>

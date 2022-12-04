@@ -20,35 +20,42 @@ import Collections from "./pages/Collections";
 import ContactPage from "./pages/ContactV2";
 import { ClientProvider } from "./contexts/ClientContext";
 import { SearchHistoryProvider } from "./contexts/SearchHistoryContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   const location = useLocation();
   return (
     <ClientProvider>
-      <SearchHistoryProvider>
-        <ScrollToTop />
-        <AnimatePresence exitBeforeEnter>
-          <Switch location={location} key={location.key}>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/product-details/:slug" component={Product} />
-            <Route exact path="/contact" component={ContactPage} />
-            <Route exact path="/search/:p" component={SearchPage} />
-            <Route exact path="/account/login" component={LoginPage} />
-            <Route exact path="/shopping-cart" component={CartPage} />
-            <Route exact path="/about" component={AboutPage} />
-            <Route exact path="/account" component={UserProfilePage} />
-            <Route exact path="/account/orders" component={UserOrders} />
-            <Route exact path="/account/address" component={UserAdresse} />
-            <Route exact path="/faqs" component={FAQs} />
-            <Route exact path="/privacy-policy" component={PrivacyPolicy} />
-            <Route exact path="/livraison" component={ShippingInfo} />
-            <Route exact path="/terms-conditions" component={TermsConditions} />
-            <Route exact path="/collections/all" component={Collections} />
-            <Route exact path="/collections/:slug" component={Collection} />
-            <Route path="*" component={NotFound} />
-          </Switch>
-        </AnimatePresence>
-      </SearchHistoryProvider>
+      <AuthProvider>
+        <SearchHistoryProvider>
+          <ScrollToTop />
+          <AnimatePresence exitBeforeEnter>
+            <Switch location={location} key={location.key}>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/product-details/:slug" component={Product} />
+              <Route exact path="/contact" component={ContactPage} />
+              <Route exact path="/search/:p" component={SearchPage} />
+              <Route exact path="/account/login" component={LoginPage} />
+              <Route exact path="/shopping-cart" component={CartPage} />
+              <Route exact path="/about" component={AboutPage} />
+              <Route exact path="/account" component={UserProfilePage} />
+              <Route exact path="/account/orders" component={UserOrders} />
+              <Route exact path="/account/address" component={UserAdresse} />
+              <Route exact path="/faqs" component={FAQs} />
+              <Route exact path="/privacy-policy" component={PrivacyPolicy} />
+              <Route exact path="/livraison" component={ShippingInfo} />
+              <Route
+                exact
+                path="/terms-conditions"
+                component={TermsConditions}
+              />
+              <Route exact path="/collections/all" component={Collections} />
+              <Route exact path="/collections/:slug" component={Collection} />
+              <Route path="*" component={NotFound} />
+            </Switch>
+          </AnimatePresence>
+        </SearchHistoryProvider>
+      </AuthProvider>
     </ClientProvider>
   );
 }

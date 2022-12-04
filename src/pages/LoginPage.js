@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { motion } from "framer-motion/dist/framer-motion";
 import LoginForm from "../components/FormeComponents/LoginForm";
 import SigningForm from "../components/FormeComponents/SigningForm";
 import Footer from "../components/FixedElements/Footer";
+import AuthContext from "../contexts/AuthContext";
 
 const LoginPage = () => {
   const fadeUp = {
@@ -23,16 +24,22 @@ const LoginPage = () => {
   };
   const history = useHistory();
   const [show, setShow] = useState(true);
-  const [errors, setErrors] = useState(false);
+  const [errors, setErrors] = useState(null);
+  const { saveUserToBrowser, getUserFromBrowser } = useContext(AuthContext);
 
-  const signup = async (d, newPhone) => {
-    //test only, push user to home page
+  const signup = async (data) => {
+    saveUserToBrowser(data);
     history.push("/account");
   };
 
-  const login = (d) => {
-    //test only, push user to home page
-    history.push("/account");
+  const login = (data) => {
+    const result = getUserFromBrowser(data);
+    if (result === 1) {
+      setErrors(null);
+      history.push("/account");
+    } else if (result === -1) {
+      setErrors("Email or Password is incorrect.");
+    }
   };
 
   return (
@@ -86,7 +93,12 @@ const LoginPage = () => {
       </div>
       <div className="forms-container">
         {show ? (
-          <LoginForm setState={setShow} state={show} handleLogin={login} />
+          <LoginForm
+            setState={setShow}
+            state={show}
+            handleLogin={login}
+            errors={errors}
+          />
         ) : (
           <SigningForm
             setState={setShow}

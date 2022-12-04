@@ -132,12 +132,14 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.links::-webkit-scrollbar {
+.links::-webkit-scrollbar,
+.overflow-modal-mobile::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.links {
+.links,
+.overflow-modal-mobile {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }

@@ -13,8 +13,8 @@ const UserInfoForm = ({ updateInfo, updatePassword, user, animations }) => {
       <Formik
         enableReinitialize={true}
         initialValues={{
-          fname: user?.firstName || "",
-          lname: user?.lastName || "",
+          fname: user?.fname || "",
+          lname: user?.lname || "",
           email: user?.email || "",
           phone: user?.phone || "",
         }}
@@ -53,7 +53,7 @@ const UserInfoForm = ({ updateInfo, updatePassword, user, animations }) => {
       <Formik
         enableReinitialize={true}
         initialValues={{
-          oldPwd: "",
+          oldPwd: user?.pwd || "",
           newPwd: "",
           confirmPwd: "",
         }}
@@ -62,11 +62,23 @@ const UserInfoForm = ({ updateInfo, updatePassword, user, animations }) => {
           newPwd: Yup.string().required("required"),
           confirmPwd: Yup.string().required("required"),
         })}
-        onSubmit={async (data) => {
-          await updatePassword(data, user?.shopifyID);
+        onSubmit={async (data, { setErrors }) => {
+          if (data.oldPwd !== user?.pwd) {
+            setErrors({
+              oldPwd: "please enter your correct password",
+            });
+          }
+          if (data.newPwd === data.confirmPwd) {
+            await updatePassword(data, user?.shopifyID);
+          } else {
+            setErrors({
+              confirmPwd: "password must match",
+              newPwd: "password must match",
+            });
+          }
         }}
       >
-        {({ handleSubmit, isSubmitting, values }) => (
+        {({ handleSubmit, isSubmitting }) => (
           <Form className="form first-form">
             <CustomInput
               placeholder="Old Password"

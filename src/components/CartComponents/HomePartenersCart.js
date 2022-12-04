@@ -60,6 +60,7 @@ const Container = styled(motion.div)`
   background: #fff;
   padding: 4em 1em;
   margin: 4em 150px;
+  border-radius: 12px;
   box-shadow: 0px 50px 130px 0px rgb(57 61 70 / 15%);
   img {
     opacity: 0.6;

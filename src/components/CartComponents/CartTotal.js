@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion/dist/framer-motion";
 import useHasBeenViewed from "../../hooks/useHasBeenViewed";
 import Button from "../elements/Button";
@@ -24,9 +23,9 @@ const CartTotal = ({ price, checkoutEC }) => {
       initial="hidden"
       variants={AdvantageCartVariants}
     >
-      <h4 className="cart-total-h4">Total panier</h4>
+      <h4 className="cart-total-h4">Cart Total</h4>
       <div className="cart-total-row">
-        <h5 className="cart-total-h5">Sous-total</h5>
+        <h5 className="cart-total-h5">Sub-total</h5>
         <h5>
           {new Intl.NumberFormat("fr-FR", {
             style: "currency",

@@ -15,6 +15,7 @@ import {
   menuContainerVariants,
 } from "../../utils/Variables";
 import { collectionList } from "../../utils/Products";
+import shopInfo from "../../utils/general";
 
 const Menu = ({ sideMenu, setSideMenu }) => {
   const handleTitle = (name) => {
@@ -28,7 +29,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { delayChildren: 0.1, staggerChildren: 0.3 },
+      transition: { delayChildren: 0.1, staggerChildren: 0.2 },
     },
   };
   const childAnimations = {
@@ -76,7 +77,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
                   variants={menuNavigationCategories}
                   className="links-top-h2"
                 >
-                  Digital Era.
+                  {shopInfo.name}.
                 </motion.h2>
               </NavLink>
             </button>
@@ -88,13 +89,9 @@ const Menu = ({ sideMenu, setSideMenu }) => {
             title="Socials"
             animations={childAnimations}
           >
-            <MenuLink to="https://www.facebook.com" title="Facebook" external />
-            <MenuLink
-              to="https://www.instagram.com"
-              title="Instagram"
-              external
-            />
-            <MenuLink to="https://www.twitter.com" title="Twitter" external />
+            <MenuLink to={shopInfo.facebook} title="Facebook" external />
+            <MenuLink to={shopInfo.instagram} title="Instagram" external />
+            <MenuLink to={shopInfo.twitter} title="Twitter" external />
           </MenuLinkParent>
           <MenuLinkParent
             SvgComp={AboutIcon}

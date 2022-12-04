@@ -8,7 +8,7 @@ const UserOrdersSkeleton = ({ margin }) => {
     const items = [];
     for (let index = 0; index < 15; index++) {
       items.push(
-        <div className="grid-skeleton">
+        <div className="grid-skeleton" key={`user-orders-skeleton-${index}`}>
           <SkeletonElement type="text" />
           <SkeletonElement type="text" />
           <SkeletonElement type="text" />

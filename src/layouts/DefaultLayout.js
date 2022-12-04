@@ -2,41 +2,28 @@ import React, { useState, useRef, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion/dist/framer-motion";
-import Header from "../components/FixedElements/Header";
 import Menu from "../components/FixedElements/Menu";
+import ClientContext from "../contexts/ClientContext";
+import Header from "../components/FixedElements/Header";
 import Footer from "../components/FixedElements/Footer";
 import CartSideMenu from "../components/FixedElements/CartSideMenu";
-import ClientContext from "../contexts/ClientContext";
 
 const Layout = ({ children }) => {
-  const { isOpen, setIsOpen } = useContext(ClientContext);
   const location = useLocation();
   const scrollRef = useRef(null);
   const [sideMenu, setSideMenu] = useState(false);
-  const [scrollDir, setScrollDir] = useState(null);
-  const [feedback, setFeeadback] = useState({ status: null, message: null });
+  const { isOpen, setIsOpen } = useContext(ClientContext);
+  const [feedback, setFeedback] = useState({ status: null, message: null });
 
   return (
-    <Container sideMenu={sideMenu} status={scrollDir}>
+    <Container sideMenu={sideMenu}>
       <div className="menu">
         <AnimatePresence exitBeforeEnter>
           {sideMenu && <Menu sideMenu={sideMenu} setSideMenu={setSideMenu} />}
         </AnimatePresence>
       </div>
       <div className="body">
-        <div
-          id="myHeader"
-          className={
-            scrollDir === "up"
-              ? "header fadeOut"
-              : scrollDir === "down"
-              ? "header fadeIn"
-              : scrollDir === "normal"
-              ? "header"
-              : "header"
-          }
-          ref={scrollRef}
-        >
+        <div id="myHeader" ref={scrollRef}>
           <Header sideMenu={sideMenu} setSideMenu={setSideMenu} />
         </div>
         <div className="content">

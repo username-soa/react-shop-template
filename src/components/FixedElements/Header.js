@@ -4,16 +4,18 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { AnimatePresence } from "framer-motion/dist/framer-motion";
 import Button from "../elements/Button";
 import HeaderSearchBar from "./HeaderSearchBar";
+import AuthContext from "../../contexts/AuthContext";
 import ClientContext from "../../contexts/ClientContext";
 import { ReactComponent as Search } from "../../assets/svgs/loupe.svg";
 import { ReactComponent as MenuIcon } from "../../assets/svgs/menu.svg";
 import { ReactComponent as ChoppingCart } from "../../assets/svgs/shopping-cart.svg";
+import shopInfo from "../../utils/general";
 
 const Header = ({ sideMenu, setSideMenu }) => {
   let isMounted = true;
-  // const cartItems = [];
   const history = useHistory();
   const location = useLocation();
+  const { user } = useContext(AuthContext);
   const { cartItems } = useContext(ClientContext);
   const [totalQte, setTotalQte] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
@@ -41,17 +43,17 @@ const Header = ({ sideMenu, setSideMenu }) => {
   }, [cartItems]);
 
   return (
-    <Container totalqte={totalQte}>
+    <Container>
       <div className="menu-icon">
         <MenuIcon
           onClick={() => {
-            setSideMenu(true);
+            setSideMenu(!sideMenu);
           }}
         />
       </div>
       <div className="header-right">
         <Link to="/">
-          <h2 className="header-right-h2">Digital Era.</h2>
+          <h2 className="header-right-h2">{shopInfo.name}.</h2>
         </Link>
         <div className="svgs-wrp">
           {!location.pathname.includes("/search/") && (
@@ -61,17 +63,31 @@ const Header = ({ sideMenu, setSideMenu }) => {
             <ChoppingCart onClick={() => history.push("/shopping-cart")} />
             <span>{totalQte ? totalQte : 0}</span>
           </div>
-
-          {/* <ChoppingCart onClick={() => history.push("/shopping-cart")} /> */}
-          <Link to="/account/login">
-            <Button
-              bg="#393d46"
-              color="#fff"
-              title="Login"
-              margin="0"
-              radius="12px"
-            />
-          </Link>
+          {user && !location.pathname.includes("/account/") ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              onClick={() => {
+                history.push("/account/");
+              }}
+            >
+              <path d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z" />
+            </svg>
+          ) : (
+            !location.pathname.includes("/account/") && (
+              <Link to="/account/login">
+                <Button
+                  bg="#393d46"
+                  color="#fff"
+                  title="Login"
+                  margin="0"
+                  radius="12px"
+                />
+              </Link>
+            )
+          )}
         </div>
       </div>
       <AnimatePresence>
@@ -139,9 +155,11 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1em;
     svg {
-      margin: 0 1em;
       cursor: pointer;
+      width: 24px;
+      height: 24px;
       fill: #393d46 !important;
       g {
         fill: #393d46 !important;

@@ -16,6 +16,7 @@ export default AdvantagesCart;
 
 const Container = styled(motion.div)`
   padding: 2em;
+  border-radius: 12px;
   box-shadow: 0px 50px 130px 0px rgb(57 61 70 / 15%);
   background: ${(props) => (props.bg ? props.bg : "#fff")};
   svg {

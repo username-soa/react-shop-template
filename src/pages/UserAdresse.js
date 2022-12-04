@@ -1,39 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import Layout from "../layouts/DefaultLayout";
+import AuthContext from "../contexts/AuthContext";
 import CustomHelmet from "../components/elements/CustomHelmet";
 import UserProfileContainer from "../layouts/UserAccountContainer";
-import UserAddressForm from "../components/FormeComponents/UserAddressForm";
 import UserAddressCard from "../components/CartComponents/UserAddressCard";
+import UserAddressForm from "../components/FormeComponents/UserAddressForm";
+import UpdateAddressPopup from "../components/FixedElements/UpdateAddressPopup";
 
 const UserAddress = () => {
-  const updateAddress = async (data) => {
-    return data;
-  };
-  const addressData = [
-    {
-      name: "Billing Address",
-      address1: "2810 Elm Hill Pike",
-      address2: "Apartment 222",
-      city: "Nashville",
-      company: "Company Name",
-      country: "United States",
-      province: "Tennessee",
-      zip: "37214",
-    },
-    {
-      name: "Shipping Address",
-      address1: "1711 N Oxnard Blvd 1711 N Oxnard Blvd 1711 N Oxnard Blvd",
-      address2: "Apartment 111",
-      city: "Oxnard",
-      company: "Company Name",
-      country: "United States",
-      province: "California",
-      zip: "93030",
-    },
-  ];
-
   const parentAnimations = {
     hidden: { opacity: 0 },
     show: {
@@ -42,14 +18,31 @@ const UserAddress = () => {
     },
   };
   const childAnimations = {
-    hidden: { opacity: 0, y: "100px" },
+    hidden: { opacity: 0, y: "10px" },
     show: {
       opacity: 1,
       y: 0,
     },
   };
 
+  const {
+    userAddresses,
+    addAddressToBrowser,
+    updateAddressInBrowser,
+    deleteAddressFromBrowser,
+  } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState({ status: null, data: null });
+
+  const addAddress = (data) => {
+    addAddressToBrowser(data);
+    setShow(false);
+  };
+
+  const updateAddress = (data) => {
+    updateAddressInBrowser(data);
+    setShowModal({ status: null, data: null });
+  };
 
   return (
     <Layout>
@@ -59,26 +52,29 @@ const UserAddress = () => {
           <motion.div
             animate="show"
             initial="hidden"
-            className="test-div-container"
+            className="user-addresses-container"
             variants={parentAnimations}
           >
             <div className="address-top">
               <motion.h2 className="address-list-h2" variants={childAnimations}>
                 Addresses
               </motion.h2>
-              <motion.button
-                className="add-address"
-                variants={childAnimations}
-                onClick={() => {
-                  setShow(!show);
-                }}
-              >
-                {show ? "Cancel" : "Add"}
-              </motion.button>
+              {userAddresses.length > 0 || show ? (
+                <motion.button
+                  className="add-address"
+                  variants={childAnimations}
+                  onClick={() => {
+                    setShow(!show);
+                  }}
+                >
+                  {show ? "Cancel" : "Add"}
+                </motion.button>
+              ) : null}
             </div>
             {show ? (
               <UserAddressForm
-                updateAddress={updateAddress}
+                operationType="add"
+                handleAddress={addAddress}
                 animations={parentAnimations}
               />
             ) : (
@@ -88,22 +84,62 @@ const UserAddress = () => {
                   book. These are a list of addresses you have used to ship
                   orders to other than your primary address.
                 </motion.p>
-                <div className="address-list-container">
-                  {addressData.map((item, index) => {
-                    return (
-                      <UserAddressCard
-                        address={item}
-                        title={item.name}
-                        animations={childAnimations}
-                        key={`user-address-card-${index}`}
-                      />
-                    );
-                  })}
-                </div>
+                {userAddresses.length === 0 && (
+                  <div className="empty-address-registry">
+                    <motion.p
+                      variants={childAnimations}
+                      className="empty-address-registry-p"
+                    >
+                      you have't set up any address yet.
+                    </motion.p>
+                    <motion.button
+                      onClick={() => {
+                        setShow(!show);
+                      }}
+                      className="add-address"
+                      variants={childAnimations}
+                    >
+                      Add
+                    </motion.button>
+                  </div>
+                )}
+                {userAddresses.length > 0 && (
+                  <div className="address-list-container">
+                    {userAddresses.map((item, index) => {
+                      return (
+                        <UserAddressCard
+                          address={item}
+                          title={item.name}
+                          animations={childAnimations}
+                          updateAddress={(data) => {
+                            setShowModal({ status: true, data: data });
+                          }}
+                          key={`user-address-card-${index}`}
+                          deleteAddress={deleteAddressFromBrowser}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
               </>
             )}
           </motion.div>
         </UserProfileContainer>
+        {showModal.status && (
+          <UpdateAddressPopup
+            name={showModal.data.name}
+            handleClose={() => {
+              setShowModal({ status: null, data: null });
+            }}
+          >
+            <UserAddressForm
+              user={showModal.data}
+              operationType="update"
+              animations={parentAnimations}
+              handleAddress={updateAddress}
+            />
+          </UpdateAddressPopup>
+        )}
       </Container>
     </Layout>
   );
@@ -112,7 +148,7 @@ const UserAddress = () => {
 export default UserAddress;
 
 const Container = styled(motion.div)`
-  .test-div-container {
+  .user-addresses-container {
     background: #fff;
     border-radius: 12px;
     padding: 1em;
@@ -124,36 +160,57 @@ const Container = styled(motion.div)`
       font-weight: 500;
       line-height: 2em;
       text-transform: capitalize;
-      margin-bottom: 0.25em;
     }
     .address-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .add-address {
-      color: #fff;
-      background: #000;
-      padding: 10px 15px;
-      border-radius: 12px;
-      border: 2px solid #000;
-      transition: all 0.3s ease-in-out;
-      &:hover {
-        background: RGBA(159, 162, 180, 0.08);
-        color: #000;
-      }
+  }
+  .address-list-container {
+    gap: 1em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    padding-top: 1em;
+  }
+  .address-list-p {
+    padding: 0.5em 0;
+    color: #68768e;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .add-address {
+    color: #fff;
+    background: #000;
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: 2px solid #000;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      background: RGBA(159, 162, 180, 0.08);
+      color: #000;
     }
-    .address-list-p {
-      padding: 0.5em 0;
-      color: #68768e;
-      font-size: 16px;
-      font-weight: 400;
-    }
-    .address-list-container {
-      gap: 1em;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      padding-top: 1em;
+  }
+  .empty-address-registry {
+    padding: 2em 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+  }
+  .empty-address-registry-p {
+    text-align: center;
+    padding: 0.5em 0;
+    color: #68768e;
+    opacity: 0.8;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: 768px) {
+    .address-list-p,
+    .empty-address-registry-p {
+      font-size: 14px;
     }
   }
 `;

@@ -25,7 +25,7 @@ const FAQs = () => {
           Nous sommes toujours là pour vous accompagner tout au long du
           processus ! Si vous êtes un client, vous pouvez vérifier ou demander
           de l'aide pour votre commande ici ou appeler le service client au +212
-          528230735, ou bien voir la page de <Link to="/contact">contact</Link>{" "}
+          528230735, ou bien voir la page de <Link to="/contact">contact</Link>
           pour plus d'informations.
         </p>
       ),

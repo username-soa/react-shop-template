@@ -6,14 +6,23 @@ import * as Yup from "yup";
 import Button from "../elements/Button";
 import CustomInput from "../elements/CustomInput";
 
-const UserAddressForm = ({ updateAddress, user, animations }) => {
+const UserAddressForm = ({
+  user,
+  animations,
+  operationType,
+  handleAddress,
+}) => {
   return (
     <Container animate="show" initial="hidden" variants={animations}>
-      <h2 className="form-h2">Adding a new address</h2>
+      <h2 className="form-h2">
+        {operationType === "add"
+          ? "Adding a new address"
+          : "Updating an address"}
+      </h2>
       <Formik
         enableReinitialize={true}
         initialValues={{
-          name: "",
+          name: user?.name || "",
           address1: user?.address1 || "",
           address2: user?.address2 || "",
           city: user?.city || "",
@@ -33,7 +42,7 @@ const UserAddressForm = ({ updateAddress, user, animations }) => {
           zip: Yup.string().required("required"),
         })}
         onSubmit={async (data) => {
-          await updateAddress(data);
+          await handleAddress(data);
         }}
       >
         {({ handleSubmit, isSubmitting, values }) => (

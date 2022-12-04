@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion/dist/framer-motion";
+import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../elements/CustomInput";
 import Button from "../elements/Button";
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = ({ handleLogin, errors }) => {
   const parentAnimations = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.3 },
+      transition: { staggerChildren: 0.1 },
     },
   };
   const childAnimations = {
@@ -33,8 +33,10 @@ const LoginForm = ({ handleLogin }) => {
           email: Yup.string().email("must be an e-mail").required("required"),
           pwd: Yup.string().required("required"),
         })}
-        onSubmit={(data) => {
+        onSubmit={(data, { setSubmitting }) => {
+          setSubmitting(true);
           handleLogin(data);
+          setSubmitting(false);
         }}
       >
         {({ handleSubmit, isSubmitting, values }) => (
@@ -59,6 +61,19 @@ const LoginForm = ({ handleLogin }) => {
               bg="transparent"
               animations={childAnimations}
             />
+            <AnimatePresence>
+              {errors && (
+                <motion.p
+                  exit="exit"
+                  animate="show"
+                  initial="hidden"
+                  variants={childAnimations}
+                  className="errors-red"
+                >
+                  {errors}
+                </motion.p>
+              )}
+            </AnimatePresence>
             <motion.div className="btn-wrp-login" variants={childAnimations}>
               <Button
                 radius="12px"
@@ -67,7 +82,7 @@ const LoginForm = ({ handleLogin }) => {
                 bg="#393d46"
                 border="#393d46"
                 hover="#f8f8f8"
-                title="Let's go"
+                title={isSubmitting ? "Logging..." : "Let's go"}
                 handleClick={handleSubmit}
               />
             </motion.div>
@@ -108,5 +123,10 @@ const Container = styled(motion.div)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+  .errors-red {
+    color: red;
+    font-size: 0.9rem;
+    margin: 0.5em 0 0 0;
   }
 `;

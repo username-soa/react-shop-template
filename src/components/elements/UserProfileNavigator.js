@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import AuthContext from "../../contexts/AuthContext";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { ReactComponent as InfoIcon } from "../../assets/svgs/user2.svg";
 import { ReactComponent as OrderIcon } from "../../assets/svgs/sent.svg";
@@ -8,10 +9,11 @@ import { ReactComponent as PlusIcon } from "../../assets/svgs/down-arrow.svg";
 import { ReactComponent as AddressIcon } from "../../assets/svgs/adress-book.svg";
 
 const UserProfileNavigator = () => {
-  const [expand, setExpand] = useState(0);
-  const [highlight, setHighlight] = useState(0);
   let location = useLocation();
   const history = useHistory();
+  const [expand, setExpand] = useState(0);
+  const [highlight, setHighlight] = useState(0);
+  const { deleteUserFromBrowser } = useContext(AuthContext);
 
   const checkLocation = () => {
     switch (location.pathname) {
@@ -32,6 +34,8 @@ const UserProfileNavigator = () => {
   const getName = () => {
     switch (location.pathname) {
       case "/account":
+        return "Your account information";
+      case "/account/":
         return "Your account information";
       case "/account/address":
         return "Your address information";
@@ -58,8 +62,7 @@ const UserProfileNavigator = () => {
   };
 
   const disconnect = async () => {
-    localStorage.removeItem("ec_shopify_token");
-    localStorage.removeItem("ec_shopify_accessToken");
+    deleteUserFromBrowser();
     history.push("/");
   };
 

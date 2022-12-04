@@ -1,19 +1,17 @@
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-
+import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion/dist/framer-motion";
 import Button from "./Button";
 
 const HomeCollectionCart = ({
   img,
-  title,
   text,
   type,
+  title,
   origin,
   hasBeenViewed,
 }) => {
-  let isMounted = true;
   const history = useHistory();
   const cid = 1;
   const CollectionCardVariants = {
@@ -59,6 +57,7 @@ export default HomeCollectionCart;
 const Container = styled(motion.div)`
   background: #fff;
   padding: 2em 1em;
+  border-radius: 12px;
   display: grid;
   grid-template-columns: 50% 50%;
   .HomeCollectionCart-left {

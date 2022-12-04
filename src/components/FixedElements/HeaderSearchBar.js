@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as SearchIcon } from "../../assets/svgs/close.svg";
-import { ReactComponent as CloseIcon } from "../../assets/svgs/close.svg";
 import SearchHistoryContext from "../../contexts/SearchHistoryContext";
+import { ReactComponent as CloseIcon } from "../../assets/svgs/close.svg";
+import { ReactComponent as SearchIcon } from "../../assets/svgs/close.svg";
 
 const Menu = ({ state, setState }) => {
   let isMounted = true;
@@ -12,7 +12,9 @@ const Menu = ({ state, setState }) => {
     hidden: { y: "-100vh" },
     visible: {
       y: 0,
-      transition: { duration: 1, type: "Inertia" },
+      transition: {
+        type: "Inertia",
+      },
     },
   };
   const parentAnimations = {
@@ -29,7 +31,7 @@ const Menu = ({ state, setState }) => {
     },
   };
   const history = useHistory();
-  const [search, serSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [searchArr, setSearchArr] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const { saveSearchTermsToBrowser, searchTerms, removeSearchTerm } =
@@ -85,7 +87,7 @@ const Menu = ({ state, setState }) => {
         <input
           type="text"
           onChange={(e) => {
-            serSearch(e.target.value);
+            setSearch(e.target.value);
             filterSearchHistory(e.target.value);
           }}
           placeholder="Search..."

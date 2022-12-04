@@ -1,9 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion/dist/framer-motion";
 
 const FeedBack = ({ message, bg, opacity, color }) => {
+  const feedbackAnimations = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    },
+    exit: { opacity: 0 },
+  };
   return (
-    <Container className="feedback" bg={bg} opacity={opacity} color={color}>
+    <Container
+      bg={bg}
+      exit="exit"
+      color={color}
+      animate="show"
+      initial="hidden"
+      opacity={opacity}
+      className="feedback"
+      variants={feedbackAnimations}
+    >
       <span>{message}</span>
     </Container>
   );
@@ -11,7 +28,7 @@ const FeedBack = ({ message, bg, opacity, color }) => {
 
 export default FeedBack;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   transition: all 0.3s;
   background: ${(props) => (props.bg ? props.bg : "#000")};
   border-radius: 7px;
@@ -25,5 +42,7 @@ const Container = styled.div`
   z-index: 99999;
   span {
     color: ${(props) => (props.color ? props.color : "#000")};
+    font-size: 14px;
+    opacity: 0.9;
   }
 `;

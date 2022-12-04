@@ -7,15 +7,15 @@ import CustomInput from "../elements/CustomInput";
 import Button from "../elements/Button";
 
 const SigningForm = ({ handleSignup, errors }) => {
-  const handlePhone = (f) => {
-    var newString = f.substring(1);
-    return "+212" + newString;
-  };
+  // const handlePhone = (f) => {
+  //   var newString = f.substring(1);
+  //   return "+212" + newString;
+  // };
   const parentAnimations = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.3 },
+      transition: { staggerChildren: 0.1 },
     },
   };
   const childAnimations = {
@@ -45,9 +45,9 @@ const SigningForm = ({ handleSignup, errors }) => {
           pwd: Yup.string().required("required"),
         })}
         onSubmit={async (data, { setSubmitting }) => {
-          const newPhone = handlePhone(data.phone);
+          // const newPhone = handlePhone(data.phone);
           setSubmitting(true);
-          await handleSignup(data, newPhone);
+          await handleSignup(data);
           setSubmitting(false);
         }}
       >
