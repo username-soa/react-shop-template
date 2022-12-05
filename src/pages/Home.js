@@ -3,14 +3,15 @@ import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
-import HomeMainCart from "../components/CartComponents/HomeMainCart";
-import HomeAdvantagesCart from "../components/CartComponents/HomeAdvantagesCart";
-import HomePartnersCart from "../components/CartComponents/HomePartenersCart";
-import HomeTopCollections from "../components/CartComponents/HomeTopCollections";
-import CollectionSkeleton from "../components/skeletons/CollectionSkeleton";
-import ProductCartSkeleton from "../components/skeletons/ProductCartSkeleton";
+import NoticePopup from "../components/FixedElements/NoticePopup";
 import HeaderSkeleton from "../components/skeletons/HeaderSkeleton";
 import NewsLetterV2 from "../components/FixedElements/NewsLetterV2";
+import HomeMainCart from "../components/CartComponents/HomeMainCart";
+import CollectionSkeleton from "../components/skeletons/CollectionSkeleton";
+import HomePartnersCart from "../components/CartComponents/HomePartenersCart";
+import ProductCartSkeleton from "../components/skeletons/ProductCartSkeleton";
+import HomeAdvantagesCart from "../components/CartComponents/HomeAdvantagesCart";
+import HomeTopCollections from "../components/CartComponents/HomeTopCollections";
 import SimilarProductsList from "../components/CartComponents/SimilarProductList";
 import { productList } from "../utils/Products";
 
@@ -78,6 +79,15 @@ const Home = () => {
             setPopup(!popup);
           }}
         />
+        {popup && (
+          <NoticePopup
+            title="Notice"
+            description="This is only a UI template, for demonstration purposes only. All the data existing on this website is static. that goes for the products, login and signing up logic, cart logic,the contact form, newsletter form, and search functionality."
+            handleClose={() => {
+              setPopup(!popup);
+            }}
+          />
+        )}
       </Container>
     </Layout>
   );

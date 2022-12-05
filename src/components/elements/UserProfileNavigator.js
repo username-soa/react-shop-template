@@ -141,8 +141,8 @@ const Container = styled.div`
   border-radius: 12px;
   overflow: hidden;
   position: sticky;
-  top: 5px;
-  z-index: 99;
+  top: 105px;
+  z-index: 9;
   .navigator-link {
     color: #676767;
     width: 100%;
@@ -195,6 +195,7 @@ const Container = styled.div`
     }
   }
   @media only screen and (max-width: 1200px) {
+    top: 95px;
     margin-right: 0;
     .navigation-top {
       display: flex;

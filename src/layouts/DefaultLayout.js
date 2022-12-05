@@ -22,18 +22,12 @@ const Layout = ({ children }) => {
           {sideMenu && <Menu sideMenu={sideMenu} setSideMenu={setSideMenu} />}
         </AnimatePresence>
       </div>
-      <div className="body">
-        <div id="myHeader" ref={scrollRef}>
-          <Header sideMenu={sideMenu} setSideMenu={setSideMenu} />
-        </div>
-        <div className="content">
-          {React.cloneElement(children, { url: location.pathname })}
-        </div>
+      <Header sideMenu={sideMenu} setSideMenu={setSideMenu} />
 
-        <div className="footer">
-          <Footer />
-        </div>
+      <div className="content">
+        {React.cloneElement(children, { url: location.pathname })}
       </div>
+      <Footer />
       <AnimatePresence exitBeforeEnter>
         {isOpen && (
           <CartSideMenu
@@ -64,17 +58,11 @@ const Container = styled.div`
     min-height: 100vh;
     z-index: 999;
   }
-  .header {
-    width: 100%;
-    z-index: 999;
-  }
   .content {
     width: 100%;
     min-height: calc(100vh - 150px);
   }
-  .footer {
-    width: 100%;
-  }
+
   @media only screen and (max-width: 400px) {
     .menu {
       width: ${(props) => (props.sideMenu ? "100vw" : "0")};

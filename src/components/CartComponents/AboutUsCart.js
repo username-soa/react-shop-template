@@ -69,7 +69,14 @@ const AboutUsCart = () => {
         </motion.div>
         <motion.div className="about-main-row" variants={childAnimations}>
           <p className="p-title">Follow us : </p>
-
+          <a
+            className="social-link"
+            href="https://www.twitter.com"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <p className="p-data">Twitter</p>
+          </a>
           <a
             className="social-link"
             href="https://www.facebook.com"
@@ -85,15 +92,6 @@ const AboutUsCart = () => {
             rel="noreferrer"
           >
             <p className="p-data">Instagram</p>
-          </a>
-          <a
-            className="social-link"
-            href="https://www.twitter.com"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {" "}
-            <p className="p-data">Twitter</p>
           </a>
         </motion.div>
       </motion.div>

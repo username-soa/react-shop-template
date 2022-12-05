@@ -16,7 +16,7 @@ const Button = ({
   handleClick,
   hover,
   border,
-  classname,
+  className,
 }) => {
   return (
     <Container
@@ -33,7 +33,7 @@ const Button = ({
         type={type}
         onClick={handleClick}
         disabled={disabled}
-        className={classname}
+        className={className}
       >
         {search ? <Search /> : title}
       </button>

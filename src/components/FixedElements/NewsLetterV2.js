@@ -51,13 +51,14 @@ const NewsLetterV2 = ({ handleEmail }) => {
             setSubmitting(false);
           }}
         >
-          {({ handleSubmit, handleChange, values, errors, isSubmitting }) => (
+          {({ handleSubmit, isSubmitting }) => (
             <Form>
               <CustomInput2
-                margin="1.25em 0"
-                name="email"
                 id="email"
+                name="email"
                 type="email"
+                radius="10px"
+                margin="1.25em 0"
                 placeholder="Your Email"
               />
               <div className="newsletter-button-wrp">

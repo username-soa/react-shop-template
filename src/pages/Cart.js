@@ -70,7 +70,7 @@ const CartPage = () => {
             transition: { ease: "easeInOut" },
           }}
         >
-          <CustomHelmet title="Panier" />
+          <CustomHelmet title="Cart" />
           <motion.div
             ref={ref}
             animate={hasBeenViewed ? "visible" : "hidden"}

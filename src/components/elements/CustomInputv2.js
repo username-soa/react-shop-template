@@ -30,11 +30,11 @@ const CustomInput2 = ({
 
   return (
     <Container
-      margin={margin}
       bg={bg}
-      border={border}
       width={width}
+      margin={margin}
       radius={radius}
+      border={border}
     >
       {label ? (
         <label htmlFor={props.id || props.name}>
@@ -105,7 +105,8 @@ const Container = styled.div`
   flex-direction: column;
   width: ${(props) => (props.width ? props.width : "inherit")};
   margin: ${(props) => (props.margin ? props.margin : "0")};
-
+  border-radius: ${(props) => (props.radius ? props.radius : "0")};
+  overflow: hidden;
   label {
     font-size: 15px;
     font-weight: 600;

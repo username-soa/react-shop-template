@@ -110,9 +110,9 @@ const Container = styled(motion.div)`
   }
   .product-info-details {
     height: calc(100vh);
-    z-index: 99;
+    z-index: 9;
     position: sticky;
-    top: 0px;
+    top: 100px;
   }
   @media only screen and (max-width: 1200px) {
     grid-template-columns: 55% 45%;

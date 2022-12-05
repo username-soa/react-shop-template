@@ -97,6 +97,6 @@ const Container = styled(motion.div)`
   }
   @media only screen and (min-width: 1200px) {
     position: sticky;
-    top: 2vh;
+    top: 110px;
   }
 `;

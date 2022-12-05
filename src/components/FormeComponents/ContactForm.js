@@ -129,10 +129,11 @@ const ContactForm = ({ feedback, handleClick }) => {
                 handleClick={handleSubmit}
                 title={isSubmitting ? "Sending..." : "Send"}
                 type="button"
-                bg="#1e212d"
+                bg="#393d46"
                 color="#fff"
                 margin="0.5em"
                 radius="12px"
+                width="large"
               />
               <Button
                 handleClick={(e) => {
@@ -141,12 +142,13 @@ const ContactForm = ({ feedback, handleClick }) => {
                 }}
                 title="Home"
                 type="button"
-                color="#1e212d"
+                color="#393d46"
                 bg="#fff"
-                border="#1e212d"
-                hover="#1e212d"
+                border="#393d46"
+                hover="#393d46"
                 margin="0.5em"
                 radius="12px"
+                width="large"
               />
             </motion.div>
           </Form>
@@ -221,8 +223,8 @@ const Container = styled(motion.div)`
   .form-contact-bottom {
     grid-column: 1/3;
     > div {
-      width: fit-content;
-      margin: 1em auto;
+      width: 120px;
+      margin: 0.5em auto;
     }
   }
   @media only screen and (max-width: 1000px) {

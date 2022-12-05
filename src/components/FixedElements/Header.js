@@ -17,8 +17,12 @@ const Header = ({ sideMenu, setSideMenu }) => {
   const location = useLocation();
   const { user } = useContext(AuthContext);
   const { cartItems } = useContext(ClientContext);
+  const [padding, setPadding] = useState(50);
+  const [boxShadow, setBoxShadow] = useState(0);
   const [totalQte, setTotalQte] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
+  const [clientWindowHeight, setClientWindowHeight] = useState("");
+  const [backgroundTransparency, setBackgroundTransparency] = useState(0);
 
   const getTotalQte = () => {
     let total = null;
@@ -42,16 +46,54 @@ const Header = ({ sideMenu, setSideMenu }) => {
     };
   }, [cartItems]);
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
+  const handleScroll = () => {
+    setClientWindowHeight(window.scrollY);
+  };
+
+  useEffect(() => {
+    let backgroundTransparencyVar = clientWindowHeight / 200;
+    if (backgroundTransparencyVar < 1) {
+      let paddingVar = 50 - backgroundTransparencyVar * 25;
+      let boxShadowVar = backgroundTransparencyVar * 0.1;
+      setBackgroundTransparency(backgroundTransparencyVar);
+      setPadding(paddingVar);
+      setBoxShadow(boxShadowVar);
+    }
+    console.log("backgroundTransparencyVar : ", backgroundTransparencyVar);
+  }, [clientWindowHeight]);
+
   return (
-    <Container>
-      <div className="menu-icon">
+    <Container
+      style={{
+        background: `rgba(255, 255, 255, ${backgroundTransparency + 0.1})`,
+        boxShadow: `rgba(149, 157, 165, ${boxShadow}) 0px 8px 24px`,
+      }}
+    >
+      <div
+        className="menu-icon"
+        style={{
+          paddingTop: `${padding}px`,
+          paddingBottom: `${padding}px`,
+        }}
+      >
         <MenuIcon
           onClick={() => {
             setSideMenu(!sideMenu);
           }}
         />
       </div>
-      <div className="header-right">
+      <div
+        className="header-right"
+        style={{
+          paddingTop: `${padding}px`,
+          paddingBottom: `${padding}px`,
+        }}
+      >
         <Link to="/">
           <h2 className="header-right-h2">{shopInfo.name}.</h2>
         </Link>
@@ -100,10 +142,12 @@ const Header = ({ sideMenu, setSideMenu }) => {
 export default Header;
 
 const Container = styled.div`
+  top: 0;
+  z-index: 99;
   display: grid;
+  position: sticky;
+  background: #f6f7fb;
   grid-template-columns: 150px auto;
-  height: 150px;
-
   .menu-icon {
     background: #393d46;
     display: flex;
@@ -167,7 +211,6 @@ const Container = styled.div`
     }
   }
   @media only screen and (max-width: 1000px) {
-    height: 100px;
     grid-template-columns: 100px auto !important;
     .header-right-h2 {
       font-size: 1.2rem;

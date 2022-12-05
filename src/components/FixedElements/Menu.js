@@ -115,6 +115,7 @@ const Menu = ({ sideMenu, setSideMenu }) => {
             title="Collections"
             animations={childAnimations}
           >
+            <MenuLink to="/collections/all" title="All" />
             {collectionList
               .sort((a, b) => a.name.length - b.name.length)
               .map((c, index) => {

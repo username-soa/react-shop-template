@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import Layout from "../layouts/DefaultLayout";
 import CustomHelmet from "../components/elements/CustomHelmet";
-import ContactForm from "../components/FormeComponents/ContactForm";
 import ContactInfo from "../components/FixedElements/ConactInfo";
+import NoticePopup from "../components/FixedElements/NoticePopup";
+import NewsLetterV2 from "../components/FixedElements/NewsLetterV2";
+import ContactForm from "../components/FormeComponents/ContactForm";
 
 const ContactPage = () => {
-  const [feedback, setFeedback] = useState({ status: null, message: null });
+  const [popup, setPopup] = useState(false);
   const sendMessage = async (data) => {
-    return data;
+    setPopup(!popup);
   };
   return (
     <Layout>
@@ -20,11 +22,24 @@ const ContactPage = () => {
         }}
       >
         <CustomHelmet title="Contact us" />
-        <ContactInfo />
-        <ContactForm handleClick={sendMessage} feedback={feedback} />
-        {/* {feedback?.status ? (
-        <FeedBack bg="#000" color="#fff" message={feedback?.message} />
-      ) : null} */}
+        <div className="contact-page-content">
+          <ContactInfo />
+          <ContactForm handleClick={sendMessage} />
+        </div>
+        <NewsLetterV2
+          handleEmail={() => {
+            setPopup(!popup);
+          }}
+        />
+        {popup && (
+          <NoticePopup
+            title="Notice"
+            description="This is only a UI template, for demonstration purposes only. All the data existing on this website is static. that goes for the products, login and signing up logic, cart logic,the contact form, newsletter form, and search functionality."
+            handleClose={() => {
+              setPopup(!popup);
+            }}
+          />
+        )}
       </Container>
     </Layout>
   );
@@ -33,16 +48,28 @@ const ContactPage = () => {
 export default ContactPage;
 
 const Container = styled(motion.div)`
+  .contact-page-content {
+    display: grid;
+    grid-template-columns: 350px auto;
+    grid-gap: 1em;
+    padding: 2em 150px;
+  }
   height: 100%;
-  padding: 2em 150px;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-
+  @media only screen and (max-width: 1400px) {
+    .contact-page-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+  }
   @media only screen and (max-width: 1200px) {
-    padding: 2em;
+    .contact-page-content {
+      padding: 2em;
+    }
   }
   @media only screen and (max-width: 768px) {
-    padding: 1em;
+    .contact-page-content {
+      padding: 1em;
+    }
   }
 `;

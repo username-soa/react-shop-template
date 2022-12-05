@@ -78,6 +78,9 @@ const Footer = () => {
           </a>
         </div>
       </div>
+      <div className="footer-extra">
+        <p>created By : SOA</p>
+      </div>
     </Container>
   );
 };
@@ -189,8 +192,16 @@ const Container = styled.div`
       }
     }
   }
+  .footer-extra {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      font-size: 12px;
+      color: #abb3c4;
+    }
+  }
   @media only screen and (max-width: 1200px) {
-    /* margin: 1em; */
     padding: 2em;
   }
   @media only screen and (max-width: 940px) {

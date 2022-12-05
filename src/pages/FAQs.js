@@ -6,6 +6,7 @@ import Layout from "../layouts/DefaultLayout";
 import FAQsSection from "../components/CartComponents/FAQsSection";
 import FAQsContact from "../components/CartComponents/FAQsContact";
 import { Link } from "react-router-dom";
+import shopInfo from "../utils/general";
 
 const FAQs = () => {
   const H2Animations = {
@@ -19,41 +20,41 @@ const FAQs = () => {
 
   const data = [
     {
-      title: `Je suis client et j'ai une question concernant mon achat. Qui dois-je contacter ?`,
+      title: `I am a customer and I have a question regarding my purchase. Who should I contact ?`,
       content: (
         <p>
-          Nous sommes toujours là pour vous accompagner tout au long du
-          processus ! Si vous êtes un client, vous pouvez vérifier ou demander
-          de l'aide pour votre commande ici ou appeler le service client au +212
-          528230735, ou bien voir la page de <Link to="/contact">contact</Link>
-          pour plus d'informations.
+          We are always here to accompany you throughout the process ! If you
+          are a customer, you can check or ask help with your order here or call
+          customer service on {shopInfo.phone}, or see the page of
+          <Link to="/contact">contact</Link>
+          for more information.
         </p>
       ),
     },
     {
-      title: `Comment puis-je me tenir au courant des dernières nouvelles de Digital Era ?`,
+      title: `How can I keep up to date with the latest news from ${shopInfo.name}?`,
       content: (
         <p>
-          Pour les dernières nouvelles de Digital Era, veuillez vous inscrire à
-          notre newsletter
+          For the latest from {shopInfo.name}, please subscribe to our
+          newsletter
         </p>
       ),
     },
     {
-      title: `Où puis-je trouver la politique d'expédition de Digital Era ?`,
+      title: `Where can I find ${shopInfo.name}'s privacy policy ?`,
       content: (
         <p>
-          Vous pouvez trouver la politique d'expédition sur la page{" "}
-          <Link to="/livraison">Livraison</Link>.
+          You can find the privacy policy on the page
+          <Link to="/privacy-policy">Privacy Policy</Link>.
         </p>
       ),
     },
     {
-      title: `Où puis-je trouver des informations sur l'entreprise ?`,
+      title: `Where can I find out more about the ${shopInfo.name} store ?`,
       content: (
         <p>
-          Vous pouvez trouver tous les information sur le store Digital Era sur
-          la page <Link to="/about">A propos.</Link>
+          You can find all the information about the {shopInfo.name}'s store on
+          the page <Link to="/about">About US.</Link>
         </p>
       ),
     },
@@ -76,12 +77,12 @@ const FAQs = () => {
         >
           Frequently Asked Questions
         </motion.h2>
-        <FAQsSection title="FAQS Section's name." data={data} />
-        <FAQsSection title="FAQS Section's name." data={data} />
-        <FAQsSection title="FAQS Section's name." data={data} />
-        <FAQsSection title="FAQS Section's name." data={data} />
-        <FAQsSection title="FAQS Section's name." data={data} />
-        <FAQsSection title="FAQS Section's name." data={data} />
+        <FAQsSection title="FAQS Section's example." data={data} />
+        <FAQsSection title="FAQS Section's example." data={data} />
+        <FAQsSection title="FAQS Section's example." data={data} />
+        <FAQsSection title="FAQS Section's example." data={data} />
+        <FAQsSection title="FAQS Section's example." data={data} />
+        <FAQsSection title="FAQS Section's example." data={data} />
         <FAQsContact />
       </Container>
     </Layout>

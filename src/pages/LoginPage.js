@@ -6,6 +6,7 @@ import LoginForm from "../components/FormeComponents/LoginForm";
 import SigningForm from "../components/FormeComponents/SigningForm";
 import Footer from "../components/FixedElements/Footer";
 import AuthContext from "../contexts/AuthContext";
+import CustomHelmet from "../components/elements/CustomHelmet";
 
 const LoginPage = () => {
   const fadeUp = {
@@ -49,6 +50,7 @@ const LoginPage = () => {
         transition: { ease: "easeInOut" },
       }}
     >
+      <CustomHelmet title="Authentication" />
       <div className="login-header">
         <div className="login-header-container">
           <Link to={"/"}>
